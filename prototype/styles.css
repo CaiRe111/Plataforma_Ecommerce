@@ -134,7 +134,7 @@ input, select, textarea {
 textarea { padding: 10px 12px; min-height: 96px; resize: vertical; line-height: 1.5; }
 input[type="checkbox"], input[type="radio"] { width: 18px; height: 18px; min-height: 0; padding: 0; accent-color: var(--accent); flex: none; }
 input[aria-invalid="true"] { border-color: var(--bad); }
-.form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; }
 .form-grid .full { grid-column: 1 / -1; }
 .check { display: flex; align-items: center; gap: 10px; min-height: 36px; cursor: pointer; }
 .chip {
@@ -458,3 +458,20 @@ details.acc > div { padding-bottom: 16px; color: var(--muted); }
   .panel, .summary { padding: 16px; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* ---------- promociones y perfiles ---------- */
+.nav .offer-link { color: var(--accent); font-weight: 650; }
+.strip-band { background: var(--accent-soft); border-bottom: 1px solid var(--line); }
+.strip { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 28px; padding-block: 12px; }
+.strip a { display: inline-flex; flex-wrap: wrap; gap: 4px 10px; text-decoration: none; }
+.promo-grid, .acct-grid, .compare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.promo, .plan { border: 1px solid var(--line-strong); border-radius: var(--r); padding: 22px; display: grid; gap: 12px; align-content: start; background: var(--surface); }
+.promo.locked { border-style: dashed; }
+.promo-val { font-weight: 650; }
+.plan ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+.plan.fiel { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.code { font-family: var(--mono); letter-spacing: .04em; padding: 6px 10px; border: 1px dashed var(--line-strong); border-radius: var(--r); background: var(--sunken); }
+.progress { height: 8px; border-radius: 4px; background: var(--sunken); border: 1px solid var(--line); overflow: hidden; }
+.progress i { display: block; height: 100%; background: var(--accent); }
+.demobar select + select { margin-left: -4px; }
+@media (max-width: 720px) { .promo-grid, .acct-grid, .compare { grid-template-columns: minmax(0, 1fr); } }

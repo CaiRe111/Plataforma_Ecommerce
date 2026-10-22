@@ -14,79 +14,79 @@ const P = (id, name, cat, price, compare, stock, kind, hue, attrs, options, desc
 
 const DEMO_RAW = {
   moda: {
-    rubro: 'Moda', name: 'Taller Norte', hue: 215, type: 'physical', symbol: '$', currency: 'USD',
+    rubro: 'Moda', name: 'Taller Norte', hue: 215, type: 'physical', symbol: '$', currency: 'COP',
     tagline: 'Ropa básica de algodón orgánico, hecha en series cortas.',
     hero: { eyebrow: 'Colección otoño', title: 'Básicos que duran más que la temporada.', cta: 'Ver colección' },
-    lowStock: 5, shipping: { flat: 6, freeFrom: 80 }, pay: { card: true, transfer: true, cod: true },
+    lowStock: 5, shipping: { flat: 12000, freeFrom: 250000 }, pay: { card: true, pse: true, transfer: true, cod: true },
     facets: ['Color', 'Material'], cats: ['Camisetas', 'Pantalones', 'Calzado', 'Accesorios'],
     perks: [
-      { t: 'Envío gratis desde $80', d: 'Entrega en 2 a 4 días hábiles.' },
+      { t: 'Envío gratis desde $250.000', d: 'Entrega en 2 a 4 días hábiles a todo el país.' },
       { t: 'Cambios por talla', d: '30 días, sin costo de devolución.' },
       { t: 'Producción local', d: 'Series cortas y sin excedentes.' },
     ],
     products: [
-      P('m1', 'Camiseta básica de algodón', 'Camisetas', 24, null, 48, 'tee', 38, { Color: 'Crudo', Material: 'Algodón orgánico' }, [{ name: 'Talla', values: ['S', 'M', 'L', 'XL'] }], 'Corte recto, 180 g/m². Se encoge menos del 2 % después del primer lavado.'),
-      P('m2', 'Camiseta de rayas marinas', 'Camisetas', 28, 35, 22, 'tee', 215, { Color: 'Azul marino', Material: 'Algodón orgánico' }, [{ name: 'Talla', values: ['S', 'M', 'L', 'XL'] }], 'Jersey fino con rayas tejidas, no estampadas. Cuello redondo reforzado.'),
-      P('m3', 'Pantalón de lino recto', 'Pantalones', 59, null, 14, 'pants', 35, { Color: 'Arena', Material: 'Lino' }, [{ name: 'Talla', values: ['28', '30', '32', '34', '36'] }], 'Lino lavado, tiro medio y botamanga sin dobladillo. Cintura con elástico interno.'),
-      P('m4', 'Pantalón cargo', 'Pantalones', 64, null, 3, 'pants', 130, { Color: 'Verde', Material: 'Algodón' }, [{ name: 'Talla', values: ['28', '30', '32', '34', '36'] }], 'Seis bolsillos, tela gabardina resistente al roce. Última tanda de la temporada.'),
-      P('m5', 'Tote bag de lona', 'Accesorios', 18, null, 60, 'bag', 45, { Color: 'Crudo', Material: 'Lona' }, [], 'Lona de 12 oz con costuras dobles y bolsillo interior con cierre.'),
-      P('m6', 'Gorra de visera curva', 'Accesorios', 16, 20, 0, 'cap', 215, { Color: 'Azul marino', Material: 'Algodón' }, [], 'Seis paneles, cierre metálico ajustable. Bordado en relieve.'),
-      P('m7', 'Zapatilla urbana', 'Calzado', 82, null, 9, 'shoe', 8, { Color: 'Blanco', Material: 'Cuero vegano' }, [{ name: 'Talla', values: ['38', '39', '40', '41', '42', '43', '44'] }], 'Suela de caucho reciclado, plantilla acolchada y horma ancha.'),
-      P('m8', 'Mochila roll-top', 'Accesorios', 74, null, 11, 'bag', 165, { Color: 'Verde', Material: 'Poliéster reciclado' }, [], 'Capacidad de 22 L, compartimiento acolchado para portátil de 15 pulgadas.'),
+      P('m1', 'Camiseta básica de algodón', 'Camisetas', 59900, null, 48, 'tee', 38, { Color: 'Crudo', Material: 'Algodón orgánico' }, [{ name: 'Talla', values: ['S', 'M', 'L', 'XL'] }], 'Corte recto, 180 g/m². Se encoge menos del 2 % después del primer lavado.'),
+      P('m2', 'Camiseta de rayas marinas', 'Camisetas', 69900, 89900, 22, 'tee', 215, { Color: 'Azul marino', Material: 'Algodón orgánico' }, [{ name: 'Talla', values: ['S', 'M', 'L', 'XL'] }], 'Jersey fino con rayas tejidas, no estampadas. Cuello redondo reforzado.'),
+      P('m3', 'Pantalón de lino recto', 'Pantalones', 189000, null, 14, 'pants', 35, { Color: 'Arena', Material: 'Lino' }, [{ name: 'Talla', values: ['28', '30', '32', '34', '36'] }], 'Lino lavado, tiro medio y botamanga sin dobladillo. Cintura con elástico interno.'),
+      P('m4', 'Pantalón cargo', 'Pantalones', 199000, null, 3, 'pants', 130, { Color: 'Verde', Material: 'Algodón' }, [{ name: 'Talla', values: ['28', '30', '32', '34', '36'] }], 'Seis bolsillos, tela gabardina resistente al roce. Última tanda de la temporada.'),
+      P('m5', 'Tote bag de lona', 'Accesorios', 49900, null, 60, 'bag', 45, { Color: 'Crudo', Material: 'Lona' }, [], 'Lona de 12 oz con costuras dobles y bolsillo interior con cierre.'),
+      P('m6', 'Gorra de visera curva', 'Accesorios', 44900, 59900, 0, 'cap', 215, { Color: 'Azul marino', Material: 'Algodón' }, [], 'Seis paneles, cierre metálico ajustable. Bordado en relieve.'),
+      P('m7', 'Zapatilla urbana', 'Calzado', 259000, null, 9, 'shoe', 8, { Color: 'Blanco', Material: 'Cuero vegano' }, [{ name: 'Talla', values: ['38', '39', '40', '41', '42', '43', '44'] }], 'Suela de caucho reciclado, plantilla acolchada y horma ancha.'),
+      P('m8', 'Mochila roll-top', 'Accesorios', 229000, null, 11, 'bag', 165, { Color: 'Verde', Material: 'Poliéster reciclado' }, [], 'Capacidad de 22 L, compartimiento acolchado para portátil de 15 pulgadas.'),
     ],
   },
 
   alimentos: {
-    rubro: 'Alimentos', name: 'Casa Maíz', hue: 28, type: 'physical', symbol: '$', currency: 'USD',
+    rubro: 'Alimentos', name: 'Casa Maíz', hue: 28, type: 'physical', symbol: '$', currency: 'COP',
     tagline: 'Panadería y despensa artesanal, elaborada cada semana.',
     hero: { eyebrow: 'Hecho esta semana', title: 'Comida de despensa con ingredientes que se pueden leer.', cta: 'Ver productos' },
-    lowStock: 5, shipping: { flat: 5, freeFrom: 40 }, pay: { card: true, transfer: true, cod: true },
+    lowStock: 5, shipping: { flat: 9000, freeFrom: 120000 }, pay: { card: true, pse: true, transfer: true, cod: true },
     facets: ['Dieta', 'Origen'], cats: ['Panadería', 'Despensa', 'Bebidas', 'Regalos'],
     perks: [
-      { t: 'Envío gratis desde $40', d: 'Entrega refrigerada cuando el producto lo necesita.' },
+      { t: 'Envío gratis desde $120.000', d: 'Entrega refrigerada cuando el producto lo necesita.' },
       { t: 'Lotes pequeños', d: 'Cada producto indica su fecha de elaboración.' },
       { t: 'Cajas para regalo', d: 'Con tarjeta escrita a mano.' },
     ],
     products: [
-      P('a1', 'Pan de masa madre', 'Panadería', 6.5, null, 30, 'loaf', 35, { Dieta: 'Vegano', Origen: 'Local' }, [{ name: 'Tamaño', values: ['Entero', 'Medio'] }], 'Fermentación de 24 horas, corteza gruesa y miga abierta. Se hornea los martes y viernes.'),
-      P('a2', 'Granola de avena y miel', 'Despensa', 9, null, 40, 'jar', 45, { Dieta: 'Vegetariano', Origen: 'Local' }, [{ name: 'Presentación', values: ['250 g', '500 g'] }], 'Avena tostada con miel de abejas, almendra y coco. Sin azúcar refinada.'),
-      P('a3', 'Mermelada de guayaba', 'Despensa', 7.5, null, 25, 'jar', 350, { Dieta: 'Vegano', Origen: 'Local' }, [], 'Fruta, azúcar de caña y limón. Frasco de vidrio de 280 g.'),
-      P('a4', 'Café de origen', 'Bebidas', 14, null, 18, 'bag', 25, { Dieta: 'Vegano', Origen: 'Nacional' }, [{ name: 'Molienda', values: ['Grano', 'Molido medio', 'Molido fino'] }], 'Bolsa de 340 g. Tueste medio con notas de panela y cacao.'),
-      P('a5', 'Kombucha de jengibre', 'Bebidas', 4.5, null, 4, 'bottle', 90, { Dieta: 'Vegano', Origen: 'Local' }, [], 'Botella de 330 ml, fermentada 12 días. Se conserva refrigerada.'),
-      P('a6', 'Caja degustación', 'Regalos', 38, 45, 12, 'box', 20, { Dieta: 'Vegetariano', Origen: 'Local' }, [], 'Granola, mermelada, café y galletas en una caja reutilizable.'),
-      P('a7', 'Galletas sin gluten', 'Panadería', 8, null, 20, 'box', 55, { Dieta: 'Sin gluten', Origen: 'Local' }, [], 'Harina de arroz y almendra. Caja de 12 unidades.'),
-      P('a8', 'Aceite de oliva extra virgen', 'Despensa', 16, null, 15, 'bottle', 100, { Dieta: 'Vegano', Origen: 'Importado' }, [{ name: 'Presentación', values: ['500 ml', '1 L'] }], 'Primera presión en frío. Botella oscura que protege el aceite de la luz.'),
+      P('a1', 'Pan de masa madre', 'Panadería', 18000, null, 30, 'loaf', 35, { Dieta: 'Vegano', Origen: 'Local' }, [{ name: 'Tamaño', values: ['Entero', 'Medio'] }], 'Fermentación de 24 horas, corteza gruesa y miga abierta. Se hornea los martes y viernes.'),
+      P('a2', 'Granola de avena y miel', 'Despensa', 28000, null, 40, 'jar', 45, { Dieta: 'Vegetariano', Origen: 'Local' }, [{ name: 'Presentación', values: ['250 g', '500 g'] }], 'Avena tostada con miel de abejas, almendra y coco. Sin azúcar refinada.'),
+      P('a3', 'Mermelada de guayaba', 'Despensa', 21000, null, 25, 'jar', 350, { Dieta: 'Vegano', Origen: 'Local' }, [], 'Fruta, azúcar de caña y limón. Frasco de vidrio de 280 g.'),
+      P('a4', 'Café de origen', 'Bebidas', 42000, null, 18, 'bag', 25, { Dieta: 'Vegano', Origen: 'Nacional' }, [{ name: 'Molienda', values: ['Grano', 'Molido medio', 'Molido fino'] }], 'Bolsa de 340 g. Tueste medio con notas de panela y cacao.'),
+      P('a5', 'Kombucha de jengibre', 'Bebidas', 14000, null, 4, 'bottle', 90, { Dieta: 'Vegano', Origen: 'Local' }, [], 'Botella de 330 ml, fermentada 12 días. Se conserva refrigerada.'),
+      P('a6', 'Caja degustación', 'Regalos', 119000, 140000, 12, 'box', 20, { Dieta: 'Vegetariano', Origen: 'Local' }, [], 'Granola, mermelada, café y galletas en una caja reutilizable.'),
+      P('a7', 'Galletas sin gluten', 'Panadería', 24000, null, 20, 'box', 55, { Dieta: 'Sin gluten', Origen: 'Local' }, [], 'Harina de arroz y almendra. Caja de 12 unidades.'),
+      P('a8', 'Aceite de oliva extra virgen', 'Despensa', 52000, null, 15, 'bottle', 100, { Dieta: 'Vegano', Origen: 'Importado' }, [{ name: 'Presentación', values: ['500 ml', '1 L'] }], 'Primera presión en frío. Botella oscura que protege el aceite de la luz.'),
     ],
   },
 
   tecnologia: {
-    rubro: 'Electrónica', name: 'Voltio', hue: 262, type: 'physical', symbol: '$', currency: 'USD',
+    rubro: 'Electrónica', name: 'Voltio', hue: 262, type: 'physical', symbol: '$', currency: 'COP',
     tagline: 'Accesorios y hogar conectado con garantía local.',
     hero: { eyebrow: 'Garantía de 12 meses', title: 'Tecnología útil, sin complicarte la vida.', cta: 'Explorar catálogo' },
-    lowStock: 5, shipping: { flat: 8, freeFrom: 100 }, pay: { card: true, transfer: true, cod: false },
+    lowStock: 5, shipping: { flat: 15000, freeFrom: 300000 }, pay: { card: true, pse: true, transfer: true, cod: false },
     facets: ['Marca', 'Conexión'], cats: ['Audio', 'Hogar', 'Computación', 'Accesorios'],
     perks: [
       { t: 'Garantía de 12 meses', d: 'Reposición directa si el equipo falla.' },
       { t: 'Soporte por WhatsApp', d: 'Respondemos en menos de 2 horas hábiles.' },
-      { t: 'Envío gratis desde $100', d: 'Con seguimiento del paquete.' },
+      { t: 'Envío gratis desde $300.000', d: 'Con seguimiento del paquete.' },
     ],
     products: [
-      P('t1', 'Audífonos inalámbricos Aura', 'Audio', 89, 109, 25, 'headphones', 262, { Marca: 'Aura', Conexión: 'Bluetooth' }, [{ name: 'Color', values: ['Negro', 'Blanco'] }], 'Cancelación de ruido activa y 30 horas de batería. Estuche de carga incluido.'),
-      P('t2', 'Parlante portátil Cubo', 'Audio', 59, null, 14, 'speaker', 200, { Marca: 'Cubo', Conexión: 'Bluetooth' }, [{ name: 'Color', values: ['Gris', 'Azul'] }], 'Resistente al agua IPX7, 12 horas de reproducción y micrófono integrado.'),
-      P('t3', 'Lámpara inteligente', 'Hogar', 29, 40, 50, 'lamp', 50, { Marca: 'Luma', Conexión: 'Wi-Fi' }, [], 'Luz blanca cálida a fría y 16 millones de colores. Funciona con asistentes de voz.'),
-      P('t4', 'Enchufe inteligente (2 unidades)', 'Hogar', 22, null, 4, 'box', 120, { Marca: 'Luma', Conexión: 'Wi-Fi' }, [], 'Programa horarios y mide el consumo. Máximo 10 A por enchufe.'),
-      P('t5', 'Teclado mecánico compacto', 'Computación', 79, null, 8, 'keyboard', 300, { Marca: 'Tecla', Conexión: 'USB-C' }, [{ name: 'Interruptor', values: ['Lineal', 'Táctil'] }], 'Formato 75 %, hot-swap y retroiluminación blanca. Cable USB-C desmontable.'),
-      P('t6', 'Monitor 24" Full HD', 'Computación', 169, null, 6, 'laptop', 215, { Marca: 'Pantal', Conexión: 'HDMI' }, [], 'Panel IPS de 75 Hz, bordes finos y base ajustable en altura.'),
-      P('t7', 'Cargador GaN 65 W', 'Accesorios', 34, 70, 36, 'box', 150, { Marca: 'Voltio', Conexión: 'USB-C' }, [], 'Carga un portátil y un teléfono a la vez. Mitad del tamaño de un cargador común.'),
-      P('t8', 'Cable USB-C trenzado de 2 m', 'Accesorios', 12, null, 120, 'cable', 330, { Marca: 'Voltio', Conexión: 'USB-C' }, [{ name: 'Color', values: ['Negro', 'Gris'] }], 'Soporta 100 W y transferencia de datos de 480 Mbps. Resistente a 10 000 dobleces.'),
+      P('t1', 'Audífonos inalámbricos Aura', 'Audio', 289000, 349000, 25, 'headphones', 262, { Marca: 'Aura', Conexión: 'Bluetooth' }, [{ name: 'Color', values: ['Negro', 'Blanco'] }], 'Cancelación de ruido activa y 30 horas de batería. Estuche de carga incluido.'),
+      P('t2', 'Parlante portátil Cubo', 'Audio', 189000, null, 14, 'speaker', 200, { Marca: 'Cubo', Conexión: 'Bluetooth' }, [{ name: 'Color', values: ['Gris', 'Azul'] }], 'Resistente al agua IPX7, 12 horas de reproducción y micrófono integrado.'),
+      P('t3', 'Lámpara inteligente', 'Hogar', 89000, 120000, 50, 'lamp', 50, { Marca: 'Luma', Conexión: 'Wi-Fi' }, [], 'Luz blanca cálida a fría y 16 millones de colores. Funciona con asistentes de voz.'),
+      P('t4', 'Enchufe inteligente (2 unidades)', 'Hogar', 69000, null, 4, 'box', 120, { Marca: 'Luma', Conexión: 'Wi-Fi' }, [], 'Programa horarios y mide el consumo. Máximo 10 A por enchufe.'),
+      P('t5', 'Teclado mecánico compacto', 'Computación', 249000, null, 8, 'keyboard', 300, { Marca: 'Tecla', Conexión: 'USB-C' }, [{ name: 'Interruptor', values: ['Lineal', 'Táctil'] }], 'Formato 75 %, hot-swap y retroiluminación blanca. Cable USB-C desmontable.'),
+      P('t6', 'Monitor 24" Full HD', 'Computación', 549000, null, 6, 'laptop', 215, { Marca: 'Pantal', Conexión: 'HDMI' }, [], 'Panel IPS de 75 Hz, bordes finos y base ajustable en altura.'),
+      P('t7', 'Cargador GaN 65 W', 'Accesorios', 109000, 199000, 36, 'box', 150, { Marca: 'Voltio', Conexión: 'USB-C' }, [], 'Carga un portátil y un teléfono a la vez. Mitad del tamaño de un cargador común.'),
+      P('t8', 'Cable USB-C trenzado de 2 m', 'Accesorios', 39000, null, 120, 'cable', 330, { Marca: 'Voltio', Conexión: 'USB-C' }, [{ name: 'Color', values: ['Negro', 'Gris'] }], 'Soporta 100 W y transferencia de datos de 480 Mbps. Resistente a 10 000 dobleces.'),
     ],
   },
 
   digital: {
-    rubro: 'Productos digitales', name: 'Estudio Lumen', hue: 168, type: 'digital', symbol: '$', currency: 'USD',
+    rubro: 'Productos digitales', name: 'Estudio Lumen', hue: 168, type: 'digital', symbol: '$', currency: 'COP',
     tagline: 'Cursos, plantillas y asesorías de fotografía para trabajar por tu cuenta.',
     hero: { eyebrow: 'Aprende a tu ritmo', title: 'Fotografía que se aprende haciendo.', cta: 'Ver cursos y recursos' },
-    lowStock: 3, shipping: { flat: 0, freeFrom: 0 }, pay: { card: true, transfer: true, cod: false },
+    lowStock: 3, shipping: { flat: 0, freeFrom: 0 }, pay: { card: true, pse: true, transfer: true, cod: false },
     facets: ['Formato', 'Nivel'], cats: ['Cursos', 'Plantillas', 'Asesorías', 'Libros'],
     perks: [
       { t: 'Acceso inmediato', d: 'Recibes el enlace en tu correo al confirmar el pago.' },
@@ -94,14 +94,14 @@ const DEMO_RAW = {
       { t: 'Garantía de 14 días', d: 'Si no te sirve, te devolvemos el pago.' },
     ],
     products: [
-      P('d1', 'Curso: fotografía con el móvil', 'Cursos', 49, 79, null, 'play', 280, { Formato: 'Video', Nivel: 'Principiante' }, [], '32 lecciones en video sobre luz, encuadre y edición. Ejercicios con corrección.'),
-      P('d2', 'Curso: edición en Lightroom', 'Cursos', 69, null, null, 'play', 200, { Formato: 'Video', Nivel: 'Intermedio' }, [], 'Flujo de trabajo completo, de la importación a la entrega al cliente.'),
-      P('d3', 'Pack de 40 presets', 'Plantillas', 25, 35, null, 'grid', 320, { Formato: 'Archivo', Nivel: 'Todos' }, [{ name: 'Licencia', values: ['Personal', 'Comercial'] }], 'Presets para retrato, paisaje y producto. Compatibles con Lightroom móvil y escritorio.'),
-      P('d4', 'Plantilla de portafolio web', 'Plantillas', 39, null, null, 'grid', 160, { Formato: 'Archivo', Nivel: 'Intermedio' }, [{ name: 'Licencia', values: ['Personal', 'Comercial'] }], 'Plantilla editable de una página, con galería y formulario de contacto.'),
-      P('d5', 'Asesoría 1:1 de 60 minutos', 'Asesorías', 45, null, 6, 'cal', 20, { Formato: 'Sesión en vivo', Nivel: 'Todos' }, [{ name: 'Modalidad', values: ['Videollamada'] }], 'Sesión individual por videollamada. Los cupos se agendan después del pago.'),
-      P('d6', 'Revisión de portafolio', 'Asesorías', 30, null, 2, 'cal', 40, { Formato: 'Sesión en vivo', Nivel: 'Intermedio' }, [], 'Recibes comentarios por escrito sobre 15 fotografías en 3 días hábiles.'),
-      P('d7', 'Guía de iluminación (ebook)', 'Libros', 12, null, null, 'doc', 180, { Formato: 'PDF', Nivel: 'Principiante' }, [], '64 páginas con esquemas de luz natural y artificial.'),
-      P('d8', 'Libro: composición visual', 'Libros', 18, 22, null, 'doc', 300, { Formato: 'PDF', Nivel: 'Intermedio' }, [], '120 páginas con análisis de 50 fotografías y ejercicios.'),
+      P('d1', 'Curso: fotografía con el móvil', 'Cursos', 149000, 249000, null, 'play', 280, { Formato: 'Video', Nivel: 'Principiante' }, [], '32 lecciones en video sobre luz, encuadre y edición. Ejercicios con corrección.'),
+      P('d2', 'Curso: edición en Lightroom', 'Cursos', 219000, null, null, 'play', 200, { Formato: 'Video', Nivel: 'Intermedio' }, [], 'Flujo de trabajo completo, de la importación a la entrega al cliente.'),
+      P('d3', 'Pack de 40 presets', 'Plantillas', 79000, 110000, null, 'grid', 320, { Formato: 'Archivo', Nivel: 'Todos' }, [{ name: 'Licencia', values: ['Personal', 'Comercial'] }], 'Presets para retrato, paisaje y producto. Compatibles con Lightroom móvil y escritorio.'),
+      P('d4', 'Plantilla de portafolio web', 'Plantillas', 129000, null, null, 'grid', 160, { Formato: 'Archivo', Nivel: 'Intermedio' }, [{ name: 'Licencia', values: ['Personal', 'Comercial'] }], 'Plantilla editable de una página, con galería y formulario de contacto.'),
+      P('d5', 'Asesoría 1:1 de 60 minutos', 'Asesorías', 139000, null, 6, 'cal', 20, { Formato: 'Sesión en vivo', Nivel: 'Todos' }, [{ name: 'Modalidad', values: ['Videollamada'] }], 'Sesión individual por videollamada. Los cupos se agendan después del pago.'),
+      P('d6', 'Revisión de portafolio', 'Asesorías', 99000, null, 2, 'cal', 40, { Formato: 'Sesión en vivo', Nivel: 'Intermedio' }, [], 'Recibes comentarios por escrito sobre 15 fotografías en 3 días hábiles.'),
+      P('d7', 'Guía de iluminación (ebook)', 'Libros', 39000, null, null, 'doc', 180, { Formato: 'PDF', Nivel: 'Principiante' }, [], '64 páginas con esquemas de luz natural y artificial.'),
+      P('d8', 'Libro: composición visual', 'Libros', 59000, 69000, null, 'doc', 300, { Formato: 'PDF', Nivel: 'Intermedio' }, [], '120 páginas con análisis de 50 fotografías y ejercicios.'),
     ],
   },
 };
@@ -171,6 +171,50 @@ function genOrders(store, seed) {
   });
 }
 
+/* ---------- promociones y programa de cliente fiel ---------- */
+const PR = (id, name, desc, kind, value, scope, code, audience, min, endsDays) => ({
+  id, name, desc, kind, value, scope, code, audience, min, endsDays, active: true,
+});
+const DEMO_EXTRA = {
+  moda: {
+    loyalty: { discount: 8, freeShipping: true, threshold: 500000 },
+    promos: [
+      PR('p1', 'Liquidación de camisetas', '15 % menos en todas las camisetas de la colección.', 'percent', 15, 'Camisetas', '', 'all', 0, 10),
+      PR('p2', 'Bienvenida', '10 % de descuento en tu primera compra con el código.', 'percent', 10, 'all', 'PRIMERA10', 'all', 0, null),
+      PR('p3', 'Solo clientes fieles: pantalones', '20 % menos en pantalones, aplicado automáticamente.', 'percent', 20, 'Pantalones', '', 'fiel', 0, 14),
+      PR('p4', 'Ahorra $30.000', 'Descuento fijo en compras desde $200.000.', 'fixed', 30000, 'all', 'AHORRA30', 'all', 200000, 20),
+    ],
+  },
+  alimentos: {
+    loyalty: { discount: 7, freeShipping: true, threshold: 200000 },
+    promos: [
+      PR('p1', 'Panadería de la semana', '10 % menos en panes y galletas.', 'percent', 10, 'Panadería', '', 'all', 0, 6),
+      PR('p2', 'Primera compra', '10 % de descuento con el código.', 'percent', 10, 'all', 'PRIMERA10', 'all', 0, null),
+      PR('p3', 'Solo clientes fieles: cajas de regalo', '15 % menos en cajas de regalo.', 'percent', 15, 'Regalos', '', 'fiel', 0, 12),
+      PR('p4', 'Envío gratis desde $80.000', 'Se aplica automáticamente al llegar al monto.', 'shipping', 0, 'all', '', 'all', 80000, 9),
+    ],
+  },
+  tecnologia: {
+    loyalty: { discount: 5, freeShipping: true, threshold: 800000 },
+    promos: [
+      PR('p1', 'Semana del audio', '12 % menos en audífonos y parlantes.', 'percent', 12, 'Audio', '', 'all', 0, 7),
+      PR('p2', 'Bienvenida', '10 % de descuento en tu primera compra con el código.', 'percent', 10, 'all', 'PRIMERA10', 'all', 0, null),
+      PR('p3', 'Solo clientes fieles: computación', '10 % menos en teclados y monitores.', 'percent', 10, 'Computación', '', 'fiel', 0, 15),
+      PR('p4', 'Ahorra $50.000', 'Descuento fijo en compras desde $400.000.', 'fixed', 50000, 'all', 'AHORRA50', 'all', 400000, 20),
+    ],
+  },
+  digital: {
+    loyalty: { discount: 10, freeShipping: false, threshold: 300000 },
+    promos: [
+      PR('p1', 'Cursos con 20 %', 'Todos los cursos en video con descuento.', 'percent', 20, 'Cursos', '', 'all', 0, 8),
+      PR('p2', 'Bienvenida', '10 % de descuento en tu primera compra con el código.', 'percent', 10, 'all', 'PRIMERA10', 'all', 0, null),
+      PR('p3', 'Solo clientes fieles: plantillas', '25 % menos en presets y plantillas.', 'percent', 25, 'Plantillas', '', 'fiel', 0, 14),
+      PR('p4', 'Pack aprendizaje', '$20.000 menos al combinar curso y libro, desde $150.000.', 'fixed', 20000, 'all', 'APRENDE20', 'all', 150000, 25),
+    ],
+  },
+};
+const DEMO_ACCOUNTS = { normal: 'valentina.rios@correo.com', fiel: 'mateo.gomez@correo.com' };
+
 function buildDemo() {
   const stores = {};
   let seed = 7;
@@ -181,6 +225,14 @@ function buildDemo() {
       if (st.type === 'digital') p.digital = true;
     });
     st.orders = genOrders(st, (seed += 31));
+    const ex = JSON.parse(JSON.stringify(DEMO_EXTRA[key]));
+    st.loyalty = ex.loyalty;
+    st.promos = ex.promos.map(p => { const e = p.endsDays; delete p.endsDays; p.ends = e ? new Date(Date.now() + e * 864e5).toISOString() : null; return p; });
+    const spent = {};
+    st.orders.filter(o => o.status !== 'cancelled').forEach(o => { spent[o.customer.email] = (spent[o.customer.email] || 0) + o.total; });
+    const top = Object.values(spent).sort((a, b) => b - a);
+    st.loyalty.threshold = Math.max(50000, Math.floor((top[2] || 0) / 50000) * 50000);
+    st.overrides = { [DEMO_ACCOUNTS.normal]: 'normal', [DEMO_ACCOUNTS.fiel]: 'fiel' };
     st.cart = { items: [], coupon: null };
     stores[key] = st;
   });

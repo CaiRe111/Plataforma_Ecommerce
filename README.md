@@ -10,9 +10,16 @@ Maqueta con datos de demostración, sin servidor ni pagos reales.
 cd prototype && python3 -m http.server 8080   # o abrir prototype/index.html
 ```
 
-Incluye: tienda (inicio, catálogo con filtros, ficha, carrito, compra en 3 pasos, confirmación),
-panel admin (resumen, productos y precios, inventario, pedidos, ajustes) y cuatro tiendas de
-ejemplo (moda, alimentos, electrónica, productos digitales). La guía de revisión está en `#/guia`.
+Decisiones: Colombia, precios en COP con IVA incluido, una instalación por cliente.
+
+Incluye:
+- Tienda: inicio, catálogo con filtros, ficha, carrito, compra en 3 pasos (tarjeta, PSE, transferencia, contra entrega), confirmación.
+- Zona de ofertas (`#/ofertas`): promociones automáticas, cupones, precios exclusivos.
+- Perfiles de cliente: **normal** y **fiel** (descuento permanente, envío gratis, promociones exclusivas). Cambia de perfil en la barra superior o en `#/cuenta`.
+- Panel admin: resumen, productos y precios, inventario, pedidos, clientes (reglas del programa fiel), promociones, ajustes.
+- Cuatro negocios de ejemplo (moda, alimentos, electrónica, productos digitales) sobre la misma base.
+
+La guía de revisión está en `#/guia`.
 
 ## Fase 2 (pendiente de aprobación)
 
