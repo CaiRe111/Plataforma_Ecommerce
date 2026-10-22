@@ -13,11 +13,11 @@ async function setup(over) {
   t.adminCookie = await t.admin();
   const A = (m, p, b) => t.call(m, p, b, { cookies: t.adminCookie });
   t.A = A;
-  await A('PUT', '/api/admin/settings', { name: 'Taller Norte', pay: { wompi: true, transfer: true, cod: true }, shipping: { flat: 12000, freeFrom: 250000 }, transferInstructions: 'Cuenta 000-111' });
+  await A('PUT', '/api/admin/settings', { name: 'Taller Norte', pay: { online: true, transfer: true, cod: true }, shipping: { flat: 12000, freeFrom: 250000 }, transferInstructions: 'Cuenta 000-111' });
   const mk = async (o) => (await A('POST', '/api/admin/products', { name: 'Camiseta', cat: 'Camisetas', price: 60000, stock: 5, status: 'active', options: [{ name: 'Talla', values: ['S', 'M'] }], ...o })).json.product;
   t.mk = mk;
   t.product = await mk({});
-  t.order = (o = {}, cookies = '') => t.call('POST', '/api/orders', { items: [{ pid: t.product.id, qty: 1, opts: { Talla: 'M' } }], buyer: buyer(), method: 'wompi', ...o }, { cookies });
+  t.order = (o = {}, cookies = '') => t.call('POST', '/api/orders', { items: [{ pid: t.product.id, qty: 1, opts: { Talla: 'M' } }], buyer: buyer(), method: 'online', ...o }, { cookies });
   return t;
 }
 
@@ -39,7 +39,7 @@ test('la tienda pública solo muestra productos activos y oculta datos internos'
   const s = (await t.call('GET', '/api/store')).json;
   assert.deepEqual(s.products.map(p => p.name), ['Camiseta']);
   assert.equal('sku' in s.products[0], false);
-  assert.equal(s.store.pay.wompi, true);
+  assert.equal(s.store.pay.online, true);
   assert.equal(JSON.stringify(s).includes('prv_test'), false);
   await t.close();
 });
@@ -267,5 +267,48 @@ test('sirve la interfaz, el módulo de precios y no permite salir de la carpeta 
   assert.equal((await fetch(base + '/..%2f..%2fpackage.json')).status, 404);
   assert.equal((await fetch(base + '/%2e%2e/src/config.js')).status, 404);
   assert.equal((await fetch(base + '/api/nope')).status, 404);
+  await t.close();
+});
+
+test('pasarela simulada: aprobado, rechazado y pendiente recorren el mismo flujo que una pasarela real', async () => {
+  const t = await setup({ config: { paymentMode: 'demo', wompiPublicKey: '', wompiIntegritySecret: '', wompiEventsSecret: '' } });
+  await t.A('PUT', '/api/admin/fiscal', { enabled: true, nit: '900123456', dv: '7', legalName: 'X SAS', address: 'Calle 1', cityName: 'Medellín', cityCode: '05001' });
+  assert.equal((await t.call('GET', '/api/store')).json.store.paymentMode, 'demo');
+  assert.equal((await t.call('GET', '/api/store')).json.store.pay.online, true, 'el pago en línea simulado está disponible sin llaves');
+
+  const o = (await t.order()).json;
+  assert.equal(o.checkout.simulated, true);
+  assert.match(o.checkout.url, /#\/pago-demo\/\d+\?t=/);
+  const url = `/api/demo/payment/${o.order.id}?t=${o.order.token}`;
+  assert.equal((await t.call('GET', url)).json.attempt.status, 'CREATED');
+  assert.equal((await t.call('GET', `/api/demo/payment/${o.order.id}?t=otro`)).status, 404, 'sin token válido no se ve el pedido');
+
+  // rechazado: sigue pendiente y se puede intentar otra vez
+  assert.equal((await t.call('POST', url, { outcome: 'declined', method: 'card' })).json.order.status, 'pending');
+  assert.equal((await t.call('POST', url, { outcome: 'approved', method: 'card' })).status, 409, 'un intento rechazado está cerrado');
+  const again = (await t.call('POST', `/api/orders/${o.order.id}/pay?t=${o.order.token}`, {})).json;
+  assert.equal(again.checkout.simulated, true);
+
+  // pendiente (PSE) y luego aprobado
+  assert.equal((await t.call('POST', url, { outcome: 'pending', method: 'pse' })).json.order.status, 'pending');
+  const reuse = (await t.call('POST', `/api/orders/${o.order.id}/pay?t=${o.order.token}`, {})).json;
+  assert.equal(reuse.checkout.reference, again.checkout.reference, 'un intento pendiente se reutiliza');
+  const ok = await t.call('POST', url, { outcome: 'approved', method: 'pse' });
+  assert.equal(ok.json.order.status, 'paid');
+  assert.equal((await t.call('POST', url, { outcome: 'approved' })).status, 409, 'no se paga dos veces');
+  assert.equal((await t.call('POST', url, { outcome: 'raro' })).status, 400);
+
+  const adm = (await t.A('GET', `/api/admin/orders/${o.order.id}`)).json.order;
+  assert.equal(adm.invoice.status, 'queued', 'el pago simulado genera la factura igual que uno real');
+  assert.deepEqual(adm.payments.map(p => p.status), ['DECLINED', 'APPROVED']);
+  assert.equal((await t.call('POST', '/api/webhooks/wompi', {})).status, 404, 'el webhook de Wompi no existe en modo demo');
+  await t.close();
+});
+
+test('en modo Wompi la pasarela simulada no existe', async () => {
+  const t = await setup();
+  const o = (await t.order()).json;
+  assert.equal((await t.call('GET', `/api/demo/payment/${o.order.id}?t=${o.order.token}`)).status, 404);
+  assert.equal((await t.call('POST', `/api/demo/payment/${o.order.id}?t=${o.order.token}`, { outcome: 'approved' })).status, 404);
   await t.close();
 });

@@ -61,7 +61,7 @@ export function verifyEventChecksum(event, eventsSecret, headerChecksum = '') {
  */
 export function applyTransaction(db, t) {
   return tx(db, () => {
-    const pay = db.prepare("SELECT * FROM payments WHERE reference = ? AND provider = 'wompi'").get(String(t.reference));
+    const pay = db.prepare('SELECT * FROM payments WHERE reference = ?').get(String(t.reference));
     if (!pay) return { ignored: 'unknown_reference' };
     const order = getOrderRow(db, pay.order_id);
     const method = (t.payment_method_type || '').toString();
@@ -138,7 +138,7 @@ export async function syncOrderPayments(db, client, orderId, { txId } = {}) {
  */
 export async function expireUnpaidOrders(db, config, client, now = Date.now()) {
   const cutoff = new Date(now - config.reserveMinutes * 60_000).toISOString();
-  const rows = db.prepare("SELECT id FROM orders WHERE method = 'wompi' AND status = 'pending' AND paid_at IS NULL AND created_at < ?").all(cutoff);
+  const rows = db.prepare("SELECT id FROM orders WHERE method = 'online' AND status = 'pending' AND paid_at IS NULL AND created_at < ?").all(cutoff);
   let expired = 0;
   for (const { id } of rows) {
     if (client) { try { await syncOrderPayments(db, client, id); } catch { continue; /* sin red: reintenta luego */ } }

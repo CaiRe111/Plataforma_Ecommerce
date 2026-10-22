@@ -35,7 +35,7 @@
     "freeFrom": 250000
    },
    "pay": {
-    "wompi": true,
+    "online": true,
     "transfer": true,
     "cod": true
    },
@@ -328,7 +328,7 @@
     "freeFrom": 120000
    },
    "pay": {
-    "wompi": true,
+    "online": true,
     "transfer": true,
     "cod": true
    },
@@ -599,7 +599,7 @@
     "freeFrom": 300000
    },
    "pay": {
-    "wompi": true,
+    "online": true,
     "transfer": true,
     "cod": false
    },
@@ -869,7 +869,7 @@
     "freeFrom": 0
    },
    "pay": {
-    "wompi": true,
+    "online": true,
     "transfer": true,
     "cod": false
    },

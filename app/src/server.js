@@ -137,7 +137,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   const config = loadConfig();
   const app = await createApp({ config });
   const addr = await app.listen();
-  console.log(`Tienda lista en ${config.publicUrl} (puerto ${addr.port}). Pagos en línea: ${config.wompi.enabled ? 'Wompi ' + config.wompi.env : 'desactivados'}.`);
+  console.log(`Tienda lista en ${config.publicUrl} (puerto ${addr.port}). Pagos en línea: ${config.paymentMode === 'demo' ? 'SIMULADOS (demostración)' : config.wompi.enabled ? 'Wompi ' + config.wompi.env : 'sin configurar'}.`);
   const stop = () => app.close().then(() => process.exit(0));
   process.on('SIGTERM', stop);
   process.on('SIGINT', stop);

@@ -8,7 +8,9 @@ import { listProducts, getProduct, createProduct, updateProduct, deleteProduct, 
 import { listPromos, publicPromos, createPromo, updatePromo, deletePromo } from './domain/promos.js';
 import { registerCustomer, loginCustomer, customerJson, listCustomers, setCustomerType, getCustomer, normEmail } from './domain/customers.js';
 import { createOrder, orderJson, getOrderRow, getOrderPublic, listOrders, ordersOfCustomer, advanceOrder, cancelOrder, DOC_TYPES } from './domain/orders.js';
-import { startPayment, handleWebhook, syncOrderPayments } from './payments/wompi.js';
+import { handleWebhook, syncOrderPayments } from './payments/wompi.js';
+import { startOnlinePayment } from './payments/index.js';
+import { demoAttempt, simulateOutcome } from './payments/demo.js';
 import { listInvoices, getInvoiceDocument, retryInvoice, backfillInvoices, invoiceCounts, listResolutions, createResolution, setResolutionActive, resolutionWarnings, processInvoices } from './invoicing/service.js';
 import { listProviders } from './invoicing/providers.js';
 
@@ -27,7 +29,7 @@ export function registerRoutes(r, { config, db, limiter, wompi, uploadsDir }) {
     return {
       name: s.name, tagline: s.tagline, hue: s.hue, symbol: s.symbol, currency: s.currency, type: s.type, hero: s.hero, perks: s.perks, facets: s.facets,
       lowStock: s.lowStock, shipping: s.shipping, loyalty: s.loyalty,
-      pay: { wompi: s.pay.wompi && config.wompi.enabled, transfer: s.pay.transfer, cod: s.pay.cod },
+      pay: { online: s.pay.online && config.onlineEnabled, transfer: s.pay.transfer, cod: s.pay.cod }, paymentMode: config.paymentMode,
     };
   };
   const customerPayload = row => (row ? customerJson(db, row, getStore(db).loyalty) : null);
@@ -67,8 +69,7 @@ export function registerRoutes(r, { config, db, limiter, wompi, uploadsDir }) {
   /* ----- pedidos ----- */
   const checkoutFor = order => {
     const row = getOrderRow(db, order.id);
-    const { reference, url } = startPayment(db, config, { id: row.id, total: row.total, email: row.email, name: row.name, accessToken: row.access_token });
-    return { reference, url };
+    return startOnlinePayment(db, config, { id: row.id, total: row.total, email: row.email, name: row.name, accessToken: row.access_token });
   };
   const orderResponse = (row, extra = {}) => ({ order: { ...orderJson(db, row), token: row.access_token }, ...extra });
 
@@ -77,7 +78,7 @@ export function registerRoutes(r, { config, db, limiter, wompi, uploadsDir }) {
     const id = createOrder({ db, config }, ctx.body, ctx.customer);
     const row = getOrderRow(db, id);
     const extra = {};
-    if (row.method === 'wompi') extra.checkout = checkoutFor(row);
+    if (row.method === 'online') extra.checkout = checkoutFor(row);
     if (row.method === 'transfer') extra.transferInstructions = getStore(db).transferInstructions;
     return { status: 201, body: orderResponse(row, extra) };
   });
@@ -97,20 +98,36 @@ export function registerRoutes(r, { config, db, limiter, wompi, uploadsDir }) {
   post('/api/orders/:id/pay', {}, ctx => {
     limiter.check(`pay:${ctx.ip}`, 20, 10 * 60e3);
     const row = ownedOrder(ctx);
-    if (row.method !== 'wompi' || row.status !== 'pending' || row.paid_at) throw new HttpError(409, 'Este pedido no admite un nuevo intento de pago.', 'bad_transition');
+    if (row.method !== 'online' || row.status !== 'pending' || row.paid_at) throw new HttpError(409, 'Este pedido no admite un nuevo intento de pago.', 'bad_transition');
     return { checkout: checkoutFor(row) };
   });
   post('/api/orders/:id/sync', {}, async ctx => {
     limiter.check(`sync:${ctx.ip}`, 60, 10 * 60e3);
     const row = ownedOrder(ctx);
-    if (row.method === 'wompi' && !row.paid_at && wompi) await syncOrderPayments(db, wompi, row.id, { txId: str(ctx.body.txId || ctx.query.get('id'), 80) || undefined }).catch(() => null);
+    if (row.method === 'online' && !row.paid_at && wompi) await syncOrderPayments(db, wompi, row.id, { txId: str(ctx.body.txId || ctx.query.get('id'), 80) || undefined }).catch(() => null);
     return orderResponse(getOrderRow(db, row.id));
   });
 
   post('/api/webhooks/wompi', { raw: true }, ctx => {
+    if (config.paymentMode !== 'wompi') throw new HttpError(404, 'No encontrado.', 'not_found');
     let event;
     try { event = JSON.parse(ctx.rawBody.toString('utf8')); } catch { throw bad('Evento no válido.'); }
     return handleWebhook(db, config, event, ctx.req.headers['x-event-checksum']);
+  });
+
+  /* ----- pasarela simulada (solo PAYMENT_MODE=demo) ----- */
+  const demoOnly = () => { if (config.paymentMode !== 'demo') throw new HttpError(404, 'No encontrado.', 'not_found'); };
+  get('/api/demo/payment/:id', {}, ctx => {
+    demoOnly();
+    const row = ownedOrder(ctx);
+    return { order: { id: row.id, total: row.total, status: row.status, name: row.name, method: row.method }, attempt: demoAttempt(db, row.id) };
+  });
+  post('/api/demo/payment/:id', {}, ctx => {
+    demoOnly();
+    limiter.check(`demopay:${ctx.ip}`, 60, 10 * 60e3);
+    const row = ownedOrder(ctx);
+    simulateOutcome(db, row, { outcome: ctx.body.outcome, method: ctx.body.method });
+    return orderResponse(getOrderRow(db, row.id));
   });
 
   /* ----- administración: acceso ----- */
@@ -209,7 +226,7 @@ export function registerRoutes(r, { config, db, limiter, wompi, uploadsDir }) {
   });
 
   /* ----- administración: ajustes, pagos y facturación ----- */
-  get('/api/admin/settings', A, () => ({ store: getStore(db), cats: listCategories(db, { onlyActive: false }), wompi: { enabled: config.wompi.enabled, env: config.wompi.env, webhookUrl: `${config.publicUrl}/api/webhooks/wompi` } }));
+  get('/api/admin/settings', A, () => ({ store: getStore(db), cats: listCategories(db, { onlyActive: false }), mode: config.paymentMode, wompi: { enabled: config.wompi.enabled, env: config.wompi.env, webhookUrl: `${config.publicUrl}/api/webhooks/wompi` } }));
   put('/api/admin/settings', A, ctx => ({ store: updateStore(db, ctx.body) }));
   get('/api/admin/fiscal', A, () => ({ fiscal: fiscalForAdmin(getFiscal(db)), providers: listProviders(), resolutions: listResolutions(db), warnings: resolutionWarnings(db), counts: invoiceCounts(db) }));
   put('/api/admin/fiscal', A, ctx => ({ fiscal: fiscalForAdmin(updateFiscal(db, ctx.body)) }));

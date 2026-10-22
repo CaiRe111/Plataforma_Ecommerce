@@ -12,7 +12,7 @@ export const STORE_DEFAULTS = {
   facets: [],
   lowStock: 5,
   shipping: { flat: 12000, freeFrom: 250000 },
-  pay: { wompi: true, transfer: false, cod: false },
+  pay: { online: true, transfer: false, cod: false },
   transferInstructions: '',
   loyalty: { discount: 5, freeShipping: false, threshold: 500000 },
 };
@@ -68,8 +68,8 @@ export function updateStore(db, input) {
     next.shipping = { flat: clamp(intOr(input.shipping.flat, cur.shipping.flat), 0, 1e7), freeFrom: clamp(intOr(input.shipping.freeFrom, cur.shipping.freeFrom), 0, 1e9) };
   }
   if (input.pay) {
-    next.pay = { wompi: !!input.pay.wompi, transfer: !!input.pay.transfer, cod: !!input.pay.cod };
-    if (!next.pay.wompi && !next.pay.transfer && !next.pay.cod) throw bad('Deja al menos un método de pago activo.');
+    next.pay = { online: !!input.pay.online, transfer: !!input.pay.transfer, cod: !!input.pay.cod };
+    if (!next.pay.online && !next.pay.transfer && !next.pay.cod) throw bad('Deja al menos un método de pago activo.');
   }
   if (input.transferInstructions !== undefined) next.transferInstructions = str(input.transferInstructions, 600);
   if (input.loyalty) {

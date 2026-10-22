@@ -11,7 +11,7 @@ export const closeAll = () => Promise.all([...open].map(f => f()));
 export async function boot(over = {}) {
   const config = loadConfig({
     publicUrl: 'http://localhost:3000', dataDir: '/tmp/pe-test-' + crypto.randomBytes(4).toString('hex'), jobsIntervalMs: 0,
-    adminEmail: 'admin@tienda.co', adminPassword: 'clave-segura-1', wompiPublicKey: WOMPI.publicKey, wompiPrivateKey: WOMPI.privateKey,
+    adminEmail: 'admin@tienda.co', adminPassword: 'clave-segura-1', paymentMode: 'wompi', wompiPublicKey: WOMPI.publicKey, wompiPrivateKey: WOMPI.privateKey,
     wompiEventsSecret: WOMPI.eventsSecret, wompiIntegritySecret: WOMPI.integritySecret, ...over.config,
   });
   const fetchLog = [];

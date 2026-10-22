@@ -99,7 +99,7 @@ CREATE TABLE orders (
   total INTEGER NOT NULL,
   physical INTEGER NOT NULL DEFAULT 1,
   fiel INTEGER NOT NULL DEFAULT 0,
-  method TEXT NOT NULL CHECK (method IN ('wompi','transfer','cod')),
+  method TEXT NOT NULL CHECK (method IN ('online','transfer','cod')),
   status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending','paid','preparing','shipped','delivered','cancelled')),
   stock_released INTEGER NOT NULL DEFAULT 0,
   created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')),

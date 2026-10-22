@@ -109,7 +109,9 @@ const STATUS = {
   pending: { l: 'Pendiente de pago', c: 'warn' }, paid: { l: 'Pagado', c: 'info' }, preparing: { l: 'Preparando', c: 'info' },
   shipped: { l: 'Enviado', c: 'info' }, delivered: { l: 'Entregado', c: 'good' }, cancelled: { l: 'Cancelado', c: 'bad' },
 };
-const METHODS = { wompi: 'Pago en línea (Wompi)', transfer: 'Transferencia', cod: 'Contra entrega' };
+const METHODS = { online: 'Pago en línea', transfer: 'Transferencia', cod: 'Contra entrega' };
+const isDemoPay = () => !!S.store && S.store.paymentMode === 'demo';
+const methodLabel = m => (m === 'online' && isDemoPay() ? 'Pago en línea (simulado)' : METHODS[m]);
 const pill = s => html`<span class="pill ${STATUS[s].c}">${STATUS[s].l}</span>`;
 
 function stockState(p) {
@@ -200,7 +202,12 @@ async function loadRoute() {
   const [a, b, c] = S.route.segs, q = S.route.q;
   if (a === 'admin') return loadAdmin(b, c);
   if (a === 'pedido') return loadOrder(b, q);
+  if (a === 'pago-demo') return loadDemo(b, q);
   if (a === 'cuenta' && S.me) { S.myOrders = (await api('GET', '/api/me')).orders; }
+}
+async function loadDemo(id, q) {
+  S.demo = null;
+  try { S.demo = await api('GET', `/api/demo/payment/${id}?t=${enc(q.get('t') || '')}`); S.demo.token = q.get('t') || ''; } catch (e) { if (e.status !== 404) throw e; }
 }
 async function loadOrder(id, q) {
   const token = q.get('t') || '';
@@ -213,7 +220,7 @@ async function loadOrder(id, q) {
   if (S.order) {
     const o = S.order.order;
     if (o.status !== 'pending') store_.del(LAST_KEY);
-    else if (o.method === 'wompi' && !o.paidAt) schedulePoll(id, token, 0);
+    else if (o.method === 'online' && !o.paidAt && !isDemoPay()) schedulePoll(id, token, 0);
   }
 }
 function schedulePoll(id, token, n) {
@@ -415,7 +422,7 @@ function cartPage() {
 
 /* ---- compra ---- */
 const DOC_RULES = { CC: /^\d{6,10}$/, NIT: /^\d{6,10}(-\d)?$/, CE: /^[A-Za-z0-9]{4,12}$/, PP: /^[A-Za-z0-9]{4,16}$/, TI: /^\d{6,12}$/ };
-const availableMethods = physical => ['wompi', 'transfer', 'cod'].filter(m => ST().pay[m] && (m !== 'cod' || physical));
+const availableMethods = physical => ['online', 'transfer', 'cod'].filter(m => ST().pay[m] && (m !== 'cod' || physical));
 function initCheckout() {
   const m = S.me, phys = calc(lines()).physical;
   S.ui.co = { step: 1, busy: false, errors: {}, data: {
@@ -470,18 +477,18 @@ function checkout() {
       ${t.physical ? html`<div class="panel"><h3>Entrega</h3><div class="form-grid">${fld('address', 'Dirección', { auto: 'street-address', full: true })}${fld('city', 'Ciudad', { auto: 'address-level2' })}${fld('notes', 'Indicaciones (opcional)', { ph: 'Torre, apartamento, portería…' })}</div>
         <div class="paycard" style="cursor:default;border-color:var(--accent)"><span></span><b>Envío estándar</b><small>2 a 4 días hábiles · ${t.ship ? money(t.ship) : 'Gratis'}</small></div></div>` : html`<div class="notice">Es un pedido digital: no necesitas dirección. Recibirás el acceso por correo.</div>`}`;
   } else if (co.step === 2) {
-    const sub = { wompi: 'Tarjeta, PSE, Nequi, Bancolombia y más. Pagas en el sitio seguro de Wompi y vuelves aquí.', transfer: 'Te mostramos los datos bancarios al confirmar. El pedido se prepara al recibir el pago.', cod: 'Pagas en efectivo al recibir el pedido.' };
+    const sub = { online: isDemoPay() ? 'Pasarela simulada de demostración: tú eliges si el pago se aprueba o se rechaza. No se cobra nada.' : 'Tarjeta, PSE, Nequi, Bancolombia y más. Pagas en el sitio seguro de Wompi y vuelves aquí.', transfer: 'Te mostramos los datos bancarios al confirmar. El pedido se prepara al recibir el pago.', cod: 'Pagas en efectivo al recibir el pedido.' };
     body = html`<div class="panel"><h3>Método de pago</h3>
-      ${methods.length ? methods.map(m => html`<label class="paycard"><input type="radio" name="method" value="${m}" data-method ${d.method === m ? 'checked' : ''}><b>${METHODS[m]}</b><small>${sub[m]}</small></label>`) : html`<p class="muted">La tienda no tiene métodos de pago disponibles. Escríbenos para completar tu compra.</p>`}
+      ${methods.length ? methods.map(m => html`<label class="paycard"><input type="radio" name="method" value="${m}" data-method ${d.method === m ? 'checked' : ''}><b>${methodLabel(m)}</b><small>${sub[m]}</small></label>`) : html`<p class="muted">La tienda no tiene métodos de pago disponibles. Escríbenos para completar tu compra.</p>`}
       ${co.errors.method ? html`<span class="err">${co.errors.method}</span>` : ''}</div>`;
   } else {
     body = html`<div class="panel"><h3>Revisa tu pedido</h3>
       <dl class="spec"><dt>Contacto</dt><dd>${d.name}<br><span class="muted">${d.email} · ${d.phone}</span></dd>
         <dt>Factura a</dt><dd>${S.docTypes[d.docType]}${d.docType === 'CF' ? '' : ' ' + d.docNumber}</dd>
         ${t.physical ? html`<dt>Entrega</dt><dd>${d.address}, ${d.city}${d.notes ? html`<br><span class="muted">${d.notes}</span>` : ''}</dd>` : html`<dt>Entrega</dt><dd>Digital, por correo</dd>`}
-        <dt>Pago</dt><dd>${METHODS[d.method]}</dd></dl>
+        <dt>Pago</dt><dd>${methodLabel(d.method)}</dd></dl>
       <div class="row"><button class="link-btn" data-act="co-edit" data-step="1">Editar datos</button><button class="link-btn" data-act="co-edit" data-step="2">Cambiar pago</button></div></div>
-      ${d.method === 'wompi' ? html`<div class="notice">Al confirmar te llevamos al sitio seguro de Wompi para completar el pago.</div>` : ''}`;
+      ${d.method === 'online' ? html`<div class="notice">${isDemoPay() ? 'Al confirmar te llevamos a una pasarela de pago simulada. No se cobra nada.' : 'Al confirmar te llevamos al sitio seguro de Wompi para completar el pago.'}</div>` : ''}`;
   }
   return html`<div class="wrap"><div class="page-h"><h1 style="font-size:clamp(28px,4vw,40px)">Finalizar compra</h1></div>
     <ol class="steps" style="padding:0;margin:0 0 28px">${names.map((n, i) => html`<li ${co.step === i + 1 ? raw('aria-current="step"') : ''} class="${co.step > i + 1 ? 'done' : ''}"><span class="n">${co.step > i + 1 ? '✓' : i + 1}</span>${n}</li>`)}</ol>
@@ -489,7 +496,7 @@ function checkout() {
       <details class="panel m-only" style="padding:14px 16px"><summary style="cursor:pointer;font-weight:650">Resumen del pedido · ${money(t.total)}</summary><div class="stack mt">${summary}</div></details>
       ${body}
       <div class="row between">${co.step > 1 ? html`<button class="btn btn-ghost" data-act="co-back">Volver</button>` : html`<a class="btn btn-ghost" href="#/carrito">Volver al carrito</a>`}
-        ${co.step < 3 ? html`<button class="btn btn-primary" data-act="co-next" ${co.step === 2 && !methods.length ? 'disabled' : ''}>Continuar</button>` : html`<button class="btn btn-primary" data-act="place-order" ${co.busy ? 'disabled' : ''}>${co.busy ? 'Procesando…' : d.method === 'wompi' ? `Confirmar y pagar · ${money(t.total)}` : `Confirmar pedido · ${money(t.total)}`}</button>`}</div></div>
+        ${co.step < 3 ? html`<button class="btn btn-primary" data-act="co-next" ${co.step === 2 && !methods.length ? 'disabled' : ''}>Continuar</button>` : html`<button class="btn btn-primary" data-act="place-order" ${co.busy ? 'disabled' : ''}>${co.busy ? 'Procesando…' : d.method === 'online' ? `Confirmar y pagar · ${money(t.total)}` : `Confirmar pedido · ${money(t.total)}`}</button>`}</div></div>
       <aside class="summary d-only">${summary}</aside></div></div>`;
 }
 async function placeOrder() {
@@ -504,6 +511,7 @@ async function placeOrder() {
     S.cart.items.length = 0; S.cart.coupon = null; persistCart();
     S.ui.co = null;
     store_.set(LAST_KEY, JSON.stringify({ id: res.order.id, token: res.order.token }));
+    if (res.checkout && res.checkout.simulated) { await loadStore(); go(`#/pago-demo/${res.order.id}?t=${enc(res.order.token)}`); return; }
     if (res.checkout) { location.assign(res.checkout.url); return; }
     await loadStore();
     go(`#/pedido/${res.order.id}?t=${enc(res.order.token)}`);
@@ -530,13 +538,13 @@ function timeline(o) {
 function done() {
   if (!S.order) return html`<div class="wrap"><div class="empty page-h"><h1>No encontramos ese pedido</h1><p class="muted">El enlace está incompleto o el pedido no existe. Si compraste con una cuenta, inicia sesión para verlo.</p><a class="btn btn-primary" href="#/cuenta">Mi cuenta</a></div></div>`;
   const o = S.order.order, first = o.customer.name.split(' ')[0];
-  const waiting = o.status === 'pending' && o.method === 'wompi';
+  const waiting = o.status === 'pending' && o.method === 'online';
   const title = o.status === 'cancelled' ? 'Este pedido fue cancelado.' : waiting ? 'Falta completar tu pago.' : o.status === 'pending' ? `Gracias, ${first}. Recibimos tu pedido.` : `Gracias, ${first}. Tu pedido está confirmado.`;
   return html`<div class="wrap"><div class="page-h stack" style="justify-items:start;gap:16px"><div class="done-mark" style="${waiting || o.status === 'cancelled' ? 'background:var(--warn)' : ''}">${ic(o.status === 'cancelled' ? 'close' : 'check')}</div>
     <h1 style="font-size:clamp(28px,4vw,40px)">${title}</h1>
-    <p class="lead">Pedido <b class="mono">#${o.id}</b>. ${waiting ? 'Estamos esperando la confirmación de Wompi. Si ya pagaste, esta página se actualiza sola.' : `Enviaremos la información a ${o.customer.email}.`}</p></div>
+    <p class="lead">Pedido <b class="mono">#${o.id}</b>. ${waiting ? (isDemoPay() ? 'Falta completar el pago en la pasarela simulada.' : 'Estamos esperando la confirmación de Wompi. Si ya pagaste, esta página se actualiza sola.') : `Enviaremos la información a ${o.customer.email}.`}</p></div>
     <div class="two"><div class="stack" style="gap:20px">
-      ${waiting ? html`<div class="row"><button class="btn btn-primary" data-act="pay-again">Completar el pago</button><button class="btn btn-ghost" data-act="order-check">Ya pagué, verificar</button></div>` : ''}
+      ${waiting ? html`<div class="row"><button class="btn btn-primary" data-act="pay-again">Completar el pago</button>${isDemoPay() ? '' : html`<button class="btn btn-ghost" data-act="order-check">Ya pagué, verificar</button>`}</div>` : ''}
       <div class="panel"><h3>Estado</h3>${timeline(o)}</div>
       ${o.method === 'transfer' && o.status === 'pending' ? html`<div class="notice"><b>Datos para la transferencia:</b> ${S.order.transferInstructions || 'La tienda te contactará con los datos bancarios.'} Usa el pedido #${o.id} como referencia.</div>` : ''}
       ${o.method === 'cod' && o.status !== 'cancelled' && o.status !== 'delivered' ? html`<div class="notice">Pagas en efectivo cuando recibas el pedido.</div>` : ''}
@@ -546,7 +554,28 @@ function done() {
         ${o.couponDiscount ? html`<div class="tr"><span>Cupón ${o.couponCode}</span><span class="num">−${money(o.couponDiscount)}</span></div>` : ''}
         <div class="tr"><span>Envío</span><span class="num">${o.address ? (o.shipping ? money(o.shipping) : 'Gratis') : 'Digital'}</span></div>
         <div class="tr total"><span>Total</span><span class="num">${money(o.total)}</span></div>
-        <p class="muted small">Pago: ${METHODS[o.method]}</p></aside></div></div>`;
+        <p class="muted small">Pago: ${methodLabel(o.method)}</p></aside></div></div>`;
+}
+
+function demoGateway() {
+  if (!S.demo) return html`<div class="wrap"><div class="empty page-h"><h1>No encontramos ese pago</h1><p class="muted">El enlace está incompleto, el pedido no existe o la pasarela simulada no está activa.</p><a class="btn btn-primary" href="#/">Volver a la tienda</a></div></div>`;
+  const { order, attempt, token } = S.demo, m = S.ui.demoMethod || 'card', pendingTx = attempt && attempt.status === 'PENDING';
+  const closed = order.status !== 'pending' || !attempt || !['CREATED', 'PENDING'].includes(attempt.status);
+  const back = `#/pedido/${order.id}?t=${enc(token)}`;
+  return html`<div class="wrap" style="max-width:560px;padding-block:32px 72px"><div class="stack" style="gap:20px">
+    <div class="notice" style="border-color:var(--warn)"><b>Pasarela simulada · modo demostración.</b> No se cobra nada ni se usa ninguna tarjeta real.</div>
+    <div class="panel"><div class="row between"><span class="eyebrow">Pago del pedido</span><span class="mono">#${order.id}</span></div>
+      <div class="row between"><b>${S.store.name}</b><b class="num" style="font-size:24px">${money(order.total)}</b></div></div>
+    ${closed ? html`<div class="panel"><h3>${order.status === 'pending' ? 'Este intento de pago ya terminó' : 'Este pedido ya no está pendiente de pago'}</h3><p class="muted">${order.status === 'pending' ? 'Vuelve al pedido para iniciar un nuevo intento.' : 'No hace falta pagar de nuevo.'}</p><a class="btn btn-primary" href="${back}">Ver mi pedido</a></div>`
+    : html`<div class="panel"><h3>${pendingTx ? 'Tu pago quedó pendiente' : 'Elige cómo pagar'}</h3>
+      ${pendingTx ? html`<p class="muted">Algunos medios, como PSE, tardan en confirmar. Elige cómo termina la transacción.</p>` : html`
+        ${[['card', 'Tarjeta de crédito o débito'], ['pse', 'PSE'], ['nequi', 'Nequi']].map(([k, l]) => html`<label class="paycard"><input type="radio" name="dm" value="${k}" data-demo-method ${m === k ? 'checked' : ''}><b>${l}</b></label>`)}`}
+      <p class="muted small">Resultado de la simulación:</p>
+      <div class="stack" style="gap:10px">
+        <button class="btn btn-primary" data-act="demo-outcome" data-outcome="approved">Simular pago aprobado</button>
+        <button class="btn btn-ghost" data-act="demo-outcome" data-outcome="declined">Simular pago rechazado</button>
+        ${pendingTx ? '' : html`<button class="btn btn-ghost" data-act="demo-outcome" data-outcome="pending">Simular pago pendiente</button>`}</div></div>
+      <a class="muted" href="${back}">← Volver al pedido sin pagar</a>`}</div></div>`;
 }
 
 function pendingNotice() {
@@ -672,7 +701,7 @@ function ordersTable(list) {
   return html`<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Pedido</th><th>Fecha</th><th>Cliente</th><th>Pago</th><th>Estado</th><th>Factura</th><th class="r">Total</th></tr></thead><tbody>
     ${list.map(o => html`<tr data-search="${(o.id + ' ' + o.customer.name + ' ' + o.customer.email).toLowerCase()}">
       <td data-label="Pedido"><a class="mono" href="#/admin/pedidos/${o.id}"><b>#${o.id}</b></a></td><td data-label="Fecha">${fmtDate(o.createdAt)}</td>
-      <td data-label="Cliente">${o.customer.name}${o.fiel ? html` <span class="pill good">Fiel</span>` : ''}</td><td data-label="Pago">${METHODS[o.method]}</td><td data-label="Estado">${pill(o.status)}</td>
+      <td data-label="Cliente">${o.customer.name}${o.fiel ? html` <span class="pill good">Fiel</span>` : ''}</td><td data-label="Pago">${methodLabel(o.method)}</td><td data-label="Estado">${pill(o.status)}</td>
       <td data-label="Factura">${o.invoiceStatus ? invPill(o.invoiceStatus) : html`<span class="muted">—</span>`}</td>
       <td data-label="Total" class="r num">${money(o.total)}</td></tr>`)}</tbody></table></div>`;
 }
@@ -769,7 +798,7 @@ function adminOrder() {
   const o = S.adm.order;
   if (!o) return notFound();
   const ask = S.ui.confirm === 'cancel:' + o.id;
-  const wompiPaid = o.method === 'wompi' && o.paidAt;
+  const onlinePaid = o.method === 'online' && o.paidAt && !isDemoPay();
   return html`<div class="adm-h"><div><a class="small muted" href="#/admin/pedidos">← Pedidos</a><h1>Pedido <span class="mono">#${o.id}</span></h1></div><div class="row">${pill(o.status)}<span class="muted">${fmtDateTime(o.createdAt)}</span></div></div>
   <div class="cols">
     <div class="stack" style="gap:24px">
@@ -784,13 +813,13 @@ function adminOrder() {
         <dt>Cliente</dt><dd>${o.customer.name} ${o.fiel ? html`<span class="pill good">Cliente fiel</span>` : ''}</dd><dt>Correo</dt><dd>${o.customer.email}</dd><dt>Teléfono</dt><dd class="mono">${o.customer.phone}</dd>
         <dt>Documento</dt><dd>${S.docTypes[o.docType] || o.docType} ${o.docType === 'CF' ? '' : o.docNumber}</dd>
         <dt>Entrega</dt><dd>${o.address ? html`${o.address.line}, ${o.address.city}${o.address.notes ? html`<br><span class="muted">${o.address.notes}</span>` : ''}` : 'Digital, por correo'}</dd>
-        <dt>Pago</dt><dd>${METHODS[o.method]} · ${o.paidAt ? 'recibido el ' + fmtDateTime(o.paidAt) : o.status === 'cancelled' ? 'cancelado' : 'por confirmar'}</dd></dl></div></section>
-      ${o.payments.length ? html`<section class="card-box"><header><h3>Intentos de pago</h3></header><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Referencia</th><th>Estado en Wompi</th><th>Medio</th><th>Actualizado</th></tr></thead><tbody>
-        ${o.payments.map(p => html`<tr><td data-label="Referencia" class="mono">${p.reference}</td><td data-label="Estado en Wompi"><span class="pill ${p.status === 'APPROVED' ? 'good' : p.status === 'PENDING' || p.status === 'CREATED' ? 'warn' : 'bad'}">${p.status}</span></td><td data-label="Medio">${p.method || '—'}</td><td data-label="Actualizado">${fmtDateTime(p.updatedAt)}</td></tr>`)}</tbody></table></div></section>` : ''}</div>
+        <dt>Pago</dt><dd>${methodLabel(o.method)} · ${o.paidAt ? 'recibido el ' + fmtDateTime(o.paidAt) : o.status === 'cancelled' ? 'cancelado' : 'por confirmar'}</dd></dl></div></section>
+      ${o.payments.length ? html`<section class="card-box"><header><h3>Intentos de pago</h3></header><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Referencia</th><th>Estado del pago</th><th>Medio</th><th>Actualizado</th></tr></thead><tbody>
+        ${o.payments.map(p => html`<tr><td data-label="Referencia" class="mono">${p.reference}</td><td data-label="Estado del pago"><span class="pill ${p.status === 'APPROVED' ? 'good' : p.status === 'PENDING' || p.status === 'CREATED' ? 'warn' : 'bad'}">${p.status}</span></td><td data-label="Medio">${p.method || '—'}</td><td data-label="Actualizado">${fmtDateTime(p.updatedAt)}</td></tr>`)}</tbody></table></div></section>` : ''}</div>
     <div class="stack" style="gap:24px"><section class="card-box"><header><h3>Seguimiento</h3></header><div class="pad stack">${timeline(o)}
       ${o.next ? html`<button class="btn btn-primary btn-block" data-act="order-next" data-id="${o.id}">${o.next.label}</button>` : ''}
-      ${o.method === 'wompi' && o.status === 'pending' ? html`<button class="btn btn-ghost btn-block" data-act="order-sync" data-id="${o.id}">Verificar pago con Wompi</button>` : ''}
-      ${!['cancelled', 'delivered', 'shipped'].includes(o.status) ? (ask ? html`<div class="notice">¿Cancelar el pedido #${o.id}? Se devuelve el inventario.${wompiPaid ? ' El reembolso del pago se hace desde el panel de Wompi.' : ''}<div class="row" style="margin-top:12px"><button class="btn btn-danger btn-sm" data-act="order-cancel" data-id="${o.id}">Sí, cancelar</button><button class="btn btn-ghost btn-sm" data-act="confirm-no">Volver</button></div></div>` : html`<button class="btn btn-ghost btn-block" data-act="cancel-ask" data-id="${o.id}">Cancelar pedido</button>`) : ''}
+      ${o.method === 'online' && o.status === 'pending' && !isDemoPay() ? html`<button class="btn btn-ghost btn-block" data-act="order-sync" data-id="${o.id}">Verificar pago con Wompi</button>` : ''}
+      ${!['cancelled', 'delivered', 'shipped'].includes(o.status) ? (ask ? html`<div class="notice">¿Cancelar el pedido #${o.id}? Se devuelve el inventario.${onlinePaid ? ' El reembolso del pago se hace desde el panel de Wompi.' : ''}<div class="row" style="margin-top:12px"><button class="btn btn-danger btn-sm" data-act="order-cancel" data-id="${o.id}">Sí, cancelar</button><button class="btn btn-ghost btn-sm" data-act="confirm-no">Volver</button></div></div>` : html`<button class="btn btn-ghost btn-block" data-act="cancel-ask" data-id="${o.id}">Cancelar pedido</button>`) : ''}
       ${o.status === 'delivered' ? html`<p class="muted small">Pedido completado.</p>` : ''}</div></section>
     <section class="card-box"><header><h3>Factura electrónica</h3></header><div class="pad stack">${o.invoice ? html`<div class="row between">${invPill(o.invoice.status)}<span class="mono">${o.invoice.number ? o.invoice.prefix + o.invoice.number : 'Sin número'}</span></div>${o.invoice.lastError ? html`<p class="small" style="color:var(--bad)">${o.invoice.lastError}</p>` : ''}<a href="#/admin/facturacion">Ir a facturación</a>` : html`<p class="muted small">${o.paidAt ? 'Este pedido no tiene factura. Activa la facturación y usa “Encolar pedidos pagados”.' : 'Se genera cuando el pago queda confirmado.'}</p>`}</div></section></div></div>`;
 }
@@ -903,7 +932,7 @@ function adminFiscal() {
 }
 
 function adminSettings() {
-  const { store: s, wompi } = S.adm.settings;
+  const { store: s, wompi, mode } = S.adm.settings;
   const perks = (s.perks || []).map(k => `${k.t} | ${k.d}`).join('\n');
   return html`<div class="adm-h"><div><span class="eyebrow">Configuración</span><h1>Ajustes de la tienda</h1></div></div>
   <form class="stack" style="gap:24px" data-form="settings" novalidate>
@@ -921,11 +950,11 @@ function adminSettings() {
     <div class="field"><label for="s-flat">Costo de envío (COP)</label><input id="s-flat" name="flat" type="number" min="0" step="500" value="${s.shipping.flat}"></div>
     <div class="field"><label for="s-free">Envío gratis desde (COP)</label><input id="s-free" name="freeFrom" type="number" min="0" step="1000" value="${s.shipping.freeFrom}"></div></div>`}</div>
   <div class="panel"><h3>Pagos</h3>
-    <label class="check"><input type="checkbox" name="payWompi" ${s.pay.wompi ? 'checked' : ''} ${wompi.enabled ? '' : 'disabled'}> Pago en línea con Wompi (tarjeta, PSE, Nequi y más)</label>
+    <label class="check"><input type="checkbox" name="payOnline" ${s.pay.online ? 'checked' : ''} ${mode === 'demo' || wompi.enabled ? '' : 'disabled'}> ${mode === 'demo' ? 'Pago en línea simulado (tarjeta, PSE, Nequi)' : 'Pago en línea con Wompi (tarjeta, PSE, Nequi y más)'}</label>
     <label class="check"><input type="checkbox" name="payTransfer" ${s.pay.transfer ? 'checked' : ''}> Transferencia bancaria</label>
     ${s.type === 'digital' ? '' : html`<label class="check"><input type="checkbox" name="payCod" ${s.pay.cod ? 'checked' : ''}> Pago contra entrega</label>`}
     <div class="field"><label for="s-tr">Instrucciones de la transferencia</label><textarea id="s-tr" name="transferInstructions" placeholder="Banco, tipo y número de cuenta, titular">${s.transferInstructions}</textarea></div>
-    <div class="notice">${wompi.enabled ? html`<b>Wompi conectado</b> (${wompi.env === 'production' ? 'producción' : 'sandbox'}). En el panel de Wompi, en Desarrolladores, configura esta URL de eventos:<br><span class="mono">${wompi.webhookUrl}</span> <button class="link-btn" type="button" data-act="copy" data-text="${wompi.webhookUrl}">Copiar</button>` : html`<b>Wompi no está configurado.</b> Agrega las llaves en el archivo de configuración del servidor (WOMPI_PUBLIC_KEY, WOMPI_INTEGRITY_SECRET y WOMPI_EVENTS_SECRET) y reinicia. Mientras tanto la tienda puede usar transferencia o contra entrega.`}</div></div>
+    <div class="notice">${mode === 'demo' ? html`<b>Modo demostración.</b> Los pagos en línea se simulan: el cliente elige si se aprueba o se rechaza y no se cobra nada. Los cobros reales con Wompi se activan con <span class="mono">PAYMENT_MODE=wompi</span> y las llaves del cliente.` : wompi.enabled ? html`<b>Wompi conectado</b> (${wompi.env === 'production' ? 'producción' : 'sandbox'}). En el panel de Wompi, en Desarrolladores, configura esta URL de eventos:<br><span class="mono">${wompi.webhookUrl}</span> <button class="link-btn" type="button" data-act="copy" data-text="${wompi.webhookUrl}">Copiar</button>` : html`<b>Wompi no está configurado.</b> Agrega las llaves en el archivo de configuración del servidor (WOMPI_PUBLIC_KEY, WOMPI_INTEGRITY_SECRET y WOMPI_EVENTS_SECRET) y reinicia. Mientras tanto la tienda puede usar transferencia o contra entrega.`}</div></div>
   <div class="panel"><h3>Inventario</h3><div class="form-grid"><div class="field"><label for="s-low">Alerta de stock bajo (unidades)</label><input id="s-low" name="lowStock" type="number" min="0" value="${s.lowStock}"><span class="hint">Se marca “Stock bajo” cuando quedan estas unidades o menos.</span></div></div></div>
   <div><button class="btn btn-primary" type="submit">Guardar ajustes</button></div></form>
   <form class="panel" data-form="password" novalidate><h3>Cambiar contraseña</h3><div class="form-grid">
@@ -1002,6 +1031,7 @@ function page() {
     case 'carrito': return html`${pendingNotice()}${cartPage()}`;
     case 'pago': return checkout();
     case 'pedido': return done();
+    case 'pago-demo': return demoGateway();
     case 'ofertas': return ofertas();
     case 'cuenta': return cuenta();
     default: return notFound();
@@ -1063,13 +1093,21 @@ const ACT = {
   'apply-code'(el) { applyCoupon(el.dataset.code); },
   async 'pay-again'() {
     const o = S.order.order, r = await api('POST', `/api/orders/${o.id}/pay?t=${enc(S.order.token)}`, {});
+    if (r.checkout.simulated) return go(`#/pago-demo/${o.id}?t=${enc(S.order.token)}`);
     location.assign(r.checkout.url);
+  },
+  async 'demo-outcome'(el) {
+    const { order, token } = S.demo, outcome = el.dataset.outcome;
+    await api('POST', `/api/demo/payment/${order.id}?t=${enc(token)}`, { outcome, method: S.ui.demoMethod || 'card' });
+    await refreshStore();
+    await go(`#/pedido/${order.id}?t=${enc(token)}`);
+    toast(outcome === 'approved' ? 'Pago aprobado (simulado).' : outcome === 'declined' ? 'Pago rechazado (simulado). Puedes intentarlo de nuevo.' : 'Pago pendiente (simulado).');
   },
   async 'order-check'() {
     const o = S.order.order;
     const r = await api('POST', `/api/orders/${o.id}/sync?t=${enc(S.order.token)}`, {});
     r.token = S.order.token; S.order = r; render();
-    toast(r.order.status === 'pending' ? 'Wompi todavía no confirma el pago. Se actualizará sola.' : 'Pago confirmado.');
+    toast(r.order.status === 'pending' ? 'Todavía no hay confirmación del pago. Se actualizará sola.' : 'Pago confirmado.');
   },
   /* administración */
   async 'admin-logout'() { await api('POST', '/api/admin/logout', {}); S.admin = null; S.adm = {}; render(true); },
@@ -1123,6 +1161,7 @@ document.addEventListener('change', guard(async e => {
   const t = e.target;
   if (t.dataset.go) return go(t.dataset.go, true);
   if (t.hasAttribute('data-go-select')) return go(t.value, true);
+  if (t.hasAttribute('data-demo-method')) { S.ui.demoMethod = t.value; return render(); }
   if (t.dataset.method !== undefined) { S.ui.co.data.method = t.value; S.ui.co.errors = {}; return render(); }
   if (t.dataset.rerender !== undefined && S.ui.co) { S.ui.co.data[t.dataset.field] = t.value; S.ui.co.errors = {}; return render(); }
   const ch = t.dataset.change;
@@ -1206,7 +1245,7 @@ const SUBMIT = {
       hero: { eyebrow: fd.get('heroEyebrow'), title: fd.get('heroTitle'), cta: fd.get('heroCta') },
       facets: String(fd.get('facets') || '').split(',').map(x => x.trim()).filter(Boolean),
       perks: String(fd.get('perks') || '').split('\n').map(l => { const [t, ...d] = l.split('|'); return { t: t.trim(), d: d.join('|').trim() }; }).filter(p => p.t),
-      pay: { wompi: fd.has('payWompi') ? true : (f.elements.payWompi && f.elements.payWompi.disabled ? s.pay.wompi : false), transfer: !!fd.get('payTransfer'), cod: !!fd.get('payCod') },
+      pay: { online: fd.has('payOnline') ? true : (f.elements.payOnline && f.elements.payOnline.disabled ? s.pay.online : false), transfer: !!fd.get('payTransfer'), cod: !!fd.get('payCod') },
       transferInstructions: fd.get('transferInstructions'), lowStock: fdNum(fd, 'lowStock', s.lowStock),
     };
     if (fd.has('flat')) body.shipping = { flat: fdNum(fd, 'flat'), freeFrom: fdNum(fd, 'freeFrom') };

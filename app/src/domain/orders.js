@@ -44,7 +44,7 @@ export function createOrder({ db, config }, input, customerRow) {
   if (!Array.isArray(input.items) || !input.items.length) throw bad('El carrito está vacío.', 'empty_cart');
   if (input.items.length > 50) throw bad('El carrito tiene demasiados productos.');
   const method = input.method;
-  if (!['wompi', 'transfer', 'cod'].includes(method)) throw bad('Elige un método de pago.', 'bad_method');
+  if (!['online', 'transfer', 'cod'].includes(method)) throw bad('Elige un método de pago.', 'bad_method');
 
   return tx(db, () => {
     const lines = [];
@@ -68,7 +68,7 @@ export function createOrder({ db, config }, input, customerRow) {
     if (input.coupon && q.note) throw bad(q.note, 'bad_coupon');
     if (q.total < 1) throw bad('El total del pedido debe ser mayor que cero.', 'bad_total');
 
-    if (method === 'wompi' && !(config.wompi.enabled && store.pay.wompi)) throw bad('El pago en línea no está disponible.', 'bad_method');
+    if (method === 'online' && !(config.onlineEnabled && store.pay.online)) throw bad('El pago en línea no está disponible.', 'bad_method');
     if (method === 'transfer' && !store.pay.transfer) throw bad('La transferencia no está disponible.', 'bad_method');
     if (method === 'cod' && !(store.pay.cod && q.physical)) throw bad('El pago contra entrega no está disponible para este pedido.', 'bad_method');
 
@@ -94,7 +94,7 @@ export function createOrder({ db, config }, input, customerRow) {
       db.prepare('INSERT INTO order_items (order_id, product_id, name, qty, unit_price, opts, digital) VALUES (?,?,?,?,?,?,?)')
         .run(orderId, l.p.id, l.p.name, l.qty, q.lines[k].unit, JSON.stringify(l.opts), l.p.digital ? 1 : 0);
     });
-    addEvent(db, orderId, 'pending', method === 'wompi' ? 'Pedido creado. Esperando el pago en línea.' : 'Pedido creado.');
+    addEvent(db, orderId, 'pending', method === 'online' ? 'Pedido creado. Esperando el pago en línea.' : 'Pedido creado.');
 
     // Guarda los datos de facturación y entrega en la cuenta para la próxima compra.
     if (customerRow) {
@@ -115,7 +115,7 @@ export function nextStep(row) {
   if (row.status === 'pending') {
     if (row.method === 'transfer') return { action: 'mark_paid', to: 'paid', label: 'Confirmar pago recibido' };
     if (row.method === 'cod') return { action: 'advance', to: 'preparing', label: 'Empezar a preparar' };
-    return null; // pago en línea: avanza solo cuando Wompi aprueba
+    return null; // pago en línea: avanza solo cuando la pasarela aprueba
   }
   const flow = FLOW[row.physical ? 'physical' : 'digital'];
   const to = flow[flow.indexOf(row.status) + 1];

@@ -24,11 +24,14 @@ export function loadConfig(overrides = {}) {
       apiUrl: overrides.wompiApiUrl ?? env.WOMPI_API_URL ?? '',
     },
     // Minutos que se reserva el stock de un pedido pagado en línea antes de liberarlo.
+    // demo: pasarela simulada (sin cobros reales). wompi: cobros reales con Wompi.
+    paymentMode: (overrides.paymentMode ?? env.PAYMENT_MODE ?? 'demo') === 'wompi' ? 'wompi' : 'demo',
     reserveMinutes: Number(overrides.reserveMinutes ?? env.RESERVE_MINUTES ?? 45),
     jobsIntervalMs: Number(overrides.jobsIntervalMs ?? env.JOBS_INTERVAL_MS ?? 60_000),
     invoicing: { provider: overrides.invoicingProvider ?? env.INVOICING_PROVIDER ?? 'mock' },
   };
   if (!cfg.wompi.apiUrl) cfg.wompi.apiUrl = cfg.wompi.env === 'production' ? 'https://production.wompi.co/v1' : 'https://sandbox.wompi.co/v1';
-  cfg.wompi.enabled = !!(cfg.wompi.publicKey && cfg.wompi.integritySecret && cfg.wompi.eventsSecret);
+  cfg.wompi.enabled = cfg.paymentMode === 'wompi' && !!(cfg.wompi.publicKey && cfg.wompi.integritySecret && cfg.wompi.eventsSecret);
+  cfg.onlineEnabled = cfg.paymentMode === 'demo' || cfg.wompi.enabled;
   return cfg;
 }
