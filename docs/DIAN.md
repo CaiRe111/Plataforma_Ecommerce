@@ -13,6 +13,12 @@
 
 **Pendiente: el envío real a la DIAN.** Hoy el único proveedor disponible es de prueba: genera un documento interno que la pantalla marca como *sin validez fiscal*. Ninguna factura se transmite a la DIAN.
 
+## Decisión
+
+Se eligió el **camino A: proveedor tecnológico autorizado por la DIAN**. Falta elegir el proveedor (ver abajo); el adaptador se escribe cuando se tenga su documentación y un usuario de pruebas.
+
+Criterios para elegirlo: que figure como proveedor autorizado en el listado vigente de la DIAN; API REST con ambiente de pruebas; emisión de facturas y notas crédito; entrega de XML y PDF; webhooks o consulta de estado; costo por documento o plan mensual; y que el cliente pueda contratarlo directamente.
+
 ## Por qué falta y qué hay que decidir
 
 Hay dos caminos para emitir facturas con validez fiscal:
@@ -29,7 +35,7 @@ No implementé el camino B de memoria: no pude consultar el anexo técnico vigen
 
 ### Lo que necesito para continuar
 
-1. **Camino y, si es A, el proveedor** (con acceso a su documentación de API y un usuario de pruebas). Cada proveedor tiene su propia API; el adaptador se escribe en `app/src/invoicing/providers.js` y recibe el documento ya calculado.
+1. **El proveedor** (con acceso a su documentación de API y un usuario de pruebas). Cada proveedor tiene su propia API; el adaptador se escribe en `app/src/invoicing/providers.js` y recibe el documento ya calculado.
 2. Del cliente: NIT, razón social, dirección y código DANE, régimen y tarifas de IVA de sus productos, resolución de numeración (o set de pruebas de habilitación), y cómo trata las ventas a consumidor final.
 3. Si el camino es B: certificado de firma digital (.p12 y su clave), ID y PIN del software registrado y el ID del set de pruebas.
 
