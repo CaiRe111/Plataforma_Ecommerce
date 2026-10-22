@@ -25,6 +25,7 @@ const SECURITY = {
 export async function createApp({ config = loadConfig(), db, fetchImpl, publicDir = path.join(HERE, '..', 'public') } = {}) {
   db = db || openDb(path.join(config.dataDir, 'app.db'));
   const uploadsDir = path.join(config.dataDir, 'uploads');
+  const sharedDir = path.join(HERE, 'shared');
   const limiter = createLimiter();
   const wompi = config.wompi.enabled ? createWompiClient(config, fetchImpl) : null;
   const router = createRouter();
@@ -37,6 +38,7 @@ export async function createApp({ config = loadConfig(), db, fetchImpl, publicDi
     let rel = pathname === '/' ? '/index.html' : pathname;
     let base = publicDir;
     if (rel.startsWith('/uploads/')) { base = uploadsDir; rel = rel.slice('/uploads'.length); }
+    else if (rel === '/shared/pricing.js') { base = sharedDir; rel = '/pricing.js'; }
     const file = path.normalize(path.join(base, rel));
     if (!file.startsWith(base + path.sep) && file !== base) return false;
     let st;
@@ -55,6 +57,14 @@ export async function createApp({ config = loadConfig(), db, fetchImpl, publicDi
     const pathname = url.pathname;
     const ip = (config.trustProxy && (req.headers['cf-connecting-ip'] || String(req.headers['x-forwarded-for'] || '').split(',')[0].trim())) || req.socket.remoteAddress || '';
     try {
+      // Wompi devuelve al cliente aquí (con ?id=<transacción>); se reenvía a la pantalla del pedido, que consulta el estado real.
+      if (pathname === '/pago/retorno' && req.method === 'GET') {
+        const raw = req.url;
+        const pick = k => (new RegExp('[?&]' + k + '=([^&#]+)').exec(raw) || [])[1] || '';
+        const o = pick('o').replace(/\D/g, ''), t = pick('t').replace(/[^\w-]/g, ''), id = pick('id').replace(/[^\w-]/g, '');
+        res.writeHead(302, { location: `/#/pedido/${o}?t=${t}${id ? '&tx=' + id : ''}`, 'cache-control': 'no-store', ...SECURITY });
+        return res.end();
+      }
       if (!pathname.startsWith('/api/')) {
         if (!['GET', 'HEAD'].includes(req.method)) throw new HttpError(405, 'Método no permitido.', 'method');
         if (await serveStatic(req, res, pathname)) return;

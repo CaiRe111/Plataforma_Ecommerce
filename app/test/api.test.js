@@ -248,3 +248,24 @@ test('IVA: base e impuesto por tarifa, descuentos repartidos y envío', async ()
   assert.equal(d.lines.reduce((a, l) => a + l.total, 0), o.order.total);
   await t.close();
 });
+
+test('retorno de Wompi redirige al pedido con la transacción', async () => {
+  const t = await boot();
+  const res = await fetch(t.app.server.address() ? `http://127.0.0.1:${t.app.server.address().port}/pago/retorno?o=1001&t=abc_DEF-1&id=T-77` : '', { redirect: 'manual' });
+  assert.equal(res.status, 302);
+  assert.equal(res.headers.get('location'), '/#/pedido/1001?t=abc_DEF-1&tx=T-77');
+  const evil = await fetch(`http://127.0.0.1:${t.app.server.address().port}/pago/retorno?o=1&t=%3Cscript%3E&id=x`, { redirect: 'manual' });
+  assert.equal(evil.headers.get('location'), '/#/pedido/1?t=3Cscript3E&tx=x');
+  await t.close();
+});
+
+test('sirve la interfaz, el módulo de precios y no permite salir de la carpeta pública', async () => {
+  const t = await boot();
+  const base = `http://127.0.0.1:${t.app.server.address().port}`;
+  assert.equal((await fetch(base + '/')).status, 200);
+  assert.match(await (await fetch(base + '/shared/pricing.js')).text(), /export function quote/);
+  assert.equal((await fetch(base + '/..%2f..%2fpackage.json')).status, 404);
+  assert.equal((await fetch(base + '/%2e%2e/src/config.js')).status, 404);
+  assert.equal((await fetch(base + '/api/nope')).status, 404);
+  await t.close();
+});

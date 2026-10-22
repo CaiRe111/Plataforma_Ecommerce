@@ -29,7 +29,7 @@ export function startPayment(db, config, order) {
     'amount-in-cents': String(amountInCents),
     reference,
     'signature:integrity': integritySignature(reference, amountInCents, 'COP', w.integritySecret),
-    'redirect-url': `${config.publicUrl}/#/pedido/${order.id}?t=${order.accessToken}`,
+    'redirect-url': `${config.publicUrl}/pago/retorno?o=${order.id}&t=${order.accessToken}`,
     'customer-data:email': order.email,
     'customer-data:full-name': order.name,
   });

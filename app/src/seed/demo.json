@@ -1,0 +1,1097 @@
+{
+ "moda": {
+  "label": "Moda",
+  "store": {
+   "name": "Taller Norte",
+   "tagline": "Ropa básica de algodón orgánico, hecha en series cortas.",
+   "hue": 215,
+   "type": "physical",
+   "hero": {
+    "eyebrow": "Colección otoño",
+    "title": "Básicos que duran más que la temporada.",
+    "cta": "Ver colección"
+   },
+   "perks": [
+    {
+     "t": "Envío gratis desde $250.000",
+     "d": "Entrega en 2 a 4 días hábiles a todo el país."
+    },
+    {
+     "t": "Cambios por talla",
+     "d": "30 días, sin costo de devolución."
+    },
+    {
+     "t": "Producción local",
+     "d": "Series cortas y sin excedentes."
+    }
+   ],
+   "facets": [
+    "Color",
+    "Material"
+   ],
+   "lowStock": 5,
+   "shipping": {
+    "flat": 12000,
+    "freeFrom": 250000
+   },
+   "pay": {
+    "wompi": true,
+    "transfer": true,
+    "cod": true
+   },
+   "transferInstructions": "Bancolombia, cuenta de ahorros 000-111222-33, a nombre de Taller Norte. Envía el comprobante al correo de la tienda.",
+   "loyalty": {
+    "discount": 8,
+    "freeShipping": true,
+    "threshold": 1000000
+   }
+  },
+  "categories": [
+   "Camisetas",
+   "Pantalones",
+   "Calzado",
+   "Accesorios"
+  ],
+  "products": [
+   {
+    "name": "Camiseta básica de algodón",
+    "cat": "Camisetas",
+    "price": 59900,
+    "compare": null,
+    "stock": 48,
+    "kind": "tee",
+    "hue": 38,
+    "attrs": {
+     "Color": "Crudo",
+     "Material": "Algodón orgánico"
+    },
+    "options": [
+     {
+      "name": "Talla",
+      "values": [
+       "S",
+       "M",
+       "L",
+       "XL"
+      ]
+     }
+    ],
+    "desc": "Corte recto, 180 g/m². Se encoge menos del 2 % después del primer lavado.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Camiseta de rayas marinas",
+    "cat": "Camisetas",
+    "price": 69900,
+    "compare": 89900,
+    "stock": 22,
+    "kind": "tee",
+    "hue": 215,
+    "attrs": {
+     "Color": "Azul marino",
+     "Material": "Algodón orgánico"
+    },
+    "options": [
+     {
+      "name": "Talla",
+      "values": [
+       "S",
+       "M",
+       "L",
+       "XL"
+      ]
+     }
+    ],
+    "desc": "Jersey fino con rayas tejidas, no estampadas. Cuello redondo reforzado.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Pantalón de lino recto",
+    "cat": "Pantalones",
+    "price": 189000,
+    "compare": null,
+    "stock": 14,
+    "kind": "pants",
+    "hue": 35,
+    "attrs": {
+     "Color": "Arena",
+     "Material": "Lino"
+    },
+    "options": [
+     {
+      "name": "Talla",
+      "values": [
+       "28",
+       "30",
+       "32",
+       "34",
+       "36"
+      ]
+     }
+    ],
+    "desc": "Lino lavado, tiro medio y botamanga sin dobladillo. Cintura con elástico interno.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Pantalón cargo",
+    "cat": "Pantalones",
+    "price": 199000,
+    "compare": null,
+    "stock": 3,
+    "kind": "pants",
+    "hue": 130,
+    "attrs": {
+     "Color": "Verde",
+     "Material": "Algodón"
+    },
+    "options": [
+     {
+      "name": "Talla",
+      "values": [
+       "28",
+       "30",
+       "32",
+       "34",
+       "36"
+      ]
+     }
+    ],
+    "desc": "Seis bolsillos, tela gabardina resistente al roce. Última tanda de la temporada.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Tote bag de lona",
+    "cat": "Accesorios",
+    "price": 49900,
+    "compare": null,
+    "stock": 60,
+    "kind": "bag",
+    "hue": 45,
+    "attrs": {
+     "Color": "Crudo",
+     "Material": "Lona"
+    },
+    "options": [],
+    "desc": "Lona de 12 oz con costuras dobles y bolsillo interior con cierre.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Gorra de visera curva",
+    "cat": "Accesorios",
+    "price": 44900,
+    "compare": 59900,
+    "stock": 0,
+    "kind": "cap",
+    "hue": 215,
+    "attrs": {
+     "Color": "Azul marino",
+     "Material": "Algodón"
+    },
+    "options": [],
+    "desc": "Seis paneles, cierre metálico ajustable. Bordado en relieve.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Zapatilla urbana",
+    "cat": "Calzado",
+    "price": 259000,
+    "compare": null,
+    "stock": 9,
+    "kind": "shoe",
+    "hue": 8,
+    "attrs": {
+     "Color": "Blanco",
+     "Material": "Cuero vegano"
+    },
+    "options": [
+     {
+      "name": "Talla",
+      "values": [
+       "38",
+       "39",
+       "40",
+       "41",
+       "42",
+       "43",
+       "44"
+      ]
+     }
+    ],
+    "desc": "Suela de caucho reciclado, plantilla acolchada y horma ancha.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Mochila roll-top",
+    "cat": "Accesorios",
+    "price": 229000,
+    "compare": null,
+    "stock": 11,
+    "kind": "bag",
+    "hue": 165,
+    "attrs": {
+     "Color": "Verde",
+     "Material": "Poliéster reciclado"
+    },
+    "options": [],
+    "desc": "Capacidad de 22 L, compartimiento acolchado para portátil de 15 pulgadas.",
+    "digital": false,
+    "status": "active"
+   }
+  ],
+  "promos": [
+   {
+    "name": "Liquidación de camisetas",
+    "desc": "15 % menos en todas las camisetas de la colección.",
+    "kind": "percent",
+    "value": 15,
+    "scope": "Camisetas",
+    "code": "",
+    "audience": "all",
+    "min": 0,
+    "endsInDays": 10
+   },
+   {
+    "name": "Bienvenida",
+    "desc": "10 % de descuento en tu primera compra con el código.",
+    "kind": "percent",
+    "value": 10,
+    "scope": "all",
+    "code": "PRIMERA10",
+    "audience": "all",
+    "min": 0,
+    "endsInDays": null
+   },
+   {
+    "name": "Solo clientes fieles: pantalones",
+    "desc": "20 % menos en pantalones, aplicado automáticamente.",
+    "kind": "percent",
+    "value": 20,
+    "scope": "Pantalones",
+    "code": "",
+    "audience": "fiel",
+    "min": 0,
+    "endsInDays": 14
+   },
+   {
+    "name": "Ahorra $30.000",
+    "desc": "Descuento fijo en compras desde $200.000.",
+    "kind": "fixed",
+    "value": 30000,
+    "scope": "all",
+    "code": "AHORRA30",
+    "audience": "all",
+    "min": 200000,
+    "endsInDays": 20
+   }
+  ]
+ },
+ "alimentos": {
+  "label": "Alimentos",
+  "store": {
+   "name": "Casa Maíz",
+   "tagline": "Panadería y despensa artesanal, elaborada cada semana.",
+   "hue": 28,
+   "type": "physical",
+   "hero": {
+    "eyebrow": "Hecho esta semana",
+    "title": "Comida de despensa con ingredientes que se pueden leer.",
+    "cta": "Ver productos"
+   },
+   "perks": [
+    {
+     "t": "Envío gratis desde $120.000",
+     "d": "Entrega refrigerada cuando el producto lo necesita."
+    },
+    {
+     "t": "Lotes pequeños",
+     "d": "Cada producto indica su fecha de elaboración."
+    },
+    {
+     "t": "Cajas para regalo",
+     "d": "Con tarjeta escrita a mano."
+    }
+   ],
+   "facets": [
+    "Dieta",
+    "Origen"
+   ],
+   "lowStock": 5,
+   "shipping": {
+    "flat": 9000,
+    "freeFrom": 120000
+   },
+   "pay": {
+    "wompi": true,
+    "transfer": true,
+    "cod": true
+   },
+   "transferInstructions": "Bancolombia, cuenta de ahorros 000-111222-33, a nombre de Casa Maíz. Envía el comprobante al correo de la tienda.",
+   "loyalty": {
+    "discount": 7,
+    "freeShipping": true,
+    "threshold": 300000
+   }
+  },
+  "categories": [
+   "Panadería",
+   "Despensa",
+   "Bebidas",
+   "Regalos"
+  ],
+  "products": [
+   {
+    "name": "Pan de masa madre",
+    "cat": "Panadería",
+    "price": 18000,
+    "compare": null,
+    "stock": 30,
+    "kind": "loaf",
+    "hue": 35,
+    "attrs": {
+     "Dieta": "Vegano",
+     "Origen": "Local"
+    },
+    "options": [
+     {
+      "name": "Tamaño",
+      "values": [
+       "Entero",
+       "Medio"
+      ]
+     }
+    ],
+    "desc": "Fermentación de 24 horas, corteza gruesa y miga abierta. Se hornea los martes y viernes.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Granola de avena y miel",
+    "cat": "Despensa",
+    "price": 28000,
+    "compare": null,
+    "stock": 40,
+    "kind": "jar",
+    "hue": 45,
+    "attrs": {
+     "Dieta": "Vegetariano",
+     "Origen": "Local"
+    },
+    "options": [
+     {
+      "name": "Presentación",
+      "values": [
+       "250 g",
+       "500 g"
+      ]
+     }
+    ],
+    "desc": "Avena tostada con miel de abejas, almendra y coco. Sin azúcar refinada.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Mermelada de guayaba",
+    "cat": "Despensa",
+    "price": 21000,
+    "compare": null,
+    "stock": 25,
+    "kind": "jar",
+    "hue": 350,
+    "attrs": {
+     "Dieta": "Vegano",
+     "Origen": "Local"
+    },
+    "options": [],
+    "desc": "Fruta, azúcar de caña y limón. Frasco de vidrio de 280 g.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Café de origen",
+    "cat": "Bebidas",
+    "price": 42000,
+    "compare": null,
+    "stock": 18,
+    "kind": "bag",
+    "hue": 25,
+    "attrs": {
+     "Dieta": "Vegano",
+     "Origen": "Nacional"
+    },
+    "options": [
+     {
+      "name": "Molienda",
+      "values": [
+       "Grano",
+       "Molido medio",
+       "Molido fino"
+      ]
+     }
+    ],
+    "desc": "Bolsa de 340 g. Tueste medio con notas de panela y cacao.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Kombucha de jengibre",
+    "cat": "Bebidas",
+    "price": 14000,
+    "compare": null,
+    "stock": 4,
+    "kind": "bottle",
+    "hue": 90,
+    "attrs": {
+     "Dieta": "Vegano",
+     "Origen": "Local"
+    },
+    "options": [],
+    "desc": "Botella de 330 ml, fermentada 12 días. Se conserva refrigerada.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Caja degustación",
+    "cat": "Regalos",
+    "price": 119000,
+    "compare": 140000,
+    "stock": 12,
+    "kind": "box",
+    "hue": 20,
+    "attrs": {
+     "Dieta": "Vegetariano",
+     "Origen": "Local"
+    },
+    "options": [],
+    "desc": "Granola, mermelada, café y galletas en una caja reutilizable.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Galletas sin gluten",
+    "cat": "Panadería",
+    "price": 24000,
+    "compare": null,
+    "stock": 20,
+    "kind": "box",
+    "hue": 55,
+    "attrs": {
+     "Dieta": "Sin gluten",
+     "Origen": "Local"
+    },
+    "options": [],
+    "desc": "Harina de arroz y almendra. Caja de 12 unidades.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Aceite de oliva extra virgen",
+    "cat": "Despensa",
+    "price": 52000,
+    "compare": null,
+    "stock": 15,
+    "kind": "bottle",
+    "hue": 100,
+    "attrs": {
+     "Dieta": "Vegano",
+     "Origen": "Importado"
+    },
+    "options": [
+     {
+      "name": "Presentación",
+      "values": [
+       "500 ml",
+       "1 L"
+      ]
+     }
+    ],
+    "desc": "Primera presión en frío. Botella oscura que protege el aceite de la luz.",
+    "digital": false,
+    "status": "active"
+   }
+  ],
+  "promos": [
+   {
+    "name": "Panadería de la semana",
+    "desc": "10 % menos en panes y galletas.",
+    "kind": "percent",
+    "value": 10,
+    "scope": "Panadería",
+    "code": "",
+    "audience": "all",
+    "min": 0,
+    "endsInDays": 6
+   },
+   {
+    "name": "Primera compra",
+    "desc": "10 % de descuento con el código.",
+    "kind": "percent",
+    "value": 10,
+    "scope": "all",
+    "code": "PRIMERA10",
+    "audience": "all",
+    "min": 0,
+    "endsInDays": null
+   },
+   {
+    "name": "Solo clientes fieles: cajas de regalo",
+    "desc": "15 % menos en cajas de regalo.",
+    "kind": "percent",
+    "value": 15,
+    "scope": "Regalos",
+    "code": "",
+    "audience": "fiel",
+    "min": 0,
+    "endsInDays": 12
+   },
+   {
+    "name": "Envío gratis desde $80.000",
+    "desc": "Se aplica automáticamente al llegar al monto.",
+    "kind": "shipping",
+    "value": 0,
+    "scope": "all",
+    "code": "",
+    "audience": "all",
+    "min": 80000,
+    "endsInDays": 9
+   }
+  ]
+ },
+ "tecnologia": {
+  "label": "Electrónica",
+  "store": {
+   "name": "Voltio",
+   "tagline": "Accesorios y hogar conectado con garantía local.",
+   "hue": 262,
+   "type": "physical",
+   "hero": {
+    "eyebrow": "Garantía de 12 meses",
+    "title": "Tecnología útil, sin complicarte la vida.",
+    "cta": "Explorar catálogo"
+   },
+   "perks": [
+    {
+     "t": "Garantía de 12 meses",
+     "d": "Reposición directa si el equipo falla."
+    },
+    {
+     "t": "Soporte por WhatsApp",
+     "d": "Respondemos en menos de 2 horas hábiles."
+    },
+    {
+     "t": "Envío gratis desde $300.000",
+     "d": "Con seguimiento del paquete."
+    }
+   ],
+   "facets": [
+    "Marca",
+    "Conexión"
+   ],
+   "lowStock": 5,
+   "shipping": {
+    "flat": 15000,
+    "freeFrom": 300000
+   },
+   "pay": {
+    "wompi": true,
+    "transfer": true,
+    "cod": false
+   },
+   "transferInstructions": "Bancolombia, cuenta de ahorros 000-111222-33, a nombre de Voltio. Envía el comprobante al correo de la tienda.",
+   "loyalty": {
+    "discount": 5,
+    "freeShipping": true,
+    "threshold": 1200000
+   }
+  },
+  "categories": [
+   "Audio",
+   "Hogar",
+   "Computación",
+   "Accesorios"
+  ],
+  "products": [
+   {
+    "name": "Audífonos inalámbricos Aura",
+    "cat": "Audio",
+    "price": 289000,
+    "compare": 349000,
+    "stock": 25,
+    "kind": "headphones",
+    "hue": 262,
+    "attrs": {
+     "Marca": "Aura",
+     "Conexión": "Bluetooth"
+    },
+    "options": [
+     {
+      "name": "Color",
+      "values": [
+       "Negro",
+       "Blanco"
+      ]
+     }
+    ],
+    "desc": "Cancelación de ruido activa y 30 horas de batería. Estuche de carga incluido.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Parlante portátil Cubo",
+    "cat": "Audio",
+    "price": 189000,
+    "compare": null,
+    "stock": 14,
+    "kind": "speaker",
+    "hue": 200,
+    "attrs": {
+     "Marca": "Cubo",
+     "Conexión": "Bluetooth"
+    },
+    "options": [
+     {
+      "name": "Color",
+      "values": [
+       "Gris",
+       "Azul"
+      ]
+     }
+    ],
+    "desc": "Resistente al agua IPX7, 12 horas de reproducción y micrófono integrado.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Lámpara inteligente",
+    "cat": "Hogar",
+    "price": 89000,
+    "compare": 120000,
+    "stock": 50,
+    "kind": "lamp",
+    "hue": 50,
+    "attrs": {
+     "Marca": "Luma",
+     "Conexión": "Wi-Fi"
+    },
+    "options": [],
+    "desc": "Luz blanca cálida a fría y 16 millones de colores. Funciona con asistentes de voz.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Enchufe inteligente (2 unidades)",
+    "cat": "Hogar",
+    "price": 69000,
+    "compare": null,
+    "stock": 4,
+    "kind": "box",
+    "hue": 120,
+    "attrs": {
+     "Marca": "Luma",
+     "Conexión": "Wi-Fi"
+    },
+    "options": [],
+    "desc": "Programa horarios y mide el consumo. Máximo 10 A por enchufe.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Teclado mecánico compacto",
+    "cat": "Computación",
+    "price": 249000,
+    "compare": null,
+    "stock": 8,
+    "kind": "keyboard",
+    "hue": 300,
+    "attrs": {
+     "Marca": "Tecla",
+     "Conexión": "USB-C"
+    },
+    "options": [
+     {
+      "name": "Interruptor",
+      "values": [
+       "Lineal",
+       "Táctil"
+      ]
+     }
+    ],
+    "desc": "Formato 75 %, hot-swap y retroiluminación blanca. Cable USB-C desmontable.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Monitor 24\" Full HD",
+    "cat": "Computación",
+    "price": 549000,
+    "compare": null,
+    "stock": 6,
+    "kind": "laptop",
+    "hue": 215,
+    "attrs": {
+     "Marca": "Pantal",
+     "Conexión": "HDMI"
+    },
+    "options": [],
+    "desc": "Panel IPS de 75 Hz, bordes finos y base ajustable en altura.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Cargador GaN 65 W",
+    "cat": "Accesorios",
+    "price": 109000,
+    "compare": 199000,
+    "stock": 36,
+    "kind": "box",
+    "hue": 150,
+    "attrs": {
+     "Marca": "Voltio",
+     "Conexión": "USB-C"
+    },
+    "options": [],
+    "desc": "Carga un portátil y un teléfono a la vez. Mitad del tamaño de un cargador común.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Cable USB-C trenzado de 2 m",
+    "cat": "Accesorios",
+    "price": 39000,
+    "compare": null,
+    "stock": 120,
+    "kind": "cable",
+    "hue": 330,
+    "attrs": {
+     "Marca": "Voltio",
+     "Conexión": "USB-C"
+    },
+    "options": [
+     {
+      "name": "Color",
+      "values": [
+       "Negro",
+       "Gris"
+      ]
+     }
+    ],
+    "desc": "Soporta 100 W y transferencia de datos de 480 Mbps. Resistente a 10 000 dobleces.",
+    "digital": false,
+    "status": "active"
+   }
+  ],
+  "promos": [
+   {
+    "name": "Semana del audio",
+    "desc": "12 % menos en audífonos y parlantes.",
+    "kind": "percent",
+    "value": 12,
+    "scope": "Audio",
+    "code": "",
+    "audience": "all",
+    "min": 0,
+    "endsInDays": 7
+   },
+   {
+    "name": "Bienvenida",
+    "desc": "10 % de descuento en tu primera compra con el código.",
+    "kind": "percent",
+    "value": 10,
+    "scope": "all",
+    "code": "PRIMERA10",
+    "audience": "all",
+    "min": 0,
+    "endsInDays": null
+   },
+   {
+    "name": "Solo clientes fieles: computación",
+    "desc": "10 % menos en teclados y monitores.",
+    "kind": "percent",
+    "value": 10,
+    "scope": "Computación",
+    "code": "",
+    "audience": "fiel",
+    "min": 0,
+    "endsInDays": 15
+   },
+   {
+    "name": "Ahorra $50.000",
+    "desc": "Descuento fijo en compras desde $400.000.",
+    "kind": "fixed",
+    "value": 50000,
+    "scope": "all",
+    "code": "AHORRA50",
+    "audience": "all",
+    "min": 400000,
+    "endsInDays": 20
+   }
+  ]
+ },
+ "digital": {
+  "label": "Productos digitales",
+  "store": {
+   "name": "Estudio Lumen",
+   "tagline": "Cursos, plantillas y asesorías de fotografía para trabajar por tu cuenta.",
+   "hue": 168,
+   "type": "digital",
+   "hero": {
+    "eyebrow": "Aprende a tu ritmo",
+    "title": "Fotografía que se aprende haciendo.",
+    "cta": "Ver cursos y recursos"
+   },
+   "perks": [
+    {
+     "t": "Acceso inmediato",
+     "d": "Recibes el enlace en tu correo al confirmar el pago."
+    },
+    {
+     "t": "Acceso de por vida",
+     "d": "Incluye las actualizaciones futuras."
+    },
+    {
+     "t": "Garantía de 14 días",
+     "d": "Si no te sirve, te devolvemos el pago."
+    }
+   ],
+   "facets": [
+    "Formato",
+    "Nivel"
+   ],
+   "lowStock": 3,
+   "shipping": {
+    "flat": 0,
+    "freeFrom": 0
+   },
+   "pay": {
+    "wompi": true,
+    "transfer": true,
+    "cod": false
+   },
+   "transferInstructions": "Bancolombia, cuenta de ahorros 000-111222-33, a nombre de Estudio Lumen. Envía el comprobante al correo de la tienda.",
+   "loyalty": {
+    "discount": 10,
+    "freeShipping": false,
+    "threshold": 500000
+   }
+  },
+  "categories": [
+   "Cursos",
+   "Plantillas",
+   "Asesorías",
+   "Libros"
+  ],
+  "products": [
+   {
+    "name": "Curso: fotografía con el móvil",
+    "cat": "Cursos",
+    "price": 149000,
+    "compare": 249000,
+    "stock": null,
+    "kind": "play",
+    "hue": 280,
+    "attrs": {
+     "Formato": "Video",
+     "Nivel": "Principiante"
+    },
+    "options": [],
+    "desc": "32 lecciones en video sobre luz, encuadre y edición. Ejercicios con corrección.",
+    "digital": true,
+    "status": "active"
+   },
+   {
+    "name": "Curso: edición en Lightroom",
+    "cat": "Cursos",
+    "price": 219000,
+    "compare": null,
+    "stock": null,
+    "kind": "play",
+    "hue": 200,
+    "attrs": {
+     "Formato": "Video",
+     "Nivel": "Intermedio"
+    },
+    "options": [],
+    "desc": "Flujo de trabajo completo, de la importación a la entrega al cliente.",
+    "digital": true,
+    "status": "active"
+   },
+   {
+    "name": "Pack de 40 presets",
+    "cat": "Plantillas",
+    "price": 79000,
+    "compare": 110000,
+    "stock": null,
+    "kind": "grid",
+    "hue": 320,
+    "attrs": {
+     "Formato": "Archivo",
+     "Nivel": "Todos"
+    },
+    "options": [
+     {
+      "name": "Licencia",
+      "values": [
+       "Personal",
+       "Comercial"
+      ]
+     }
+    ],
+    "desc": "Presets para retrato, paisaje y producto. Compatibles con Lightroom móvil y escritorio.",
+    "digital": true,
+    "status": "active"
+   },
+   {
+    "name": "Plantilla de portafolio web",
+    "cat": "Plantillas",
+    "price": 129000,
+    "compare": null,
+    "stock": null,
+    "kind": "grid",
+    "hue": 160,
+    "attrs": {
+     "Formato": "Archivo",
+     "Nivel": "Intermedio"
+    },
+    "options": [
+     {
+      "name": "Licencia",
+      "values": [
+       "Personal",
+       "Comercial"
+      ]
+     }
+    ],
+    "desc": "Plantilla editable de una página, con galería y formulario de contacto.",
+    "digital": true,
+    "status": "active"
+   },
+   {
+    "name": "Asesoría 1:1 de 60 minutos",
+    "cat": "Asesorías",
+    "price": 139000,
+    "compare": null,
+    "stock": 6,
+    "kind": "cal",
+    "hue": 20,
+    "attrs": {
+     "Formato": "Sesión en vivo",
+     "Nivel": "Todos"
+    },
+    "options": [
+     {
+      "name": "Modalidad",
+      "values": [
+       "Videollamada"
+      ]
+     }
+    ],
+    "desc": "Sesión individual por videollamada. Los cupos se agendan después del pago.",
+    "digital": true,
+    "status": "active"
+   },
+   {
+    "name": "Revisión de portafolio",
+    "cat": "Asesorías",
+    "price": 99000,
+    "compare": null,
+    "stock": 2,
+    "kind": "cal",
+    "hue": 40,
+    "attrs": {
+     "Formato": "Sesión en vivo",
+     "Nivel": "Intermedio"
+    },
+    "options": [],
+    "desc": "Recibes comentarios por escrito sobre 15 fotografías en 3 días hábiles.",
+    "digital": true,
+    "status": "active"
+   },
+   {
+    "name": "Guía de iluminación (ebook)",
+    "cat": "Libros",
+    "price": 39000,
+    "compare": null,
+    "stock": null,
+    "kind": "doc",
+    "hue": 180,
+    "attrs": {
+     "Formato": "PDF",
+     "Nivel": "Principiante"
+    },
+    "options": [],
+    "desc": "64 páginas con esquemas de luz natural y artificial.",
+    "digital": true,
+    "status": "active"
+   },
+   {
+    "name": "Libro: composición visual",
+    "cat": "Libros",
+    "price": 59000,
+    "compare": 69000,
+    "stock": null,
+    "kind": "doc",
+    "hue": 300,
+    "attrs": {
+     "Formato": "PDF",
+     "Nivel": "Intermedio"
+    },
+    "options": [],
+    "desc": "120 páginas con análisis de 50 fotografías y ejercicios.",
+    "digital": true,
+    "status": "active"
+   }
+  ],
+  "promos": [
+   {
+    "name": "Cursos con 20 %",
+    "desc": "Todos los cursos en video con descuento.",
+    "kind": "percent",
+    "value": 20,
+    "scope": "Cursos",
+    "code": "",
+    "audience": "all",
+    "min": 0,
+    "endsInDays": 8
+   },
+   {
+    "name": "Bienvenida",
+    "desc": "10 % de descuento en tu primera compra con el código.",
+    "kind": "percent",
+    "value": 10,
+    "scope": "all",
+    "code": "PRIMERA10",
+    "audience": "all",
+    "min": 0,
+    "endsInDays": null
+   },
+   {
+    "name": "Solo clientes fieles: plantillas",
+    "desc": "25 % menos en presets y plantillas.",
+    "kind": "percent",
+    "value": 25,
+    "scope": "Plantillas",
+    "code": "",
+    "audience": "fiel",
+    "min": 0,
+    "endsInDays": 14
+   },
+   {
+    "name": "Pack aprendizaje",
+    "desc": "$20.000 menos al combinar curso y libro, desde $150.000.",
+    "kind": "fixed",
+    "value": 20000,
+    "scope": "all",
+    "code": "APRENDE20",
+    "audience": "all",
+    "min": 150000,
+    "endsInDays": 25
+   }
+  ]
+ }
+}
