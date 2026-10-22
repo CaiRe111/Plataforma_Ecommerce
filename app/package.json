@@ -1,0 +1,13 @@
+{
+  "name": "plataforma-ecommerce",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.13" },
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning src/server.js",
+    "test": "node --disable-warning=ExperimentalWarning --test --test-timeout=30000 test/*.test.js",
+    "seed:demo": "node --disable-warning=ExperimentalWarning src/seed/index.js",
+    "backup": "node --disable-warning=ExperimentalWarning src/backup.js"
+  }
+}
