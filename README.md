@@ -1,26 +1,29 @@
 # Plataforma Ecommerce
 
-Ecommerce para emprendedores y microempresas.
+Ecommerce para emprendedores y microempresas en Colombia: tienda, panel de administración, pagos con Wompi y facturación electrónica.
+Una instalación por cliente, publicada con Cloudflare Tunnel.
 
-## Fase 1: prototipo visual navegable (`prototype/`)
+| Carpeta | Contenido |
+|---|---|
+| `app/` | Servidor y tienda (Node 22, SQLite). `npm test` ejecuta las pruebas. |
+| `deploy/` | Docker Compose, instalación, respaldos y plantilla de configuración. |
+| `docs/` | [Instalación](docs/INSTALL.md) · [Wompi](docs/WOMPI.md) · [DIAN](docs/DIAN.md) · [Arquitectura](docs/ARCHITECTURE.md) |
+| `prototype/` | Prototipo visual aprobado en la fase 1 (solo referencia). |
 
-Maqueta con datos de demostración, sin servidor ni pagos reales.
+## Probar en local
 
+```bash
+cd app
+DATA_DIR=./data ADMIN_EMAIL=admin@demo.co ADMIN_PASSWORD=clave-demo-123 npm run seed:demo -- moda --accounts
+DATA_DIR=./data ADMIN_EMAIL=admin@demo.co ADMIN_PASSWORD=clave-demo-123 npm start
 ```
-cd prototype && python3 -m http.server 8080   # o abrir prototype/index.html
-```
 
-Decisiones: Colombia, precios en COP con IVA incluido, una instalación por cliente.
+Tienda en `http://localhost:3000`, panel en `http://localhost:3000/#/admin`. Clientes de ejemplo: `valentina.rios@correo.com` (normal) y `mateo.gomez@correo.com` (fiel), contraseña `demo12345`.
+Sin llaves de Wompi la tienda ofrece transferencia y contra entrega.
 
-Incluye:
-- Tienda: inicio, catálogo con filtros, ficha, carrito, compra en 3 pasos (tarjeta, PSE, transferencia, contra entrega), confirmación.
-- Zona de ofertas (`#/ofertas`): promociones automáticas, cupones, precios exclusivos.
-- Perfiles de cliente: **normal** y **fiel** (descuento permanente, envío gratis, promociones exclusivas). Cambia de perfil en la barra superior o en `#/cuenta`.
-- Panel admin: resumen, productos y precios, inventario, pedidos, clientes (reglas del programa fiel), promociones, ajustes.
-- Cuatro negocios de ejemplo (moda, alimentos, electrónica, productos digitales) sobre la misma base.
+## Estado
 
-La guía de revisión está en `#/guia`.
-
-## Fase 2 (pendiente de aprobación)
-
-Backend, base de datos, autenticación, pasarela de pagos y gestión real de pedidos.
+- Funcionando y probado: catálogo, carrito, compra, cuentas de cliente normal y fiel, promociones y cupones, panel completo, fotos de producto, inventario con reserva, pedidos, respaldo.
+- Pagos con Wompi: implementado y probado con simulaciones; **falta validarlo con llaves de sandbox** (ver docs/WOMPI.md).
+- Facturación: infraestructura completa; **el envío a la DIAN depende de elegir el camino** (ver docs/DIAN.md). Hoy emite documentos internos sin validez fiscal.
+- Docker y Cloudflare Tunnel: escritos según la documentación, **sin probar** (este entorno no tiene Docker en ejecución).

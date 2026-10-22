@@ -1,0 +1,27 @@
+# Una instalación = una carpeta con este archivo y un .env propio.
+#   docker compose up -d --build
+services:
+  app:
+    build: ../app
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATA_DIR: /data
+      PORT: "3000"
+      TRUST_PROXY: "true"
+    volumes:
+      - tienda-data:/data
+    # No se publica ningún puerto: el único acceso desde fuera es el túnel de Cloudflare.
+
+  tunnel:
+    image: cloudflare/cloudflared:latest   # en producción conviene fijar una versión concreta
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    environment:
+      TUNNEL_TOKEN: ${TUNNEL_TOKEN}
+    depends_on:
+      app:
+        condition: service_healthy
+
+volumes:
+  tienda-data:
