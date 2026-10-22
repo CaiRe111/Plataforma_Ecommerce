@@ -1,3 +1,4 @@
+import crypto from 'node:crypto';
 import { hashPassword, validatePassword, verifyPassword } from '../auth.js';
 import { HttpError, bad, str } from '../http/util.js';
 
@@ -45,4 +46,27 @@ export function listCustomers(db, loyalty) {
 export function setCustomerType(db, id, type) {
   if (!['normal', 'fiel', null].includes(type)) throw bad('Perfil no válido.');
   return db.prepare('UPDATE customers SET type_override = ? WHERE id = ?').run(type, id).changes > 0;
+}
+
+/* ---------- recuperación de contraseña ---------- */
+const sha = t => crypto.createHash('sha256').update(t).digest('hex');
+const RESET_TTL = 3600e3;
+
+/** Crea un enlace de un solo uso (vence en una hora). Devuelve null si el correo no tiene cuenta con contraseña. */
+export function createResetToken(db, email) {
+  const row = db.prepare('SELECT * FROM customers WHERE email = ? AND password_hash IS NOT NULL').get(normEmail(email));
+  if (!row) return null;
+  db.prepare('DELETE FROM password_resets WHERE customer_id = ?').run(row.id);
+  const token = crypto.randomBytes(32).toString('base64url');
+  db.prepare('INSERT INTO password_resets (token_hash, customer_id, expires_at) VALUES (?, ?, ?)').run(sha(token), row.id, new Date(Date.now() + RESET_TTL).toISOString());
+  return { customer: row, token };
+}
+
+export async function consumeResetToken(db, token, password) {
+  validatePassword(password);
+  const r = db.prepare('SELECT * FROM password_resets WHERE token_hash = ? AND used_at IS NULL').get(sha(String(token || '')));
+  if (!r || r.expires_at <= new Date().toISOString()) throw new HttpError(400, 'El enlace no es válido o ya venció. Pide uno nuevo.', 'bad_token');
+  db.prepare('UPDATE customers SET password_hash = ? WHERE id = ?').run(await hashPassword(password), r.customer_id);
+  db.prepare('UPDATE password_resets SET used_at = ? WHERE token_hash = ?').run(new Date().toISOString(), r.token_hash);
+  db.prepare("DELETE FROM sessions WHERE kind = 'customer' AND user_id = ?").run(r.customer_id);
 }

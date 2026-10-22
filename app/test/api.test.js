@@ -312,3 +312,72 @@ test('en modo Wompi la pasarela simulada no existe', async () => {
   assert.equal((await t.call('POST', `/api/demo/payment/${o.order.id}?t=${o.order.token}`, { outcome: 'approved' })).status, 404);
   await t.close();
 });
+
+const emailsOf = async (t, ck) => (await t.call('GET', '/api/admin/emails', undefined, { cookies: ck })).json.emails;
+
+test('correos transaccionales: pedido, pago, envío, entrega y cancelación quedan en el buzón de salida', async () => {
+  const t = await setup({ config: { paymentMode: 'demo' } });
+  const o = (await t.order()).json;
+  let mails = await emailsOf(t, t.adminCookie);
+  assert.deepEqual(mails.map(m => m.kind), ['order_created']);
+  assert.equal(mails[0].to, 'vale@correo.com');
+  assert.equal(mails[0].status, 'sent');
+  assert.equal(mails[0].transport, 'outbox');
+  const detail = (await t.A('GET', `/api/admin/emails/${mails[0].id}`)).json.email;
+  assert.match(detail.text, new RegExp(`#/pedido/${o.order.id}\\?t=${o.order.token}`), 'el correo trae el enlace seguro del pedido');
+  assert.match(detail.text, /\$72\.000/);
+
+  const url = `/api/demo/payment/${o.order.id}?t=${o.order.token}`;
+  await t.call('POST', url, { outcome: 'approved', method: 'card' });
+  for (let i = 0; i < 2; i++) await t.A('POST', `/api/admin/orders/${o.order.id}/action`, { action: 'advance' }); // preparando, enviado
+  await t.A('POST', `/api/admin/orders/${o.order.id}/action`, { action: 'advance' }); // entregado
+  mails = await emailsOf(t, t.adminCookie);
+  assert.deepEqual(mails.map(m => m.kind).reverse(), ['order_created', 'payment_confirmed', 'order_shipped', 'order_delivered']);
+
+  const o2 = (await t.order({ buyer: buyer({ email: 'otra@correo.com' }) })).json;
+  await t.A('POST', `/api/admin/orders/${o2.order.id}/action`, { action: 'cancel' });
+  assert.equal((await emailsOf(t, t.adminCookie))[0].kind, 'order_cancelled');
+  assert.equal((await t.call('GET', '/api/admin/emails')).status, 401, 'el buzón es solo del administrador');
+  await t.close();
+});
+
+test('un correo con HTML en el nombre no inyecta código', async () => {
+  const t = await setup({ config: { paymentMode: 'demo' } });
+  await t.order({ buyer: buyer({ name: '<img src=x onerror=alert(1)> Ana' }) });
+  const m = (await emailsOf(t, t.adminCookie))[0];
+  const row = t.app.db.prepare('SELECT html_body FROM emails WHERE id = ?').get(m.id);
+  assert.equal(row.html_body.includes('<img src=x'), false);
+  assert.match(row.html_body, /Hola, &lt;img\./);
+  await t.close();
+});
+
+test('recuperación de contraseña: enlace de un solo uso, sin revelar cuentas y cierra sesiones', async () => {
+  const t = await setup({ config: { paymentMode: 'demo' } });
+  const reg = await t.call('POST', '/api/auth/register', { email: 'ana@correo.com', name: 'Ana Pérez', password: 'clave-vieja-1' });
+  const oldCookie = t.cookieOf(reg);
+  assert.equal((await emailsOf(t, t.adminCookie))[0].kind, 'welcome');
+
+  const unknown = await t.call('POST', '/api/auth/forgot', { email: 'nadie@correo.com' });
+  const known = await t.call('POST', '/api/auth/forgot', { email: 'ANA@correo.com' });
+  assert.deepEqual(unknown.json, known.json, 'misma respuesta exista o no la cuenta');
+  const resets = (await emailsOf(t, t.adminCookie)).filter(m => m.kind === 'password_reset');
+  assert.equal(resets.length, 1);
+  const body = (await t.A('GET', `/api/admin/emails/${resets[0].id}`)).json.email.text;
+  const token = /token=([\w-]+)/.exec(body)[1];
+
+  assert.equal((await t.call('POST', '/api/auth/reset', { token: 'falso', password: 'clave-nueva-1' })).status, 400);
+  assert.equal((await t.call('POST', '/api/auth/reset', { token, password: 'corta' })).status, 400);
+  assert.equal((await t.call('POST', '/api/auth/reset', { token, password: 'clave-nueva-1' })).status, 200);
+  assert.equal((await t.call('POST', '/api/auth/reset', { token, password: 'otra-clave-22' })).status, 400, 'el enlace sirve una sola vez');
+  assert.equal((await t.call('GET', '/api/me', undefined, { cookies: oldCookie })).json.me, null, 'la sesión anterior se cerró');
+  assert.equal((await t.call('POST', '/api/auth/login', { email: 'ana@correo.com', password: 'clave-vieja-1' })).status, 401);
+  assert.equal((await t.call('POST', '/api/auth/login', { email: 'ana@correo.com', password: 'clave-nueva-1' })).status, 200);
+
+  // enlace vencido
+  await t.call('POST', '/api/auth/forgot', { email: 'ana@correo.com' });
+  const m2 = (await emailsOf(t, t.adminCookie)).find(m => m.kind === 'password_reset');
+  const tok2 = /token=([\w-]+)/.exec((await t.A('GET', `/api/admin/emails/${m2.id}`)).json.email.text)[1];
+  t.app.db.prepare('UPDATE password_resets SET expires_at = ?').run(new Date(Date.now() - 1000).toISOString());
+  assert.equal((await t.call('POST', '/api/auth/reset', { token: tok2, password: 'clave-nueva-2' })).status, 400);
+  await t.close();
+});

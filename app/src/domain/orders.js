@@ -3,6 +3,7 @@ import { tx } from '../db/index.js';
 import { HttpError, bad, intOr, str } from '../http/util.js';
 import { quote } from '../shared/pricing.js';
 import { enqueueInvoice } from '../invoicing/queue.js';
+import { queueOrderEmail } from '../mail/index.js';
 import { getStore } from './settings.js';
 import { listPromos } from './promos.js';
 import { productFromRow } from './catalog.js';
@@ -95,6 +96,7 @@ export function createOrder({ db, config }, input, customerRow) {
         .run(orderId, l.p.id, l.p.name, l.qty, q.lines[k].unit, JSON.stringify(l.opts), l.p.digital ? 1 : 0);
     });
     addEvent(db, orderId, 'pending', method === 'online' ? 'Pedido creado. Esperando el pago en línea.' : 'Pedido creado.');
+    queueOrderEmail(db, orderId, 'order_created');
 
     // Guarda los datos de facturación y entrega en la cuenta para la próxima compra.
     if (customerRow) {
@@ -195,6 +197,7 @@ export function markPaid(db, orderId, note = '') {
     db.prepare('UPDATE orders SET paid_at = ?, status = ? WHERE id = ?').run(new Date().toISOString(), to, orderId);
     addEvent(db, orderId, to, note || 'Pago confirmado.');
     enqueueInvoice(db, orderId);
+    queueOrderEmail(db, orderId, 'payment_confirmed');
     return getOrderRow(db, orderId);
   });
 }
@@ -207,6 +210,7 @@ export function cancelOrder(db, orderId, note = 'Pedido cancelado.') {
     db.prepare("UPDATE orders SET status = 'cancelled' WHERE id = ?").run(orderId);
     releaseStock(db, orderId);
     addEvent(db, orderId, 'cancelled', note);
+    queueOrderEmail(db, orderId, 'order_cancelled', note);
     return getOrderRow(db, orderId);
   });
 }
@@ -220,6 +224,8 @@ export function advanceOrder(db, orderId) {
     if (step.action === 'mark_paid') { markPaid(db, orderId, 'Pago confirmado manualmente.'); return getOrderRow(db, orderId); }
     db.prepare('UPDATE orders SET status = ? WHERE id = ?').run(step.to, orderId);
     addEvent(db, orderId, step.to);
+    if (step.to === 'shipped') queueOrderEmail(db, orderId, 'order_shipped');
+    if (step.to === 'delivered') queueOrderEmail(db, orderId, 'order_delivered');
     // Contra entrega: el cobro ocurre al entregar.
     if (step.to === 'delivered' && o.method === 'cod' && !o.paid_at) {
       db.prepare('UPDATE orders SET paid_at = ? WHERE id = ?').run(new Date().toISOString(), orderId);

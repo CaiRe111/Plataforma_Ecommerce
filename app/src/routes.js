@@ -6,7 +6,8 @@ import { HttpError, bad, intOr, nowIso, readBody, str } from './http/util.js';
 import { getStore, updateStore, getFiscal, updateFiscal, fiscalForAdmin } from './domain/settings.js';
 import { listProducts, getProduct, createProduct, updateProduct, deleteProduct, listCategories } from './domain/catalog.js';
 import { listPromos, publicPromos, createPromo, updatePromo, deletePromo } from './domain/promos.js';
-import { registerCustomer, loginCustomer, customerJson, listCustomers, setCustomerType, getCustomer, normEmail } from './domain/customers.js';
+import { registerCustomer, loginCustomer, customerJson, listCustomers, setCustomerType, getCustomer, normEmail, createResetToken, consumeResetToken } from './domain/customers.js';
+import { queueWelcomeEmail, queueResetEmail, listEmails, getEmail } from './mail/index.js';
 import { createOrder, orderJson, getOrderRow, getOrderPublic, listOrders, ordersOfCustomer, advanceOrder, cancelOrder, DOC_TYPES } from './domain/orders.js';
 import { handleWebhook, syncOrderPayments } from './payments/wompi.js';
 import { startOnlinePayment } from './payments/index.js';
@@ -45,6 +46,7 @@ export function registerRoutes(r, { config, db, limiter, wompi, uploadsDir }) {
   post('/api/auth/register', {}, async ctx => {
     limiter.check(`reg:${ctx.ip}`, 10, 3600e3);
     const row = await registerCustomer(db, ctx.body);
+    queueWelcomeEmail(db, row);
     const s = createSession(db, 'customer', row.id);
     ctx.setCookie(COOKIE.customer, s.token, s.maxAge);
     return { me: customerPayload(row) };
@@ -55,6 +57,19 @@ export function registerRoutes(r, { config, db, limiter, wompi, uploadsDir }) {
     const s = createSession(db, 'customer', row.id);
     ctx.setCookie(COOKIE.customer, s.token, s.maxAge);
     return { me: customerPayload(row) };
+  });
+  post('/api/auth/forgot', {}, ctx => {
+    limiter.check(`forgot:${ctx.ip}`, 10, 3600e3);
+    limiter.check(`forgot:${normEmail(ctx.body.email)}`, 3, 3600e3);
+    const r = createResetToken(db, ctx.body.email);
+    if (r) queueResetEmail(db, r.customer, r.token);
+    // La respuesta es la misma exista o no la cuenta, para no revelar qué correos están registrados.
+    return { ok: true, message: 'Si el correo tiene una cuenta, te enviamos un enlace para elegir una contraseña nueva.' };
+  });
+  post('/api/auth/reset', {}, async ctx => {
+    limiter.check(`reset:${ctx.ip}`, 20, 3600e3);
+    await consumeResetToken(db, ctx.body.token, ctx.body.password);
+    return { ok: true };
   });
   post('/api/auth/logout', {}, ctx => { destroySession(db, ctx.cookies[COOKIE.customer]); ctx.clearCookie(COOKIE.customer); return { ok: true }; });
   get('/api/me', {}, ctx => ({ me: customerPayload(ctx.customer), orders: ctx.customer ? ordersOfCustomer(db, ctx.customer.id) : [] }));
@@ -217,6 +232,8 @@ export function registerRoutes(r, { config, db, limiter, wompi, uploadsDir }) {
     if (a === 'advance') await processInvoices(db).catch(() => 0);
     return { order: orderJson(db, getOrderRow(db, id), { admin: true }) };
   });
+  get('/api/admin/emails', A, () => ({ emails: listEmails(db), transport: config.mail.transport }));
+  get('/api/admin/emails/:id', A, ctx => { const e = getEmail(db, pid(ctx.params.id)); if (!e) throw new HttpError(404, 'Correo no encontrado.', 'not_found'); return { email: e }; });
   get('/api/admin/customers', A, () => ({ customers: listCustomers(db, getStore(db).loyalty) }));
   put('/api/admin/customers/:id/type', A, ctx => {
     const id = pid(ctx.params.id);

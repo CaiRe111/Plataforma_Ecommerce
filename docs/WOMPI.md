@@ -1,5 +1,8 @@
 # Pagos con Wompi
 
+> **Estado: apagado en la demostración.** Por defecto la tienda usa una **pasarela simulada** (`PAYMENT_MODE=demo`): el cliente elige si el pago se aprueba, se rechaza o queda pendiente y no se cobra nada. El resto del flujo (pedido pagado, inventario, factura, correos) es el mismo que con Wompi.
+> Esta guía describe la integración real, que se activa con `PAYMENT_MODE=wompi` y las llaves del cliente.
+
 ## Cómo funciona
 
 1. El cliente confirma el pedido. El servidor **recalcula todo** (precios, promociones, envío), reserva el inventario y crea el pedido en estado *Pendiente de pago*.
@@ -14,7 +17,7 @@ Un pago aprobado genera la factura electrónica (ver [DIAN.md](DIAN.md)).
 
 1. En Wompi, con la cuenta del cliente, abre **Desarrolladores** y copia: llave pública, **secreto de integridad** y **secreto de eventos**.
    Al empezar usa las llaves de *sandbox* (`pub_test_…`).
-2. Pégalas en `deploy/.env`: `WOMPI_ENV=sandbox`, `WOMPI_PUBLIC_KEY`, `WOMPI_INTEGRITY_SECRET`, `WOMPI_EVENTS_SECRET`. Reinicia: `docker compose up -d`.
+2. Pégalas en `deploy/.env`: `PAYMENT_MODE=wompi`, `WOMPI_ENV=sandbox`, `WOMPI_PUBLIC_KEY`, `WOMPI_INTEGRITY_SECRET`, `WOMPI_EVENTS_SECRET`. Reinicia: `docker compose up -d`.
 3. En Wompi → Desarrolladores → **URL de eventos**, pon la que muestra el panel en *Ajustes → Pagos* (`https://tienda.cliente.com/api/webhooks/wompi`). Hay una URL por ambiente (sandbox y producción).
 4. Para pasar a producción cambia `WOMPI_ENV=production` y las tres llaves por las de producción, y configura la URL de eventos del ambiente de producción.
 

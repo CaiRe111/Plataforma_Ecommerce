@@ -590,6 +590,11 @@ function cuenta() {
   const s = ST();
   if (!S.me) {
     const tab = S.ui.authTab;
+    if (tab === 'forgot') return html`<div class="wrap" style="max-width:480px;padding-block:32px 72px"><div class="stack" style="gap:20px"><span class="eyebrow">Mi cuenta</span><h1 style="font-size:32px">Recupera tu contraseña</h1>
+      <p class="muted">Escribe el correo de tu cuenta y te enviamos un enlace para elegir una contraseña nueva.</p>
+      <form class="panel" data-form="forgot" novalidate><div class="field"><label for="a-email">Correo electrónico</label><input id="a-email" name="email" type="email" autocomplete="email"></div>
+        <button class="btn btn-primary" type="submit" ${S.ui.busy ? 'disabled' : ''}>Enviar enlace</button></form>
+      <a class="muted" href="#/cuenta" data-act="auth-tab" data-tab="login">← Volver a iniciar sesión</a></div></div>`;
     return html`<div class="wrap"><div class="page-h stack" style="gap:12px"><span class="eyebrow">Mi cuenta</span><h1>${tab === 'login' ? 'Inicia sesión' : 'Crea tu cuenta'}</h1>
       <p class="lead">Con una cuenta guardas tus datos, ves tus pedidos y accedes a los beneficios de cliente fiel.</p></div>
       <div class="acct-grid" style="padding-bottom:40px;align-items:start">
@@ -597,7 +602,8 @@ function cuenta() {
           ${tab === 'register' ? html`<div class="field"><label for="a-name">Nombre completo</label><input id="a-name" name="name" autocomplete="name"></div><div class="field"><label for="a-phone">Teléfono</label><input id="a-phone" name="phone" type="tel" autocomplete="tel"></div>` : ''}
           <div class="field"><label for="a-email">Correo electrónico</label><input id="a-email" name="email" type="email" autocomplete="email"></div>
           <div class="field"><label for="a-pass">Contraseña</label><input id="a-pass" name="password" type="password" autocomplete="${tab === 'login' ? 'current-password' : 'new-password'}">${tab === 'register' ? html`<span class="hint">Mínimo 8 caracteres.</span>` : ''}</div>
-          <button class="btn btn-primary" type="submit" ${S.ui.busy ? 'disabled' : ''}>${tab === 'login' ? 'Entrar' : 'Crear cuenta'}</button></form>
+          <button class="btn btn-primary" type="submit" ${S.ui.busy ? 'disabled' : ''}>${tab === 'login' ? 'Entrar' : 'Crear cuenta'}</button>
+          ${tab === 'login' ? html`<a class="muted small" href="#/cuenta" data-act="auth-tab" data-tab="forgot">¿Olvidaste tu contraseña?</a>` : ''}</form>
         <div class="stack"><h2>Diferencias entre perfiles</h2>${programTable()}</div></div></div>`;
   }
   const m = S.me, L = s.loyalty, orders = S.myOrders;
@@ -613,6 +619,14 @@ function cuenta() {
           <div class="progress" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i></div>
           <div class="row between small"><span class="num">${money(m.spent)}</span><span class="muted">Te faltan <b class="num">${money(Math.max(0, L.threshold - m.spent))}</b></span></div>`}
         <a class="btn btn-ghost btn-block" href="#/ofertas">Ver ofertas</a></aside></div></div>`;
+}
+function resetPage() {
+  const token = S.route.q.get('token') || '';
+  if (!token) return notFound();
+  return html`<div class="wrap" style="max-width:480px;padding-block:32px 72px"><div class="stack" style="gap:20px"><span class="eyebrow">Mi cuenta</span><h1 style="font-size:32px">Elige una contraseña nueva</h1>
+    <form class="panel" data-form="reset" data-token="${token}" novalidate><div class="field"><label for="r-pass">Contraseña nueva</label><input id="r-pass" name="password" type="password" autocomplete="new-password"><span class="hint">Mínimo 8 caracteres.</span></div>
+      <div class="field"><label for="r-pass2">Repite la contraseña</label><input id="r-pass2" name="password2" type="password" autocomplete="new-password"></div>
+      <button class="btn btn-primary" type="submit" ${S.ui.busy ? 'disabled' : ''}>Guardar contraseña</button></form></div></div>`;
 }
 function notFound() {
   return html`<div class="wrap"><div class="empty page-h"><h1>No encontramos esa página</h1><p class="muted">El enlace no existe o el producto ya no está disponible.</p><a class="btn btn-primary" href="#/">Volver al inicio</a></div></div>`;
@@ -649,6 +663,7 @@ function ofertas() {
 }
 
 /* ================= panel de administración ================= */
+ICONS.mail = '<path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/>';
 ICONS.invoice = '<path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h6M9 17h6"/>';
 async function loadAdmin(b, c) {
   if (S.admin === undefined) { try { S.admin = (await api('GET', '/api/admin/me')).admin; } catch (e) { S.admin = null; } }
@@ -662,6 +677,7 @@ async function loadAdmin(b, c) {
     else if (b === 'promociones') { A.promos = (await api('GET', '/api/admin/promos')).promos; A.cats = (await api('GET', '/api/admin/settings')).cats; }
     else if (b === 'facturacion') { A.fiscal = await api('GET', '/api/admin/fiscal'); A.invoices = (await api('GET', '/api/admin/invoices')).invoices; A.invDoc = null; }
     else if (b === 'ajustes') A.settings = await api('GET', '/api/admin/settings');
+    else if (b === 'correos') { const d = await api('GET', '/api/admin/emails'); A.emails = d.emails; A.mailTransport = d.transport; A.mailView = null; }
   } catch (e) { if (e.status === 401) { S.admin = null; return; } throw e; }
 }
 
@@ -963,7 +979,19 @@ function adminSettings() {
     <div><button class="btn btn-ghost btn-sm" type="submit">Cambiar contraseña</button></div></form>`;
 }
 
-const NAV = [['', 'Resumen', 'home'], ['productos', 'Productos', 'box'], ['inventario', 'Inventario', 'stock'], ['pedidos', 'Pedidos', 'orders'], ['clientes', 'Clientes', 'users'], ['promociones', 'Promociones', 'tag'], ['facturacion', 'Facturación', 'invoice'], ['ajustes', 'Ajustes', 'gear']];
+const MAIL_KIND = { order_created: 'Pedido recibido', payment_confirmed: 'Pago confirmado', order_shipped: 'Pedido enviado', order_delivered: 'Pedido entregado', order_cancelled: 'Pedido cancelado', welcome: 'Bienvenida', password_reset: 'Recuperar contraseña' };
+function adminMail() {
+  const list = S.adm.emails, v = S.adm.mailView;
+  return html`<div class="adm-h"><div><span class="eyebrow">Comunicación</span><h1>Correos</h1></div></div>
+  ${S.adm.mailTransport === 'outbox' ? html`<div class="notice" style="border-color:var(--warn)"><b>Modo demostración.</b> Los correos no se envían: se guardan aquí para que veas lo que recibiría cada cliente. El envío real por SMTP se conecta en producción.</div>` : ''}
+  <div class="card-box">${list.length ? html`<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Fecha</th><th>Para</th><th>Asunto</th><th>Tipo</th><th>Estado</th><th></th></tr></thead><tbody>
+    ${list.map(e => html`<tr><td data-label="Fecha">${fmtDateTime(e.createdAt)}</td><td data-label="Para">${e.to}</td><td data-label="Asunto">${e.subject}</td><td data-label="Tipo">${MAIL_KIND[e.kind] || e.kind}</td>
+      <td data-label="Estado"><span class="pill ${e.status === 'sent' ? 'good' : e.status === 'failed' ? 'bad' : 'warn'}">${e.status === 'sent' ? (e.transport === 'outbox' ? 'Guardado' : 'Enviado') : e.status === 'failed' ? 'Falló' : 'En cola'}</span></td>
+      <td data-label="" class="r"><button class="btn btn-ghost btn-sm" data-act="mail-view" data-id="${e.id}">Ver</button></td></tr>`)}</tbody></table></div>` : html`<p class="pad muted">Todavía no se ha generado ningún correo.</p>`}</div>
+  ${v ? html`<section class="card-box"><header><h3>${v.subject}</h3><button class="link-btn" data-act="mail-close">Cerrar</button></header><div class="pad stack"><p class="small muted">Para: ${v.to}</p><pre class="code-block" style="white-space:pre-wrap">${v.text}</pre></div></section>` : ''}`;
+}
+
+const NAV = [['', 'Resumen', 'home'], ['productos', 'Productos', 'box'], ['inventario', 'Inventario', 'stock'], ['pedidos', 'Pedidos', 'orders'], ['clientes', 'Clientes', 'users'], ['promociones', 'Promociones', 'tag'], ['facturacion', 'Facturación', 'invoice'], ['correos', 'Correos', 'mail'], ['ajustes', 'Ajustes', 'gear']];
 function adminPage(b, c, q) {
   if (!S.admin) return adminLogin();
   let body;
@@ -974,6 +1002,7 @@ function adminPage(b, c, q) {
   else if (b === 'clientes') body = adminCustomers();
   else if (b === 'promociones') body = c ? adminPromoEdit(c) : adminPromos();
   else if (b === 'facturacion') body = adminFiscal();
+  else if (b === 'correos') body = adminMail();
   else if (b === 'ajustes') body = adminSettings();
   else body = notFound();
   const pending = S.adm.summary ? S.adm.summary.unpaid : 0;
@@ -1034,6 +1063,7 @@ function page() {
     case 'pago-demo': return demoGateway();
     case 'ofertas': return ofertas();
     case 'cuenta': return cuenta();
+    case 'restablecer': return resetPage();
     default: return notFound();
   }
 }
@@ -1089,7 +1119,7 @@ const ACT = {
   'co-edit'(el) { S.ui.co.step = +el.dataset.step; render(true); },
   'place-order'() { return placeOrder(); },
   'auth-tab'(el, e) { e.preventDefault(); S.ui.authTab = el.dataset.tab; render(); },
-  async logout() { await api('POST', '/api/auth/logout', {}); S.myOrders = []; S.ui.co = null; await loadStore(); await go('#/'); },
+  async logout() { await api('POST', '/api/auth/logout', {}); S.myOrders = []; S.ui.co = null; S.ui.authTab = 'login'; await loadStore(); await go('#/'); },
   'apply-code'(el) { applyCoupon(el.dataset.code); },
   async 'pay-again'() {
     const o = S.order.order, r = await api('POST', `/api/orders/${o.id}/pay?t=${enc(S.order.token)}`, {});
@@ -1124,6 +1154,8 @@ const ACT = {
   async 'order-cancel'(el) { await api('POST', `/api/admin/orders/${el.dataset.id}/action`, { action: 'cancel' }); S.ui.confirm = null; await reload(); refreshStore(); toast(`Pedido #${el.dataset.id} cancelado.`); },
   async 'order-sync'(el) { await api('POST', `/api/admin/orders/${el.dataset.id}/action`, { action: 'sync' }); await reload(); toast('Estado del pago consultado en Wompi.'); },
   async 'cust-set'(el) { await api('PUT', `/api/admin/customers/${el.dataset.id}/type`, { type: el.dataset.type }); await reload(); toast('Perfil del cliente actualizado.'); },
+  async 'mail-view'(el) { S.adm.mailView = (await api('GET', `/api/admin/emails/${el.dataset.id}`)).email; render(); },
+  'mail-close'() { S.adm.mailView = null; render(); },
   async 'inv-view'(el) { S.adm.invDoc = await api('GET', `/api/admin/invoices/${el.dataset.id}`); render(); },
   'inv-close'() { S.adm.invDoc = null; render(); },
   async 'inv-retry'(el) { await api('POST', `/api/admin/invoices/${el.dataset.id}/retry`, {}); await reload(); toast('Factura reintentada.'); },
@@ -1192,6 +1224,20 @@ const fdNum = (fd, k, d = 0) => { const v = fd.get(k); return v === null || v ==
 const SUBMIT = {
   search(f) { const v = $('input', f).value.trim(); return go('#/catalogo' + (v ? '?q=' + enc(v) : '')); },
   coupon() { applyCoupon($('#coupon').value); },
+  async forgot(f) {
+    const fd = new FormData(f);
+    S.ui.busy = true;
+    let r;
+    try { r = await api('POST', '/api/auth/forgot', { email: fd.get('email') }); } finally { S.ui.busy = false; }
+    S.ui.authTab = 'login'; render(); toast(r.message);
+  },
+  async reset(f) {
+    const fd = new FormData(f);
+    if (fd.get('password') !== fd.get('password2')) return toast('Las contraseñas no coinciden.');
+    S.ui.busy = true;
+    try { await api('POST', '/api/auth/reset', { token: f.dataset.token, password: fd.get('password') }); } finally { S.ui.busy = false; }
+    S.ui.authTab = 'login'; await go('#/cuenta'); toast('Contraseña actualizada. Ya puedes iniciar sesión.');
+  },
   async login(f) {
     const fd = new FormData(f);
     S.ui.busy = true;
@@ -1202,7 +1248,7 @@ const SUBMIT = {
     const fd = new FormData(f);
     S.ui.busy = true;
     try { await api('POST', '/api/auth/register', { email: fd.get('email'), name: fd.get('name'), phone: fd.get('phone'), password: fd.get('password') }); } finally { S.ui.busy = false; }
-    S.ui.co = null; await loadStore(); await go('#/cuenta'); toast('Cuenta creada.');
+    S.ui.co = null; S.ui.authTab = 'login'; await loadStore(); await go('#/cuenta'); toast('Cuenta creada.');
   },
   async 'admin-login'(f) {
     const fd = new FormData(f);

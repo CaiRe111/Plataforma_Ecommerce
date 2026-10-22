@@ -89,10 +89,18 @@ Las migraciones de la base de datos se aplican solas al arrancar. Haz un respald
 | `PUBLIC_URL` | Dirección pública con https. Cookies seguras, retorno de Wompi, URL de eventos. |
 | `ADMIN_EMAIL`, `ADMIN_PASSWORD` | Administrador inicial (solo se usa si aún no existe ninguno). |
 | `TUNNEL_TOKEN` | Token del túnel de Cloudflare. |
-| `WOMPI_ENV`, `WOMPI_PUBLIC_KEY`, `WOMPI_INTEGRITY_SECRET`, `WOMPI_EVENTS_SECRET` | Pagos en línea. Sin ellas la tienda funciona con transferencia o contra entrega. |
+| `PAYMENT_MODE` | `demo` (por defecto): pasarela simulada, no se cobra nada. `wompi`: cobros reales. |
+| `MAIL_TRANSPORT` | `outbox` (por defecto): los correos se guardan en el panel y no se envían. |
+| `WOMPI_ENV`, `WOMPI_PUBLIC_KEY`, `WOMPI_INTEGRITY_SECRET`, `WOMPI_EVENTS_SECRET` | Solo con `PAYMENT_MODE=wompi`. |
 | `RESERVE_MINUTES` | Minutos que se reserva el inventario de un pago en línea sin completar (45 por defecto). |
 | `TRUST_PROXY` | `true` detrás de Cloudflare para leer la IP real del cliente (ya viene activado en el compose). |
 | `DATA_DIR` | Carpeta de datos (`/data` en Docker). |
+
+## Olvidé la contraseña del administrador
+
+```bash
+docker compose exec app node --disable-warning=ExperimentalWarning src/admin-reset.js correo@ejemplo.com "nueva-contraseña"
+```
 
 ## Qué revisar si algo falla
 

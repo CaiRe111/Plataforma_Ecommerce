@@ -193,4 +193,33 @@ CREATE TABLE invoices (
 CREATE INDEX idx_invoices_status ON invoices(status);
 `,
   },
+  {
+    id: 3,
+    name: 'mail',
+    sql: `
+CREATE TABLE emails (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  kind TEXT NOT NULL,
+  to_email TEXT NOT NULL,
+  subject TEXT NOT NULL,
+  text_body TEXT NOT NULL,
+  html_body TEXT NOT NULL,
+  order_id INTEGER,
+  status TEXT NOT NULL DEFAULT 'queued' CHECK (status IN ('queued','sent','failed')),
+  transport TEXT NOT NULL DEFAULT '',
+  attempts INTEGER NOT NULL DEFAULT 0,
+  last_error TEXT NOT NULL DEFAULT '',
+  created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')),
+  sent_at TEXT
+);
+CREATE INDEX idx_emails_status ON emails(status);
+
+CREATE TABLE password_resets (
+  token_hash TEXT PRIMARY KEY,
+  customer_id INTEGER NOT NULL REFERENCES customers(id) ON DELETE CASCADE,
+  expires_at TEXT NOT NULL,
+  used_at TEXT
+);
+`,
+  },
 ];

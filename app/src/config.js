@@ -26,6 +26,8 @@ export function loadConfig(overrides = {}) {
     // Minutos que se reserva el stock de un pedido pagado en línea antes de liberarlo.
     // demo: pasarela simulada (sin cobros reales). wompi: cobros reales con Wompi.
     paymentMode: (overrides.paymentMode ?? env.PAYMENT_MODE ?? 'demo') === 'wompi' ? 'wompi' : 'demo',
+    // outbox: los correos se guardan en el panel y no se envían (demostración). El envío real por SMTP está pendiente.
+    mail: { transport: overrides.mailTransport ?? env.MAIL_TRANSPORT ?? 'outbox' },
     reserveMinutes: Number(overrides.reserveMinutes ?? env.RESERVE_MINUTES ?? 45),
     jobsIntervalMs: Number(overrides.jobsIntervalMs ?? env.JOBS_INTERVAL_MS ?? 60_000),
     invoicing: { provider: overrides.invoicingProvider ?? env.INVOICING_PROVIDER ?? 'mock' },

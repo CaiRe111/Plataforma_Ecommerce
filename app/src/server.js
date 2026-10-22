@@ -10,6 +10,7 @@ import { COOKIE, bootstrapAdmin, getSession, purgeExpiredSessions } from './auth
 import { registerRoutes } from './routes.js';
 import { createWompiClient, expireUnpaidOrders } from './payments/wompi.js';
 import { processInvoices } from './invoicing/service.js';
+import { processEmails, rememberPublicUrl, mailTransportOk } from './mail/index.js';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.png': 'image/png', '.jpg': 'image/jpeg', '.webp': 'image/webp', '.ico': 'image/x-icon', '.txt': 'text/plain; charset=utf-8' };
@@ -30,6 +31,8 @@ export async function createApp({ config = loadConfig(), db, fetchImpl, publicDi
   const wompi = config.wompi.enabled ? createWompiClient(config, fetchImpl) : null;
   const router = createRouter();
   registerRoutes(router, { config, db, limiter, wompi, uploadsDir });
+  if (!mailTransportOk(config)) throw new Error(`MAIL_TRANSPORT="${config.mail.transport}" no está disponible. Opciones: outbox.`);
+  rememberPublicUrl(db, config.publicUrl);
   await bootstrapAdmin(db, config.admin);
 
   const origin = new URL(config.publicUrl).origin;
@@ -101,6 +104,7 @@ export async function createApp({ config = loadConfig(), db, fetchImpl, publicDi
         }
       }
       let out = await route.handler(ctx);
+      if (!['GET', 'HEAD'].includes(req.method)) await processEmails(db, config);
       let status = 200;
       if (out && out.status && out.body) { status = out.status; out = out.body; }
       sendJson(res, status, out ?? { ok: true }, { ...SECURITY, ...(setCookies.length ? { 'set-cookie': setCookies } : {}) });
@@ -121,6 +125,7 @@ export async function createApp({ config = loadConfig(), db, fetchImpl, publicDi
       limiter.sweep();
       await expireUnpaidOrders(db, config, wompi);
       await processInvoices(db);
+      await processEmails(db, config);
     } catch (e) { console.error('[jobs]', e); } finally { busy = false; }
   };
   const timer = config.jobsIntervalMs > 0 ? setInterval(tick, config.jobsIntervalMs) : null;

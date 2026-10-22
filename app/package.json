@@ -8,6 +8,7 @@
     "start": "node --disable-warning=ExperimentalWarning src/server.js",
     "test": "node --disable-warning=ExperimentalWarning --test --test-timeout=30000 test/*.test.js",
     "seed:demo": "node --disable-warning=ExperimentalWarning src/seed/index.js",
-    "backup": "node --disable-warning=ExperimentalWarning src/backup.js"
+    "backup": "node --disable-warning=ExperimentalWarning src/backup.js",
+    "admin:reset": "node --disable-warning=ExperimentalWarning src/admin-reset.js"
   }
 }

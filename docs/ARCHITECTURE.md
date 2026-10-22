@@ -22,11 +22,12 @@ app/
     db/                  migraciones numeradas y transacciones anidables
     domain/              ajustes, catálogo, promociones, clientes, pedidos
     shared/pricing.js    precios, promociones, cupones, fiel, envío (puro, compartido con el navegador)
-    payments/wompi.js    firma, checkout, webhook, consulta y expiración
+    payments/            pasarela simulada (demo) y Wompi: firma, checkout, webhook, consulta y expiración
+    mail/                plantillas y buzón de salida (transporte outbox; SMTP pendiente)
     invoicing/           documento, numeración, cola y proveedores
     seed/, backup.js     datos de ejemplo y respaldo
   public/                tienda y panel (SPA con rutas por #/)
-  test/                  33 pruebas (precios, Wompi, pedidos, facturación)
+  test/                  38 pruebas (precios, Wompi, pedidos, facturación)
 deploy/                  compose, instalación, respaldos
 ```
 
@@ -59,6 +60,7 @@ sequenceDiagram
 ## Límites conocidos
 
 - Un solo proceso y una sola base: suficiente para miles de pedidos al día, no para alta concurrencia.
-- Sin correo electrónico: no hay confirmaciones por correo, verificación de correo ni recuperación de contraseña (el administrador puede cambiar la suya; un cliente que la olvide necesita ayuda manual).
+- Correo: en la demostración los mensajes (pedido, pago, envío, entrega, cancelación, bienvenida y recuperación de contraseña) se guardan en el panel y no se envían. Falta el transporte SMTP y la verificación del correo al registrarse.
+- Productos digitales: se registran y se marcan como entregados, pero la entrega automática de archivos o enlaces de descarga no está hecha.
 - Una foto por producto, sin devoluciones ni notas crédito, sin cálculo de transportadoras.
 - La limitación de intentos vive en memoria: se reinicia con el servidor (Cloudflare añade la capa principal).
