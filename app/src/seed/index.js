@@ -1,5 +1,5 @@
 // Carga un catálogo de demostración en una instalación nueva:
-//   npm run seed:demo -- moda            (moda | alimentos | tecnologia | digital)
+//   npm run seed:demo -- moda            (moda | alimentos | tecnologia | digital | fantasia)
 //   npm run seed:demo -- moda --accounts (crea además dos clientes de ejemplo: normal y fiel)
 import fs from 'node:fs';
 import path from 'node:path';

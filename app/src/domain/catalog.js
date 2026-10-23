@@ -1,7 +1,7 @@
 import crypto from 'node:crypto';
 import { bad, intOr, str } from '../http/util.js';
 
-export const KINDS = ['tee', 'pants', 'bag', 'cap', 'shoe', 'bottle', 'jar', 'box', 'loaf', 'headphones', 'speaker', 'lamp', 'laptop', 'keyboard', 'cable', 'play', 'grid', 'cal', 'doc'];
+export const KINDS = ['tee', 'pants', 'bag', 'cap', 'shoe', 'bottle', 'jar', 'box', 'loaf', 'headphones', 'speaker', 'lamp', 'laptop', 'keyboard', 'cable', 'play', 'grid', 'cal', 'doc', 'dice', 'scroll', 'sword'];
 
 export function productFromRow(r, { admin = false } = {}) {
   const p = {

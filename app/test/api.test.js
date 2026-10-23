@@ -381,3 +381,13 @@ test('recuperación de contraseña: enlace de un solo uso, sin revelar cuentas y
   assert.equal((await t.call('POST', '/api/auth/reset', { token: tok2, password: 'clave-nueva-2' })).status, 400);
   await t.close();
 });
+
+test('tema visual: se guarda por tienda, llega a la tienda pública y rechaza valores desconocidos', async () => {
+  const t = await setup();
+  assert.equal((await t.call('GET', '/api/store')).json.store.theme, 'clasico');
+  assert.equal((await t.A('PUT', '/api/admin/settings', { theme: 'neon' })).status, 400);
+  assert.equal((await t.A('PUT', '/api/admin/settings', { theme: 'fantasia' })).status, 200);
+  assert.equal((await t.call('GET', '/api/store')).json.store.theme, 'fantasia');
+  assert.equal((await t.A('POST', '/api/admin/products', { name: 'Espada', cat: 'Armas', price: 100000, stock: 1, status: 'active', kind: 'sword' })).json.product.kind, 'sword');
+  await t.close();
+});

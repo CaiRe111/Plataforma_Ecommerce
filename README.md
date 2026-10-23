@@ -23,6 +23,7 @@ Sin llaves de Wompi la tienda ofrece transferencia y contra entrega.
 
 ## Estado
 
+- Temas visuales por cliente: **Clásico** (minimalista, por defecto) y **Fantasía** (pergamino, marcos dorados, tipografía medieval), que se elige en Ajustes y solo cambia la tienda; el panel siempre es sobrio. Para verlo: `npm run seed:demo -- fantasia --accounts`.
 - Funcionando y probado: catálogo, carrito, compra, cuentas de cliente normal y fiel, promociones y cupones, panel completo, fotos de producto, inventario con reserva, pedidos, respaldo.
 - Pagos: en la demostración usan una **pasarela simulada** (aprobado, rechazado o pendiente; no se cobra nada). Wompi está implementado y probado con simulaciones, apagado, y **falta validarlo con llaves de sandbox** (docs/WOMPI.md).
 - Facturación: infraestructura completa; **el envío a la DIAN depende de elegir el camino** (ver docs/DIAN.md). Hoy emite documentos internos sin validez fiscal.

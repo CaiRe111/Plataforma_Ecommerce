@@ -7,6 +7,7 @@
 | Una instalación por cliente | Datos, dominio y configuración aislados; sin multi-inquilino que complique la seguridad |
 | Node 22 sin dependencias externas | Menos que instalar, actualizar y auditar en cada servidor; sin compilaciones nativas |
 | SQLite (`node:sqlite`, modo WAL) | Un archivo por cliente: respaldo y restauración triviales; sobra para una microempresa |
+| Tema visual por cliente | `settings.theme` (clásico o fantasía) pone `data-skin` en la tienda; son variables CSS y reglas aparte, sin duplicar pantallas. El panel no lo recibe |
 | Interfaz en el mismo servidor | Un solo proceso que desplegar; fuentes e imágenes locales, sin CDN |
 | Cloudflare Tunnel | El servidor del cliente no expone puertos; el dominio queda en tu cuenta |
 | El servidor es la autoridad de precios | El navegador solo muestra; `src/shared/pricing.js` lo usan ambos y el servidor recalcula al comprar |

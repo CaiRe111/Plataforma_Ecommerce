@@ -4,6 +4,7 @@ export const STORE_DEFAULTS = {
   name: 'Mi tienda',
   tagline: '',
   hue: 215,
+  theme: 'clasico', // clasico | fantasia (solo cambia la tienda; el panel siempre es sobrio)
   symbol: '$',
   currency: 'COP',
   type: 'physical',
@@ -57,6 +58,7 @@ export function updateStore(db, input) {
   const next = structuredClone(cur);
   if (input.name !== undefined) { next.name = str(input.name, 80); if (!next.name) throw bad('El nombre de la tienda no puede quedar vacío.'); }
   if (input.tagline !== undefined) next.tagline = str(input.tagline, 200);
+  if (input.theme !== undefined) { if (!['clasico', 'fantasia'].includes(input.theme)) throw bad('Tema visual no válido.'); next.theme = input.theme; }
   if (input.hue !== undefined) next.hue = clamp(intOr(input.hue, cur.hue), 0, 360);
   if (input.symbol !== undefined) next.symbol = str(input.symbol, 4) || '$';
   if (input.type !== undefined) { if (!['physical', 'digital'].includes(input.type)) throw bad('Tipo de tienda no válido.'); next.type = input.type; }

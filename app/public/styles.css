@@ -1,3 +1,13 @@
+@font-face { font-family: 'Cinzel'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/cinzel-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Cinzel'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/cinzel-latin-600-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Cinzel'; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/cinzel-latin-700-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Cinzel'; font-style: normal; font-weight: 900; font-display: swap; src: url('/fonts/cinzel-latin-900-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Cinzel Decorative'; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/cinzel-decorative-latin-700-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Cinzel Decorative'; font-style: normal; font-weight: 900; font-display: swap; src: url('/fonts/cinzel-decorative-latin-900-normal.woff2') format('woff2'); }
+@font-face { font-family: 'EB Garamond'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/eb-garamond-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'EB Garamond'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/eb-garamond-latin-500-normal.woff2') format('woff2'); }
+@font-face { font-family: 'EB Garamond'; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/eb-garamond-latin-700-normal.woff2') format('woff2'); }
+@font-face { font-family: 'EB Garamond'; font-style: italic; font-weight: 400; font-display: swap; src: url('/fonts/eb-garamond-latin-400-italic.woff2') format('woff2'); }
 @font-face { font-family: 'Schibsted Grotesk'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/schibsted-grotesk-latin-400-normal.woff2') format('woff2'); }
 @font-face { font-family: 'Schibsted Grotesk'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/schibsted-grotesk-latin-500-normal.woff2') format('woff2'); }
 @font-face { font-family: 'Schibsted Grotesk'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/schibsted-grotesk-latin-600-normal.woff2') format('woff2'); }
@@ -480,3 +490,167 @@ details.acc > div { padding-bottom: 16px; color: var(--muted); }
 .sw input:checked + span { box-shadow: 0 0 0 3px var(--fg); }
 .sw input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 4px; }
 .code-block { margin: 12px 0 0; padding: 14px; max-height: 360px; overflow: auto; background: var(--sunken); border: 1px solid var(--line); border-radius: var(--r); font: 12.5px/1.5 var(--mono); white-space: pre; }
+
+/* =====================================================================
+   Tema "Fantasía": aventura medieval. Solo se aplica a la tienda
+   (:root[data-skin="fantasia"]); el panel de administración nunca lo recibe.
+   ===================================================================== */
+:root[data-skin="fantasia"] {
+  --bg: #e8d9b8; --surface: #f3e8cd; --sunken: #d9c7a0; --fg: #2a1c10; --muted: #65502f;
+  --line: #b79b69; --line-strong: #8a6a38; --accent: #7b1e2b; --accent-fg: #f7ebcb; --accent-soft: #ead3a2;
+  --good: #2c5a26; --warn: #8a5600; --bad: #8e1b1b; --info: #7b1e2b;
+  --gold: #a97c1f; --gold-bright: #d4a437;
+  --btn-from: #a02c3a; --btn-to: #661620; --btn-fg: #f7ebcb;
+  --art-s: 30%; --art-bg: 80%; --art-fg: 26%;
+  --scrim: rgba(20, 10, 4, .62);
+  --font: 'EB Garamond', Georgia, 'Times New Roman', serif;
+  --mono: 'Cinzel', Georgia, serif;
+  --display: 'Cinzel Decorative', 'Cinzel', Georgia, serif;
+  --r: 3px;
+  --g: linear-gradient(var(--gold), var(--gold));
+}
+@media (prefers-color-scheme: dark) {
+  :root[data-skin="fantasia"]:not([data-theme="light"]) {
+    --bg: #1b130c; --surface: #271b11; --sunken: #130d08; --fg: #eddcb6; --muted: #b9a27a;
+    --line: #4b3720; --line-strong: #75562f; --accent: #d9aa3c; --accent-fg: #1b130c; --accent-soft: #3b2b14;
+    --good: #8fcf7a; --warn: #e7b04a; --bad: #f08a7a; --info: #d9aa3c;
+    --gold: #c9972e; --gold-bright: #f0c85a;
+    --btn-from: #e6bd4e; --btn-to: #b98a25; --btn-fg: #1b130c;
+    --art-bg: 20%; --art-fg: 62%; --scrim: rgba(5, 2, 0, .75);
+  }
+}
+:root[data-skin="fantasia"][data-theme="dark"] {
+  --bg: #1b130c; --surface: #271b11; --sunken: #130d08; --fg: #eddcb6; --muted: #b9a27a;
+  --line: #4b3720; --line-strong: #75562f; --accent: #d9aa3c; --accent-fg: #1b130c; --accent-soft: #3b2b14;
+  --good: #8fcf7a; --warn: #e7b04a; --bad: #f08a7a; --info: #d9aa3c;
+  --gold: #c9972e; --gold-bright: #f0c85a;
+  --btn-from: #e6bd4e; --btn-to: #b98a25; --btn-fg: #1b130c;
+  --art-bg: 20%; --art-fg: 62%; --scrim: rgba(5, 2, 0, .75);
+}
+
+[data-skin="fantasia"] body {
+  font-size: 18px; line-height: 1.6;
+  background-color: var(--bg);
+  background-image: radial-gradient(ellipse at 50% -10%, rgba(255, 226, 160, .42), transparent 55%), radial-gradient(ellipse at 50% 115%, rgba(60, 30, 8, .26), transparent 60%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .22 0 0 0 0 .08 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+[data-skin="fantasia"] body::before { background: #2a1a0e; }
+[data-skin="fantasia"] ::selection { background: var(--gold-bright); color: #1b130c; }
+[data-skin="fantasia"] :focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3px; }
+
+/* tipografía */
+[data-skin="fantasia"] h1, [data-skin="fantasia"] h2, [data-skin="fantasia"] h3, [data-skin="fantasia"] h4 { font-family: 'Cinzel', Georgia, serif; letter-spacing: .02em; font-weight: 700; line-height: 1.18; }
+[data-skin="fantasia"] h1 { font-family: var(--display); font-weight: 900; letter-spacing: .01em; line-height: 1.1; text-shadow: 0 1px 0 rgba(255, 236, 190, .45); }
+[data-skin="fantasia"] h1 { font-size: clamp(30px, 5.2vw, 58px); }
+[data-skin="fantasia"] h2 { font-size: clamp(22px, 3vw, 30px); }
+[data-skin="fantasia"] h3 { font-size: 17px; letter-spacing: .03em; }
+[data-skin="fantasia"] .eyebrow { font-family: 'Cinzel', serif; font-weight: 600; font-size: 12px; letter-spacing: .18em; color: var(--accent); }
+[data-skin="fantasia"] .lead { font-size: 21px; font-style: italic; }
+[data-skin="fantasia"] .muted, [data-skin="fantasia"] .small { font-size: inherit; }
+[data-skin="fantasia"] .price, [data-skin="fantasia"] .num, [data-skin="fantasia"] .mono { font-weight: 600; letter-spacing: .02em; font-variant-numeric: lining-nums; }
+[data-skin="fantasia"] .price s, [data-skin="fantasia"] .num s { font-weight: 400; }
+
+/* cabecera y pie: cuero oscuro con filete dorado */
+[data-skin="fantasia"] .hdr, [data-skin="fantasia"] .foot {
+  --bg: #2a1a0e; --surface: #3a2615; --sunken: #3a2718; --fg: #f2e4c0; --muted: #d0b88c;
+  --line: #5a3f22; --line-strong: #7a5a31; --accent: #e2b94a; --accent-fg: #1b130c; --gold: #d4a437;
+  background: linear-gradient(180deg, #36230f, #231408); color: var(--fg);
+}
+[data-skin="fantasia"] .hdr { border-bottom: 4px double var(--gold); box-shadow: 0 8px 20px rgba(30, 15, 3, .35); }
+[data-skin="fantasia"] .foot { border-top: 4px double var(--gold); margin-top: 48px; }
+[data-skin="fantasia"] .brand { font-family: var(--display); font-weight: 700; font-size: 17px; letter-spacing: .02em; }
+[data-skin="fantasia"] .mark {
+  width: 32px; height: 36px; border-radius: 0; font-family: var(--display); font-weight: 900;
+  background: linear-gradient(160deg, #f0cf6a, #b98a25); color: #2a1a0e; clip-path: polygon(0 0, 100% 0, 100% 60%, 50% 100%, 0 60%); padding-bottom: 6px;
+}
+[data-skin="fantasia"] .nav a { font-family: 'Cinzel', serif; font-size: 12.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 8px 10px; }
+[data-skin="fantasia"] .search { width: 200px; }
+[data-skin="fantasia"] .link-btn { font-size: inherit; }
+[data-skin="fantasia"] .nav a:hover, [data-skin="fantasia"] .nav a[aria-current="page"] { background: rgba(212, 164, 55, .16); color: #f7e7b8; }
+[data-skin="fantasia"] .nav .offer-link { color: #f0c85a; }
+[data-skin="fantasia"] .search input { border: 1px solid #5a3f22; font-size: 16px; }
+[data-skin="fantasia"] .badge-n { background: var(--gold-bright); color: #1b130c; }
+
+/* portada y secciones */
+[data-skin="fantasia"] .hero { background: radial-gradient(ellipse at 18% 0%, rgba(255, 214, 130, .5), transparent 62%), linear-gradient(180deg, transparent 55%, rgba(120, 70, 20, .12)); border-bottom: 4px double var(--gold); }
+[data-skin="fantasia"] .hero-copy .btn-primary { min-height: 52px; padding: 0 28px; }
+[data-skin="fantasia"] .sec-head { border-bottom: 3px double var(--gold); padding-bottom: 10px; }
+[data-skin="fantasia"] .cat-grid { border-top: 3px double var(--gold); }
+[data-skin="fantasia"] .cat-grid a { border-bottom: 1px solid var(--line); }
+[data-skin="fantasia"] .cat-grid h3 { font-size: 20px; }
+[data-skin="fantasia"] .perks { border-top: 3px double var(--gold); }
+[data-skin="fantasia"] .strip-band { background: linear-gradient(90deg, var(--accent-soft), transparent 30%, transparent 70%, var(--accent-soft)); border-block: 3px double var(--gold); }
+[data-skin="fantasia"] .strip a { font-family: 'Cinzel', serif; font-size: 14px; letter-spacing: .04em; }
+
+/* ilustraciones y fotos enmarcadas */
+[data-skin="fantasia"] .card-img .art, [data-skin="fantasia"] .hero-art .art, [data-skin="fantasia"] .gallery > .art {
+  border: 3px solid var(--gold); box-shadow: inset 0 0 0 4px var(--surface), inset 0 0 0 5px var(--gold), 0 8px 16px rgba(40, 20, 5, .28);
+}
+[data-skin="fantasia"] .art.photo img { filter: sepia(.28) contrast(1.05) saturate(1.05); }
+[data-skin="fantasia"] .art { background-image: radial-gradient(ellipse at 50% 40%, rgba(255, 240, 200, .35), transparent 70%); }
+[data-skin="fantasia"] .card h3 { font-size: 16px; }
+[data-skin="fantasia"] .card:hover h3 { color: var(--accent); text-decoration: none; }
+[data-skin="fantasia"] .tag {
+  background: linear-gradient(180deg, var(--btn-from), var(--btn-to)); color: var(--btn-fg); border: 1px solid var(--gold-bright); border-radius: 2px;
+  font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+}
+[data-skin="fantasia"] .tag.soft { background: var(--surface); color: var(--fg); border-color: var(--line-strong); }
+[data-skin="fantasia"] .off { font-family: 'Cinzel', serif; font-size: 12px; }
+
+/* marcos ornamentados con esquinas doradas */
+[data-skin="fantasia"] :is(.panel, .summary, .card-box, .promo, .plan) {
+  background-color: var(--surface); border: 2px solid var(--line-strong); border-radius: 2px;
+  box-shadow: inset 0 0 0 4px var(--surface), inset 0 0 0 5px var(--line), 0 6px 14px rgba(40, 20, 5, .14);
+  background-image: var(--g), var(--g), var(--g), var(--g), var(--g), var(--g), var(--g), var(--g);
+  background-repeat: no-repeat;
+  background-size: 18px 2px, 2px 18px, 18px 2px, 2px 18px, 18px 2px, 2px 18px, 18px 2px, 2px 18px;
+  background-position: left 8px top 8px, left 8px top 8px, right 8px top 8px, right 8px top 8px, left 8px bottom 8px, left 8px bottom 8px, right 8px bottom 8px, right 8px bottom 8px;
+}
+[data-skin="fantasia"] .plan.fiel { border-color: var(--accent); }
+[data-skin="fantasia"] .notice { border: 3px double var(--gold); background: var(--accent-soft); border-radius: 2px; }
+[data-skin="fantasia"] .summary { padding: 26px; }
+[data-skin="fantasia"] .panel > h3, [data-skin="fantasia"] .summary > h3, [data-skin="fantasia"] .promo h3 { border-bottom: 1px solid var(--line); padding-bottom: 8px; }
+[data-skin="fantasia"] .summary .total { border-top: 3px double var(--gold); }
+
+/* botones y formularios */
+[data-skin="fantasia"] .btn { font-family: 'Cinzel', serif; font-weight: 700; font-size: 13.5px; letter-spacing: .09em; text-transform: uppercase; border-radius: 2px; min-height: 46px; }
+[data-skin="fantasia"] .btn-sm { font-size: 12px; min-height: 38px; }
+[data-skin="fantasia"] .btn-primary {
+  background: linear-gradient(180deg, var(--btn-from), var(--btn-to)); color: var(--btn-fg); border: 2px solid var(--gold-bright);
+  box-shadow: inset 0 1px 0 rgba(255, 225, 160, .35), inset 0 0 0 2px rgba(0, 0, 0, .22), 0 3px 0 rgba(0, 0, 0, .35);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, .45);
+}
+[data-skin="fantasia"] .btn-primary:hover { filter: brightness(1.12) saturate(1.1); box-shadow: inset 0 1px 0 rgba(255, 225, 160, .35), inset 0 0 0 2px rgba(0, 0, 0, .22), 0 3px 0 rgba(0, 0, 0, .35), 0 0 16px rgba(212, 164, 55, .55); }
+[data-skin="fantasia"] .btn-ghost { border: 3px double var(--line-strong); background: transparent; }
+[data-skin="fantasia"] .btn-ghost:hover { background: var(--accent-soft); border-color: var(--gold); }
+[data-skin="fantasia"] .icon-btn:hover { background: rgba(212, 164, 55, .18); }
+[data-skin="fantasia"] :is(input, select, textarea) { border: 2px solid var(--line-strong); border-radius: 2px; font-family: var(--font); font-size: 17px; background: var(--surface); }
+[data-skin="fantasia"] .field > label, [data-skin="fantasia"] .lbl { font-family: 'Cinzel', serif; font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+[data-skin="fantasia"] .opt { font-family: 'Cinzel', serif; font-weight: 600; border-width: 2px; border-radius: 2px; }
+[data-skin="fantasia"] .opt[aria-pressed="true"], [data-skin="fantasia"] .paycard:has(input:checked) { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--gold-bright); background: var(--accent-soft); }
+[data-skin="fantasia"] .paycard { border-width: 2px; border-radius: 2px; }
+[data-skin="fantasia"] .stepper { border-width: 2px; border-radius: 2px; }
+[data-skin="fantasia"] .chip { border-width: 2px; border-radius: 2px; font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: .04em; }
+[data-skin="fantasia"] .pill { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; border-radius: 2px; }
+[data-skin="fantasia"] .code { border: 2px dashed var(--gold); background: var(--sunken); }
+[data-skin="fantasia"] details.acc summary { font-family: 'Cinzel', serif; letter-spacing: .05em; }
+[data-skin="fantasia"] .steps .n { font-family: 'Cinzel', serif; border-width: 2px; border-radius: 50%; }
+[data-skin="fantasia"] .steps li[aria-current="step"] .n, [data-skin="fantasia"] .steps li.done .n { background: var(--btn-from); color: var(--btn-fg); border-color: var(--gold-bright); }
+[data-skin="fantasia"] .timeline li.done .dot { background: var(--gold-bright); border-color: var(--gold); }
+[data-skin="fantasia"] .progress { border: 2px solid var(--line-strong); border-radius: 2px; height: 12px; }
+[data-skin="fantasia"] .progress i { background: linear-gradient(90deg, var(--gold), var(--gold-bright)); }
+[data-skin="fantasia"] .done-mark { background: radial-gradient(circle at 35% 30%, #f0cf6a, #b98a25); color: #2a1a0e; border: 3px double #5b3f10; }
+
+/* cajones, hojas y avisos */
+[data-skin="fantasia"] .drawer, [data-skin="fantasia"] .sheet { background: var(--surface); background-image: none; }
+[data-skin="fantasia"] .drawer.right { border-left: 4px double var(--gold); }
+[data-skin="fantasia"] .drawer.left { border-right: 4px double var(--gold); }
+[data-skin="fantasia"] .sheet { border-top: 4px double var(--gold); border-radius: 0; }
+[data-skin="fantasia"] .toast { background: #2a1a0e; color: #f2e4c0; border: 2px solid var(--gold-bright); border-radius: 2px; font-family: 'Cinzel', serif; letter-spacing: .03em; }
+
+@media (max-width: 720px) {
+  [data-skin="fantasia"] body { font-size: 17px; }
+  [data-skin="fantasia"] .lead { font-size: 19px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  [data-skin="fantasia"] .btn-primary, [data-skin="fantasia"] .card h3 { transition: filter .15s, box-shadow .15s, color .15s; }
+}

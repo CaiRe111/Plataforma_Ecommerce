@@ -28,7 +28,7 @@ export function registerRoutes(r, { config, db, limiter, wompi, uploadsDir }) {
   const publicStore = c => {
     const s = getStore(db);
     return {
-      name: s.name, tagline: s.tagline, hue: s.hue, symbol: s.symbol, currency: s.currency, type: s.type, hero: s.hero, perks: s.perks, facets: s.facets,
+      name: s.name, tagline: s.tagline, hue: s.hue, theme: s.theme, symbol: s.symbol, currency: s.currency, type: s.type, hero: s.hero, perks: s.perks, facets: s.facets,
       lowStock: s.lowStock, shipping: s.shipping, loyalty: s.loyalty,
       pay: { online: s.pay.online && config.onlineEnabled, transfer: s.pay.transfer, cod: s.pay.cod }, paymentMode: config.paymentMode,
     };

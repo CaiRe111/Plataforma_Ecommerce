@@ -1093,5 +1093,261 @@
     "endsInDays": 25
    }
   ]
+ },
+ "fantasia": {
+  "label": "Juegos y rol",
+  "store": {
+   "name": "La Taberna del Dragón",
+   "tagline": "Dados, juegos de mesa y tesoros para tus campañas.",
+   "hue": 8,
+   "theme": "fantasia",
+   "type": "physical",
+   "hero": {
+    "eyebrow": "Nueva campaña",
+    "title": "Forja tu próxima aventura.",
+    "cta": "Entrar al almacén"
+   },
+   "perks": [
+    {
+     "t": "Envío gratis desde $200.000",
+     "d": "Entrega en 2 a 4 días hábiles."
+    },
+    {
+     "t": "Dados verificados",
+     "d": "Cada set se prueba antes de salir de la taberna."
+    },
+    {
+     "t": "Beneficios del gremio",
+     "d": "Los clientes fieles tienen descuento y precios exclusivos."
+    }
+   ],
+   "facets": [
+    "Ambientación",
+    "Jugadores"
+   ],
+   "lowStock": 5,
+   "shipping": {
+    "flat": 12000,
+    "freeFrom": 200000
+   },
+   "pay": {
+    "online": true,
+    "transfer": true,
+    "cod": true
+   },
+   "transferInstructions": "Bancolombia, cuenta de ahorros 000-111222-33, a nombre de La Taberna del Dragón. Envía el comprobante al correo de la tienda.",
+   "loyalty": {
+    "discount": 8,
+    "freeShipping": true,
+    "threshold": 600000
+   }
+  },
+  "categories": [
+   "Dados",
+   "Juegos de mesa",
+   "Miniaturas",
+   "Libros y mapas"
+  ],
+  "products": [
+   {
+    "name": "Set de 7 dados Escamas de dragón",
+    "cat": "Dados",
+    "price": 39900,
+    "compare": 49900,
+    "stock": 40,
+    "kind": "dice",
+    "hue": 0,
+    "attrs": {
+     "Ambientación": "Fantasía",
+     "Jugadores": "1 o más"
+    },
+    "options": [
+     {
+      "name": "Color",
+      "values": [
+       "Rojo carmesí",
+       "Verde bosque",
+       "Azul medianoche"
+      ]
+     }
+    ],
+    "desc": "Siete dados poliédricos de resina con números dorados. Incluyen el d20 con pesas equilibradas.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Bolsa de cuero para dados",
+    "cat": "Dados",
+    "price": 24900,
+    "compare": null,
+    "stock": 25,
+    "kind": "bag",
+    "hue": 30,
+    "attrs": {
+     "Ambientación": "Fantasía",
+     "Jugadores": "1 o más"
+    },
+    "options": [],
+    "desc": "Cuero curtido con cierre de cordón y forro de terciopelo. Caben tres sets completos.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Torre de dados de madera",
+    "cat": "Dados",
+    "price": 89000,
+    "compare": null,
+    "stock": 6,
+    "kind": "box",
+    "hue": 28,
+    "attrs": {
+     "Ambientación": "Fantasía",
+     "Jugadores": "1 o más"
+    },
+    "options": [],
+    "desc": "Torre plegable de nogal con rampa interior. Los dados salen sin hacer trampa.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Guardianes del Reino",
+    "cat": "Juegos de mesa",
+    "price": 159000,
+    "compare": null,
+    "stock": 14,
+    "kind": "box",
+    "hue": 8,
+    "attrs": {
+     "Ambientación": "Fantasía",
+     "Jugadores": "2 a 5"
+    },
+    "options": [],
+    "desc": "Juego cooperativo de aventura con tablero modular, 40 cartas de encuentro y partidas de 60 minutos.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Bestiario: juego de cartas",
+    "cat": "Juegos de mesa",
+    "price": 59000,
+    "compare": 69000,
+    "stock": 30,
+    "kind": "grid",
+    "hue": 280,
+    "attrs": {
+     "Ambientación": "Fantasía",
+     "Jugadores": "2 a 6"
+    },
+    "options": [],
+    "desc": "Reúne criaturas y derrota a las de tus rivales. 110 cartas ilustradas.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Miniatura pintada: Caballero errante",
+    "cat": "Miniaturas",
+    "price": 79000,
+    "compare": null,
+    "stock": 9,
+    "kind": "sword",
+    "hue": 210,
+    "attrs": {
+     "Ambientación": "Fantasía",
+     "Jugadores": "1 o más"
+    },
+    "options": [
+     {
+      "name": "Peana",
+      "values": [
+       "Piedra",
+       "Bosque"
+      ]
+     }
+    ],
+    "desc": "Figura de 32 mm pintada a mano. Lista para tu mesa de juego.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Mapa del reino (póster 60 × 90 cm)",
+    "cat": "Libros y mapas",
+    "price": 45000,
+    "compare": null,
+    "stock": 18,
+    "kind": "scroll",
+    "hue": 40,
+    "attrs": {
+     "Ambientación": "Fantasía",
+     "Jugadores": "Todos"
+    },
+    "options": [],
+    "desc": "Papel texturizado de 200 g con el mapa de las Tierras Altas, para colgar o usar como tablero.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Manual del Maestro de Juego",
+    "cat": "Libros y mapas",
+    "price": 129000,
+    "compare": null,
+    "stock": 3,
+    "kind": "doc",
+    "hue": 350,
+    "attrs": {
+     "Ambientación": "Fantasía",
+     "Jugadores": "Todos"
+    },
+    "options": [],
+    "desc": "Reglas, aventuras de inicio y 80 páginas de consejos para dirigir partidas memorables.",
+    "digital": false,
+    "status": "active"
+   }
+  ],
+  "promos": [
+   {
+    "name": "Hora del botín",
+    "desc": "15 % menos en todos los dados.",
+    "kind": "percent",
+    "value": 15,
+    "scope": "Dados",
+    "code": "",
+    "audience": "all",
+    "min": 0,
+    "endsInDays": 10
+   },
+   {
+    "name": "Bienvenida",
+    "desc": "10 % de descuento en tu primera compra con el código.",
+    "kind": "percent",
+    "value": 10,
+    "scope": "all",
+    "code": "PRIMERA10",
+    "audience": "all",
+    "min": 0,
+    "endsInDays": null
+   },
+   {
+    "name": "Solo clientes fieles: juegos de mesa",
+    "desc": "12 % menos en juegos de mesa, aplicado automáticamente.",
+    "kind": "percent",
+    "value": 12,
+    "scope": "Juegos de mesa",
+    "code": "",
+    "audience": "fiel",
+    "min": 0,
+    "endsInDays": 14
+   },
+   {
+    "name": "Envío gratis desde $120.000",
+    "desc": "Se aplica automáticamente al llegar al monto.",
+    "kind": "shipping",
+    "value": 0,
+    "scope": "all",
+    "code": "",
+    "audience": "all",
+    "min": 120000,
+    "endsInDays": 9
+   }
+  ]
  }
 }

@@ -58,6 +58,9 @@ const SHAPES = {
   grid: '<rect x="16" y="16" width="30" height="30" rx="5"/><rect x="54" y="16" width="30" height="30" rx="5"/><rect x="16" y="54" width="30" height="30" rx="5"/><rect x="54" y="54" width="30" height="30" rx="5"/>',
   cal: '<rect x="14" y="22" width="72" height="62" rx="7"/><rect class="d" x="14" y="38" width="72" height="3"/><rect x="30" y="12" width="6" height="18" rx="3"/><rect x="64" y="12" width="6" height="18" rx="3"/>',
   doc: '<rect x="24" y="12" width="52" height="76" rx="5"/><path class="b" d="M34 32h32M34 44h32M34 56h20"/>',
+  dice: '<path d="M50 10l34 20v40L50 90 16 70V30z"/><circle class="d" cx="50" cy="50" r="6"/><circle class="d" cx="37" cy="37" r="4"/><circle class="d" cx="63" cy="37" r="4"/><circle class="d" cx="37" cy="63" r="4"/><circle class="d" cx="63" cy="63" r="4"/>',
+  scroll: '<rect x="26" y="20" width="48" height="60" rx="3"/><rect x="20" y="14" width="60" height="10" rx="5"/><rect x="20" y="76" width="60" height="10" rx="5"/><path class="b" d="M34 36h32M34 46h32M34 56h20"/>',
+  sword: '<path d="M46 10h8v52h-8z"/><path d="M32 62h36v7H32z"/><rect x="46" y="69" width="8" height="18" rx="3"/><circle cx="50" cy="90" r="4"/>',
 };
 
 const art = (p, cls = '', alt = '') => p.image
@@ -267,7 +270,7 @@ function home() {
   </div></section>
   ${promoStrip()}
   <section class="wrap sec"><div class="sec-head"><h2>Categorías</h2></div>
-    <div class="cat-grid">${s.cats.map(c => html`<a href="#/catalogo?cat=${enc(c)}"><h3>${c}</h3><span class="muted small">${act.filter(p => p.cat === c).length} productos</span></a>`)}</div></section>
+    <div class="cat-grid">${s.cats.map(c => html`<a href="#/catalogo?cat=${enc(c)}"><h3>${c}</h3><span class="muted small">${act.filter(p => p.cat === c).length} ${act.filter(p => p.cat === c).length === 1 ? 'producto' : 'productos'}</span></a>`)}</div></section>
   ${act.length ? '' : html`<section class="wrap sec"><div class="empty"><h2>Estamos preparando el catálogo</h2><p class="muted">Muy pronto encontrarás aquí nuestros productos.</p></div></section>`}
   <section class="wrap sec" style="padding-top:8px"><div class="sec-head"><h2>Destacados</h2><a href="#/catalogo" class="muted">Ver todo</a></div>
     <div class="grid">${act.slice(0, 4).map(productCard)}</div></section>
@@ -743,7 +746,7 @@ function adminProducts(q) {
     </tbody></table></div>` : html`<div class="pad empty"><h3>Aún no hay productos</h3><p class="muted">Crea el primero para que aparezca en la tienda.</p><a class="btn btn-primary btn-sm" href="#/admin/productos/nuevo">Nuevo producto</a></div>`}</div>`;
 }
 
-const KIND_LABEL = { tee: 'Camiseta', pants: 'Pantalón', bag: 'Bolso', cap: 'Gorra', shoe: 'Calzado', bottle: 'Botella', jar: 'Frasco', box: 'Caja', loaf: 'Pan', headphones: 'Audífonos', speaker: 'Parlante', lamp: 'Lámpara', laptop: 'Pantalla', keyboard: 'Teclado', cable: 'Cable', play: 'Curso en video', grid: 'Plantilla', cal: 'Sesión o cita', doc: 'Documento' };
+const KIND_LABEL = { tee: 'Camiseta', pants: 'Pantalón', bag: 'Bolso', cap: 'Gorra', shoe: 'Calzado', bottle: 'Botella', jar: 'Frasco', box: 'Caja', loaf: 'Pan', headphones: 'Audífonos', speaker: 'Parlante', lamp: 'Lámpara', laptop: 'Pantalla', keyboard: 'Teclado', cable: 'Cable', play: 'Curso en video', grid: 'Plantilla', cal: 'Sesión o cita', doc: 'Documento', dice: 'Dados', scroll: 'Mapa o pergamino', sword: 'Espada o miniatura' };
 function adminProductEdit(id) {
   const s = S.store, isNew = id === 'nuevo';
   const p = isNew ? { id: '', name: '', cat: (S.adm.cats && S.adm.cats[0]) || '', price: 0, compare: null, stock: 10, kind: 'box', hue: s.hue, attrs: {}, options: [], desc: '', sku: '', status: 'draft', digital: s.type === 'digital', taxRate: 19, image: null } : (S.adm.products || []).find(x => x.id === id);
@@ -955,13 +958,14 @@ function adminSettings() {
   <div class="panel"><h3>Identidad</h3><div class="form-grid">
     <div class="field"><label for="s-name">Nombre de la tienda</label><input id="s-name" name="name" value="${s.name}"></div>
     <div class="field"><label for="s-type">Tipo de negocio</label><select id="s-type" name="type"><option value="physical" ${s.type === 'physical' ? 'selected' : ''}>Productos físicos (con envío)</option><option value="digital" ${s.type === 'digital' ? 'selected' : ''}>Productos digitales o servicios</option></select></div>
+    <div class="field"><label for="s-theme">Tema visual de la tienda</label><select id="s-theme" name="theme"><option value="clasico" ${s.theme !== 'fantasia' ? 'selected' : ''}>Clásico (minimalista)</option><option value="fantasia" ${s.theme === 'fantasia' ? 'selected' : ''}>Fantasía (aventura medieval)</option></select><span class="hint">Cambia solo la tienda; este panel siempre es sobrio.</span></div>
     <div class="field full"><label for="s-tagline">Descripción corta</label><input id="s-tagline" name="tagline" value="${s.tagline}"></div>
     <div class="field"><label for="s-h1">Portada: texto pequeño</label><input id="s-h1" name="heroEyebrow" value="${s.hero.eyebrow}"></div>
     <div class="field"><label for="s-h3">Portada: botón</label><input id="s-h3" name="heroCta" value="${s.hero.cta}"></div>
     <div class="field full"><label for="s-h2">Portada: titular</label><input id="s-h2" name="heroTitle" value="${s.hero.title}"></div>
     <div class="field full"><label for="s-fac">Filtros del catálogo</label><input id="s-fac" name="facets" value="${s.facets.join(', ')}"><span class="hint">Hasta 4 atributos separados por coma, por ejemplo Color, Material.</span></div>
     <div class="field full"><label for="s-perks">Ventajas de la portada (una por línea)</label><textarea id="s-perks" name="perks" placeholder="Envío gratis desde $250.000 | Entrega en 2 a 4 días hábiles.">${perks}</textarea></div>
-    <div class="field full"><span class="lbl">Color de la tienda</span><div class="swatches">${[215, 168, 28, 262, 340, 142].map(h => html`<label class="sw" style="--sw:${h}"><input type="radio" name="hue" value="${h}" ${s.hue === h ? 'checked' : ''} aria-label="Color ${h}"><span></span></label>`)}</div></div></div></div>
+    <div class="field full"><span class="lbl">Color de la tienda (tema clásico)</span><div class="swatches">${[215, 168, 28, 262, 340, 142].map(h => html`<label class="sw" style="--sw:${h}"><input type="radio" name="hue" value="${h}" ${s.hue === h ? 'checked' : ''} aria-label="Color ${h}"><span></span></label>`)}</div></div></div></div>
   <div class="panel"><h3>Envíos</h3>${s.type === 'digital' ? html`<p class="muted">Esta tienda vende productos digitales, por eso no cobra envío.</p>` : html`<div class="form-grid">
     <div class="field"><label for="s-flat">Costo de envío (COP)</label><input id="s-flat" name="flat" type="number" min="0" step="500" value="${s.shipping.flat}"></div>
     <div class="field"><label for="s-free">Envío gratis desde (COP)</label><input id="s-free" name="freeFrom" type="number" min="0" step="1000" value="${s.shipping.freeFrom}"></div></div>`}</div>
@@ -1072,6 +1076,8 @@ function render(toTop) {
   document.documentElement.style.setProperty('--hue', S.store.hue);
   document.title = S.store.name;
   const isAdmin = S.route.segs[0] === 'admin';
+  // El tema de la tienda (p. ej. Fantasía) nunca se aplica al panel de administración.
+  if (!isAdmin && S.store.theme === 'fantasia') document.documentElement.dataset.skin = 'fantasia'; else delete document.documentElement.dataset.skin;
   const body = page();
   $('#root').innerHTML = (isAdmin ? body : html`${header()}<main>${body}</main>${footer()}`).s;
   renderOverlay();
@@ -1287,7 +1293,7 @@ const SUBMIT = {
   async settings(f) {
     const fd = new FormData(f), s = S.adm.settings.store;
     const body = {
-      name: fd.get('name'), tagline: fd.get('tagline'), type: fd.get('type'), hue: fdNum(fd, 'hue', s.hue),
+      name: fd.get('name'), tagline: fd.get('tagline'), type: fd.get('type'), theme: fd.get('theme'), hue: fdNum(fd, 'hue', s.hue),
       hero: { eyebrow: fd.get('heroEyebrow'), title: fd.get('heroTitle'), cta: fd.get('heroCta') },
       facets: String(fd.get('facets') || '').split(',').map(x => x.trim()).filter(Boolean),
       perks: String(fd.get('perks') || '').split('\n').map(l => { const [t, ...d] = l.split('|'); return { t: t.trim(), d: d.join('|').trim() }; }).filter(p => p.t),
