@@ -983,6 +983,10 @@ function adminSettings() {
     <div><button class="btn btn-ghost btn-sm" type="submit">Cambiar contraseña</button></div></form>`;
 }
 
+// Los enlaces del correo apuntan a la tienda: en el buzón de salida se abren dentro de la propia aplicación.
+function mailText(text) {
+  return html`${text.split(/(https?:\/\/[^\s]+#\/[^\s]+)/).map((part, i) => i % 2 ? html`<a href="#/${part.split('#/')[1]}">${part}</a>` : part)}`;
+}
 const MAIL_KIND = { order_created: 'Pedido recibido', payment_confirmed: 'Pago confirmado', order_shipped: 'Pedido enviado', order_delivered: 'Pedido entregado', order_cancelled: 'Pedido cancelado', welcome: 'Bienvenida', password_reset: 'Recuperar contraseña' };
 function adminMail() {
   const list = S.adm.emails, v = S.adm.mailView;
@@ -992,7 +996,7 @@ function adminMail() {
     ${list.map(e => html`<tr><td data-label="Fecha">${fmtDateTime(e.createdAt)}</td><td data-label="Para">${e.to}</td><td data-label="Asunto">${e.subject}</td><td data-label="Tipo">${MAIL_KIND[e.kind] || e.kind}</td>
       <td data-label="Estado"><span class="pill ${e.status === 'sent' ? 'good' : e.status === 'failed' ? 'bad' : 'warn'}">${e.status === 'sent' ? (e.transport === 'outbox' ? 'Guardado' : 'Enviado') : e.status === 'failed' ? 'Falló' : 'En cola'}</span></td>
       <td data-label="" class="r"><button class="btn btn-ghost btn-sm" data-act="mail-view" data-id="${e.id}">Ver</button></td></tr>`)}</tbody></table></div>` : html`<p class="pad muted">Todavía no se ha generado ningún correo.</p>`}</div>
-  ${v ? html`<section class="card-box"><header><h3>${v.subject}</h3><button class="link-btn" data-act="mail-close">Cerrar</button></header><div class="pad stack"><p class="small muted">Para: ${v.to}</p><pre class="code-block" style="white-space:pre-wrap">${v.text}</pre></div></section>` : ''}`;
+  ${v ? html`<section class="card-box"><header><h3>${v.subject}</h3><button class="link-btn" data-act="mail-close">Cerrar</button></header><div class="pad stack"><p class="small muted">Para: ${v.to}</p><pre class="code-block" style="white-space:pre-wrap">${mailText(v.text)}</pre></div></section>` : ''}`;
 }
 
 const NAV = [['', 'Resumen', 'home'], ['productos', 'Productos', 'box'], ['inventario', 'Inventario', 'stock'], ['pedidos', 'Pedidos', 'orders'], ['clientes', 'Clientes', 'users'], ['promociones', 'Promociones', 'tag'], ['facturacion', 'Facturación', 'invoice'], ['correos', 'Correos', 'mail'], ['ajustes', 'Ajustes', 'gear']];

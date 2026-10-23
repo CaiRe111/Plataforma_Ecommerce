@@ -1,0 +1,8 @@
+{
+  "name": "demo-publicable",
+  "private": true,
+  "type": "module",
+  "description": "Empaqueta la tienda y su servidor para correr completos en el navegador (demostración sin servidor).",
+  "scripts": { "build": "node build.mjs" },
+  "devDependencies": { "buffer": "6.0.3", "esbuild": "0.25.5", "sql.js": "1.13.0" }
+}

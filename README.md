@@ -8,6 +8,7 @@ Una instalación por cliente, publicada con Cloudflare Tunnel.
 | `app/` | Servidor y tienda (Node 22, SQLite). `npm test` ejecuta las pruebas. |
 | `deploy/` | Docker Compose, instalación, respaldos y plantilla de configuración. |
 | `docs/` | [Instalación](docs/INSTALL.md) · [Wompi](docs/WOMPI.md) · [DIAN](docs/DIAN.md) · [Arquitectura](docs/ARCHITECTURE.md) |
+| `demo/` | Empaqueta la tienda y su servidor para que corran completos en el navegador (demo publicable). `cd demo && npm install && npm run build` genera `dist/demo.html`. |
 | `prototype/` | Prototipo visual aprobado en la fase 1 (solo referencia). |
 
 ## Probar en local
