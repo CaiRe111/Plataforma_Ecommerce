@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plataforma Ecommerce · Caso de estudio</title>
+<meta name="description" content="Tienda en línea y panel de administración para emprendedores y microempresas en Colombia: catálogo, carrito, promociones, clientes fieles, pagos con Wompi y facturación electrónica.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234f46e5'/%3E%3Cstop offset='1' stop-color='%23c026d3'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23g)'/%3E%3Cpath d='M8 10h2.4l2.2 10h9.2l2-7H12' fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='14' cy='24' r='1.6' fill='%23fff'/%3E%3Ccircle cx='21' cy='24' r='1.6' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="site.css">
+<script>try{const t=localStorage.getItem('tema');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#"><i aria-hidden="true"></i>Plataforma Ecommerce</a>
+    <nav aria-label="Secciones">
+      <a href="#compra">Compra</a>
+      <a href="#panel">Panel</a>
+      <a href="#galeria">Galería</a>
+      <a href="#arquitectura">Arquitectura</a>
+      <a href="instructivos.html">Instructivos</a>
+    </nav>
+    <button class="icon-toggle" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro" title="Tema claro / oscuro">◐</button>
+    <a class="btn btn-primary" href="demo/index.html">Abrir demo</a>
+  </div>
+</header>
+
+<main>
+<!-- ============ PORTADA ============ -->
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">Caso de estudio · Comercio electrónico</span>
+      <h1>Una tienda en línea <span class="grad">lista para vender</span> en Colombia</h1>
+      <p class="lead">Catálogo, carrito, promociones, clientes fieles, pagos con Wompi y facturación electrónica. Cada cliente tiene <strong>su propia instalación</strong> y la administra desde un panel sencillo.</p>
+      <ul class="chips" aria-label="Tecnologías y alcance">
+        <li>JavaScript</li><li>Node.js 22</li><li>SQLite</li><li>Wompi</li><li>Factura DIAN</li><li>0 dependencias</li><li>Cloudflare Tunnel</li>
+      </ul>
+      <div class="cta">
+        <a class="btn btn-primary" href="demo/index.html">Probar la demo interactiva</a>
+        <a class="btn btn-ghost" href="#compra">Ver una compra</a>
+        <a class="btn btn-ghost" href="instructivos.html">Instructivos</a>
+      </div>
+      <small>La demo corre completa en el navegador, con datos ficticios. No se cobra ni se envía nada.</small>
+    </div>
+    <div class="vframe" role="group" aria-label="Video del recorrido completo de una compra">
+      <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>estudiolumen.tienda</span></div>
+      <video data-src="videos/recorrido-completo-compra.mp4" poster="videos/recorrido-completo-compra.jpg" muted loop playsinline preload="none" aria-label="Una compra de punta a punta: catálogo, pago aprobado y el pedido avanzando en el panel"></video>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="stats">
+    <div class="stat"><b>5</b><span>tiendas de ejemplo con su propio rubro y paleta</span></div>
+    <div class="stat"><b>2</b><span>temas visuales: Clásico y Fantasía</span></div>
+    <div class="stat"><b>9</b><span>secciones en el panel de administración</span></div>
+    <div class="stat"><b>0</b><span>dependencias externas: Node 22 y SQLite</span></div>
+  </div>
+</div>
+
+<!-- ============ RETO ============ -->
+<section class="section" id="reto">
+  <div class="wrap">
+    <div class="section-head"><div><span class="eyebrow">El reto</span><h2>Vender en línea sin pagar una plataforma cada mes</h2></div>
+      <p>Un emprendedor necesita una tienda que cobre en pesos, emita factura y que pueda manejar sin ayuda. Las plataformas extranjeras cobran en dólares y no resuelven la factura colombiana.</p></div>
+    <div class="cards">
+      <div class="card"><h3>Para el comprador</h3><ul><li>Catálogo con filtros por categoría, precio y marca.</li><li>Carrito, cupones y descuentos automáticos.</li><li>Pago en línea, transferencia o contra entrega.</li><li>Cuenta con historial y beneficios de cliente fiel.</li></ul></div>
+      <div class="card"><h3>Para el dueño de la tienda</h3><ul><li>Resumen de ventas y alertas de inventario.</li><li>Productos, fotos, opciones y existencias.</li><li>Pedidos con estados, de pendiente a entregado.</li><li>Promociones, cupones y programa de clientes fieles.</li></ul></div>
+      <div class="card"><h3>Lo que pide Colombia</h3><ul><li>Precios en COP con IVA incluido por producto.</li><li>Datos para factura: CC, NIT, consumidor final.</li><li>Pagos con Wompi: tarjeta, PSE y Nequi.</li><li>Facturación electrónica ante la DIAN.</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TIENDAS ============ -->
+<section class="section alt" id="tiendas">
+  <div class="wrap">
+    <div class="section-head"><div><span class="eyebrow">Una base, muchos negocios</span><h2>Cinco tiendas de ejemplo</h2></div>
+      <p>El mismo código cambia de paleta según el matiz de cada marca. El tema Fantasía muestra hasta dónde puede llegar la personalización sin tocar el panel.</p></div>
+    <div class="stores">
+      <figure><img loading="lazy" src="capturas/web/01-portada-moda.webp" alt="Portada de Taller Norte, tienda de moda"><figcaption><b>Taller Norte</b>Moda</figcaption></figure>
+      <figure><img loading="lazy" src="capturas/web/02-portada-alimentos.webp" alt="Portada de Casa Maíz, tienda de alimentos"><figcaption><b>Casa Maíz</b>Alimentos</figcaption></figure>
+      <figure><img loading="lazy" src="capturas/web/03-portada-tecnologia.webp" alt="Portada de Voltio, tienda de electrónica"><figcaption><b>Voltio</b>Electrónica</figcaption></figure>
+      <figure><img loading="lazy" src="capturas/web/04-portada-digital.webp" alt="Portada de Estudio Lumen, productos digitales"><figcaption><b>Estudio Lumen</b>Productos digitales</figcaption></figure>
+      <figure><img loading="lazy" src="capturas/web/05-portada-fantasia.webp" alt="Portada de La Taberna del Dragón con el tema Fantasía"><figcaption><b>La Taberna del Dragón</b>Tema Fantasía</figcaption></figure>
+    </div>
+    <div class="vframe" style="margin-top:32px">
+      <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>Cambio entre tiendas de ejemplo</span></div>
+      <video data-src="videos/01-portada-y-tiendas.mp4" poster="videos/01-portada-y-tiendas.jpg" muted loop playsinline preload="none" aria-label="Recorrido por las cinco tiendas de ejemplo"></video>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPRA ============ -->
+<section class="section" id="compra">
+  <div class="wrap">
+    <div class="section-head"><div><span class="eyebrow">Experiencia del comprador</span><h2>Una compra, paso a paso</h2></div>
+      <p>El servidor recalcula precios, descuentos y envío al confirmar: el navegador solo muestra. Así nadie puede alterar un total desde su equipo.</p></div>
+    <div class="flow">
+      <article>
+        <div class="vframe"><div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>Catálogo</span></div>
+          <video data-src="videos/02-catalogo-y-filtros.mp4" poster="videos/02-catalogo-y-filtros.jpg" muted loop playsinline preload="none" aria-label="Catálogo con filtros, orden y búsqueda"></video></div>
+        <div><span class="num">1</span><div class="who">Comprador</div><h3>Encuentra el producto</h3>
+          <p>Filtros por categoría, rango de precio y atributos como la marca o la talla. Los filtros activos se ven como etiquetas que se quitan con un clic, y el buscador revisa nombre, categoría, atributos y descripción.</p></div>
+      </article>
+      <article>
+        <div class="vframe"><div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>Ficha de producto</span></div>
+          <video data-src="videos/03-ficha-y-carrito.mp4" poster="videos/03-ficha-y-carrito.jpg" muted loop playsinline preload="none" aria-label="Ficha de producto, opciones, cantidad y carrito lateral"></video></div>
+        <div><span class="num">2</span><div class="who">Comprador</div><h3>Elige opciones y agrega al carrito</h3>
+          <p>Talla, color o formato, cantidad y existencias en vivo. El carrito lateral permite ajustar sin salir de la página y el inventario se reserva al confirmar el pedido.</p></div>
+      </article>
+      <article>
+        <div class="vframe"><div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>Ofertas</span></div>
+          <video data-src="videos/04-ofertas-y-cupon.mp4" poster="videos/04-ofertas-y-cupon.jpg" muted loop playsinline preload="none" aria-label="Página de ofertas y aplicación de un cupón"></video></div>
+        <div><span class="num">3</span><div class="who">Comprador</div><h3>Aprovecha promociones y cupones</h3>
+          <p>Descuentos por categoría que se aplican solos, cupones con compra mínima y beneficios exclusivos para clientes fieles. El resumen muestra cuánto falta para el envío gratis.</p></div>
+      </article>
+      <article>
+        <div class="vframe"><div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>Finalizar compra</span></div>
+          <video data-src="videos/05-compra-y-pago-aprobado.mp4" poster="videos/05-compra-y-pago-aprobado.jpg" muted loop playsinline preload="none" aria-label="Pago en tres pasos y pasarela simulada con pago aprobado"></video></div>
+        <div><span class="num">4</span><div class="who">Comprador</div><h3>Paga en tres pasos</h3>
+          <p>Datos y entrega, método de pago y revisión. Incluye los datos para la factura electrónica: cédula, NIT o consumidor final.</p>
+          <p>En la demo una <strong>pasarela simulada</strong> reemplaza a Wompi: tú decides si el pago se aprueba, se rechaza o queda pendiente.</p></div>
+      </article>
+      <article>
+        <div class="vframe"><div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>Pago rechazado</span></div>
+          <video data-src="videos/06-pago-rechazado-y-reintento.mp4" poster="videos/06-pago-rechazado-y-reintento.jpg" muted loop playsinline preload="none" aria-label="Pago rechazado y nuevo intento aprobado"></video></div>
+        <div><span class="num">5</span><div class="who">Comprador</div><h3>Si el pago falla, reintenta</h3>
+          <p>El pedido queda pendiente con el inventario reservado y el comprador puede completar el pago sin volver a llenar nada. Los pedidos en línea que nunca se pagan expiran solos y devuelven las existencias.</p></div>
+      </article>
+      <article>
+        <div class="vframe"><div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>Mi cuenta</span></div>
+          <video data-src="videos/07-cuenta-y-cliente-fiel.mp4" poster="videos/07-cuenta-y-cliente-fiel.jpg" muted loop playsinline preload="none" aria-label="Inicio de sesión de un cliente fiel y sus precios especiales"></video></div>
+        <div><span class="num">6</span><div class="who">Cliente fiel</div><h3>Beneficios por comprar seguido</h3>
+          <p>Al acumular un monto de compras el cliente pasa a <strong>fiel</strong>: descuento permanente, envío gratis y promociones exclusivas que se ven al iniciar sesión.</p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PANEL ============ -->
+<section class="section alt" id="panel">
+  <div class="wrap">
+    <div class="section-head"><div><span class="eyebrow">Panel de administración</span><h2>El negocio en una sola pantalla</h2></div>
+      <p>Siempre sobrio, sin importar el tema de la tienda. Pensado para que el dueño lo use sin capacitación.</p></div>
+    <div class="vgrid">
+      <figure><div class="vframe"><video data-src="videos/08-panel-resumen.mp4" poster="videos/08-panel-resumen.jpg" muted loop playsinline preload="none" aria-label="Resumen de ventas del panel"></video></div><figcaption><b>Resumen</b>Ventas de 14 días, pedidos por atender e inventario en alerta.</figcaption></figure>
+      <figure><div class="vframe"><video data-src="videos/09-crear-producto.mp4" poster="videos/09-crear-producto.jpg" muted loop playsinline preload="none" aria-label="Creación de un producto"></video></div><figcaption><b>Productos</b>Precio con IVA, precio anterior, opciones y categoría nueva al vuelo.</figcaption></figure>
+      <figure><div class="vframe"><video data-src="videos/10-inventario.mp4" poster="videos/10-inventario.jpg" muted loop playsinline preload="none" aria-label="Ajuste de existencias"></video></div><figcaption><b>Inventario</b>Sumar, restar o escribir existencias; avisos de stock bajo y agotado.</figcaption></figure>
+      <figure><div class="vframe"><video data-src="videos/11-gestion-de-pedidos.mp4" poster="videos/11-gestion-de-pedidos.jpg" muted loop playsinline preload="none" aria-label="Gestión de un pedido"></video></div><figcaption><b>Pedidos</b>De pendiente a entregado, con línea de tiempo y correo al cliente en los cambios clave.</figcaption></figure>
+      <figure><div class="vframe"><video data-src="videos/12-promociones.mp4" poster="videos/12-promociones.jpg" muted loop playsinline preload="none" aria-label="Creación de una promoción con cupón"></video></div><figcaption><b>Promociones</b>Porcentaje, monto fijo o envío gratis, con cupón, compra mínima y fecha.</figcaption></figure>
+      <figure><div class="vframe"><video data-src="videos/13-clientes-y-programa-fiel.mp4" poster="videos/13-clientes-y-programa-fiel.jpg" muted loop playsinline preload="none" aria-label="Reglas del programa de clientes fieles"></video></div><figcaption><b>Clientes</b>Reglas del programa fiel y cambio manual de tipo de cliente.</figcaption></figure>
+      <figure><div class="vframe"><video data-src="videos/14-facturacion-y-correos.mp4" poster="videos/14-facturacion-y-correos.jpg" muted loop playsinline preload="none" aria-label="Facturación electrónica y buzón de correos"></video></div><figcaption><b>Facturación y correos</b>Emisor, resolución DIAN y buzón de correos enviados.</figcaption></figure>
+      <figure><div class="vframe"><video data-src="videos/15-cambiar-tema.mp4" poster="videos/15-cambiar-tema.jpg" muted loop playsinline preload="none" aria-label="Cambio del tema visual de la tienda"></video></div><figcaption><b>Ajustes</b>Datos de la tienda, color de marca y tema visual.</figcaption></figure>
+      <figure><div class="vframe movil"><video data-src="videos/16-movil.mp4" poster="videos/16-movil.jpg" muted loop playsinline preload="none" aria-label="La tienda en un teléfono"></video></div><figcaption><b>Móvil</b>Menú lateral, filtros en hoja inferior y compra completa desde el teléfono.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALERÍA ============ -->
+<section class="section" id="galeria">
+  <div class="wrap">
+    <div class="section-head"><div><span class="eyebrow">Galería</span><h2>Capturas de pantalla</h2></div>
+      <p>Pulsa una imagen para verla completa. Los originales en PNG están a 2880 px de ancho.</p></div>
+    <div class="filters" id="filtros" role="group" aria-label="Filtrar capturas por categoría"></div>
+    <div class="gallery" id="galeria-grid"></div>
+  </div>
+</section>
+
+<!-- ============ ARQUITECTURA ============ -->
+<section class="section alt" id="arquitectura">
+  <div class="wrap">
+    <div class="section-head"><div><span class="eyebrow">Por dentro</span><h2>Arquitectura simple, decisiones deliberadas</h2></div>
+      <p>Un proceso de Node, una base SQLite por cliente y nada que compilar: se instala con Docker y se respalda con un comando.</p></div>
+    <div class="arch">
+      <div class="node"><h3>Navegador</h3><ul><li>Tienda y panel en una SPA con rutas <code>#/</code></li><li>JavaScript y CSS puros, fuentes locales</li><li>Temas por variables CSS</li></ul></div>
+      <div class="arrow" aria-hidden="true">⇄</div>
+      <div class="node"><h3>Servidor Node 22</h3><ul><li>API pública y de administración</li><li>Precios compartidos con el navegador y recalculados al comprar</li><li>Wompi, correo y cola de facturas</li></ul></div>
+      <div class="arrow" aria-hidden="true">→</div>
+      <div class="node"><h3>SQLite</h3><ul><li><code>node:sqlite</code> en modo WAL</li><li>Un archivo por cliente</li><li>Migraciones numeradas y respaldos</li></ul></div>
+    </div>
+    <p class="tunnel">Cada instalación se publica con un túnel de Cloudflare (<code>cloudflared</code>): el servidor no abre puertos y el dominio queda en la cuenta del cliente.</p>
+    <div class="cards">
+      <div class="card"><h3>Una instalación por cliente</h3><p>Datos, dominio y configuración aislados. Sin un sistema multiempresa que complique la seguridad.</p></div>
+      <div class="card"><h3>La demo es el mismo código</h3><p>El servidor real corre dentro del navegador: SQLite compilado a WebAssembly y la red reemplazada por llamadas locales. Lo que ves en la demo es lo que se instala.</p></div>
+      <div class="card"><h3>Pagos con Wompi</h3><p>Checkout firmado, webhook con verificación de firma, monto y moneda, y consulta del estado real al volver. Las llaves viven solo en variables de entorno.</p></div>
+      <div class="card"><h3>Facturación electrónica</h3><p>Documento, numeración por resolución, cola de envío y proveedores intercambiables. El envío a la DIAN depende del proveedor tecnológico que se elija.</p></div>
+      <div class="card"><h3>Seguridad</h3><p>Contraseñas con scrypt, sesiones con hash en la base, cookies <code>HttpOnly</code>, CSP estricta, límites de intentos y verificación de origen.</p></div>
+      <div class="card"><h3>Probado</h3><p>39 pruebas automáticas sobre precios, promociones, pedidos, Wompi y facturación con <code>node --test</code>.</p></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><b style="color:#fff">Plataforma Ecommerce</b><br>Caso de estudio · datos ficticios en toda la demostración.</div>
+    <div>© <a href="https://www.kayrelabs.com/" target="_blank" rel="noopener">KayreLabs</a> · <a href="demo/index.html">Abrir la demo</a> · <a href="instructivos.html">Instructivos</a></div>
+  </div>
+</footer>
+
+<dialog id="visor" aria-label="Visor de capturas">
+  <div class="visor" id="visor-in">
+    <div class="head">
+      <p id="visor-pie"></p>
+      <button type="button" id="v-prev" aria-label="Captura anterior">←</button>
+      <button type="button" id="v-next" aria-label="Captura siguiente">→</button>
+      <a id="v-orig" href="#" target="_blank" rel="noopener">PNG original</a>
+      <button type="button" id="v-cerrar">Cerrar (Esc)</button>
+    </div>
+    <div class="stage"><img id="visor-img" alt=""></div>
+  </div>
+</dialog>
+
+<script>
+/* ---- tema claro / oscuro ---- */
+document.getElementById('tema').addEventListener('click', () => {
+  const r = document.documentElement;
+  const oscuro = r.dataset.theme ? r.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  r.dataset.theme = oscuro ? 'light' : 'dark';
+  try { localStorage.setItem('tema', r.dataset.theme); } catch (e) { /* sin almacenamiento */ }
+});
+/* ---- videos: se cargan y reproducen solo cuando están a la vista ---- */
+(function () {
+  const reducir = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    const v = e.target;
+    if (e.isIntersecting) { if (!v.getAttribute('src')) v.src = v.dataset.src; if (!reducir) v.play().catch(() => {}); }
+    else v.pause();
+  }), { threshold: .35 });
+  document.querySelectorAll('video[data-src]').forEach(v => {
+    if (reducir) v.controls = true;
+    v.addEventListener('click', () => { v.paused ? v.play().catch(() => {}) : v.pause(); });
+    io.observe(v);
+  });
+})();
+/* ---- galería ---- */
+const CAPTURAS = [
+  ['01-portada-moda', 'Tienda', 'Portada · moda', 'Taller Norte con la barra de la demo para cambiar de negocio.'],
+  ['02-portada-alimentos', 'Tienda', 'Portada · alimentos', 'Casa Maíz: la paleta sale del matiz de la marca.'],
+  ['03-portada-tecnologia', 'Tienda', 'Portada · electrónica', 'Voltio, con franja de ofertas vigentes.'],
+  ['04-portada-digital', 'Tienda', 'Portada · productos digitales', 'Estudio Lumen: cursos y plantillas, sin envío.'],
+  ['05-portada-fantasia', 'Tienda', 'Portada · tema Fantasía', 'Pergamino, marcos dorados y tipografía medieval.'],
+  ['06-catalogo-con-filtros', 'Tienda', 'Catálogo', 'Filtros por categoría, precio y marca, con orden.'],
+  ['07-ficha-de-producto', 'Tienda', 'Ficha de producto', 'Opciones, cantidad, existencias y especificaciones.'],
+  ['08-carrito-lateral', 'Tienda', 'Carrito lateral', 'Ajuste de cantidades sin salir de la página.'],
+  ['09-ofertas-y-cupones', 'Tienda', 'Ofertas', 'Promociones automáticas, cupones y beneficios para fieles.'],
+  ['10-carrito-con-cupon', 'Compra', 'Carrito con cupón', 'Descuento aplicado y lo que falta para el envío gratis.'],
+  ['11-pago-datos', 'Compra', 'Pago · datos', 'Contacto, datos para la factura y entrega.'],
+  ['12-pago-revision', 'Compra', 'Pago · revisión', 'Resumen antes de confirmar.'],
+  ['13-pasarela-simulada', 'Compra', 'Pasarela simulada', 'En la demo eliges el resultado del pago.'],
+  ['14-pedido-confirmado', 'Compra', 'Pedido confirmado', 'Estado del pedido con su línea de tiempo.'],
+  ['15-cuenta-cliente-fiel', 'Compra', 'Cuenta de cliente fiel', 'Beneficios y pedidos del cliente.'],
+  ['16-panel-resumen', 'Panel', 'Resumen', 'Ventas de 14 días, pedidos recientes e inventario en alerta.'],
+  ['17-panel-productos', 'Panel', 'Productos', 'Precio y estado editables desde la tabla.'],
+  ['18-panel-editar-producto', 'Panel', 'Editar producto', 'Información, precios con IVA, opciones e imagen.'],
+  ['19-panel-inventario', 'Panel', 'Inventario', 'Existencias, stock bajo y agotados.'],
+  ['20-panel-pedidos', 'Panel', 'Pedidos', 'Filtrados por estado, con pago y factura.'],
+  ['21-panel-detalle-de-pedido', 'Panel', 'Detalle de pedido', 'Línea de tiempo, comprador y siguiente paso.'],
+  ['22-panel-clientes', 'Panel', 'Clientes', 'Programa de clientes fieles.'],
+  ['23-panel-promociones', 'Panel', 'Promociones', 'Activas, con cupón o automáticas.'],
+  ['24-panel-facturacion', 'Panel', 'Facturación electrónica', 'Emisor, resolución y documentos emitidos.'],
+  ['25-panel-correos', 'Panel', 'Correos', 'Buzón de correos transaccionales.'],
+  ['26-panel-ajustes', 'Panel', 'Ajustes', 'Datos de la tienda, color y tema visual.'],
+  ['27-modo-oscuro', 'Móvil y tema', 'Modo oscuro', 'La tienda respeta el tema del sistema.'],
+  ['28-movil-portada', 'Móvil y tema', 'Móvil · portada', 'Diseño adaptado al teléfono.'],
+  ['29-movil-menu', 'Móvil y tema', 'Móvil · menú', 'Categorías en un cajón lateral.'],
+  ['30-movil-carrito', 'Móvil y tema', 'Móvil · carrito', 'Carrito a pantalla completa.']
+];
+(function () {
+  const grid = document.getElementById('galeria-grid'), fil = document.getElementById('filtros');
+  const cats = ['Todas', ...new Set(CAPTURAS.map(c => c[1]))];
+  let cat = 'Todas', lista = CAPTURAS;
+  const movil = c => c[0].includes('movil');
+  fil.innerHTML = cats.map(c => `<button type="button" aria-pressed="${c === cat}" data-c="${c}">${c}</button>`).join('');
+  function pintar() {
+    lista = CAPTURAS.filter(c => cat === 'Todas' || c[1] === cat);
+    grid.innerHTML = lista.map((c, i) => `<figure class="shot ${movil(c) ? 'movil' : ''}"><button type="button" data-i="${i}" aria-label="Ampliar: ${c[2]}"><img loading="lazy" decoding="async" src="capturas/web/${c[0]}.webp" alt="${c[2]}. ${c[3]}"></button><figcaption><b>${c[2]}</b>${c[3]}</figcaption></figure>`).join('');
+  }
+  fil.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; cat = b.dataset.c; fil.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); pintar(); });
+  grid.addEventListener('click', e => { const b = e.target.closest('button[data-i]'); if (b) abrir(+b.dataset.i); });
+  pintar();
+  const dlg = document.getElementById('visor'), img = document.getElementById('visor-img'), pie = document.getElementById('visor-pie'), orig = document.getElementById('v-orig'), box = document.getElementById('visor-in');
+  let ix = 0;
+  function abrir(i) {
+    ix = (i + lista.length) % lista.length; const c = lista[ix];
+    img.src = `capturas/web/${c[0]}.webp`; img.alt = `${c[2]}. ${c[3]}`; orig.href = `capturas/${c[0]}.png`;
+    pie.textContent = `${ix + 1} / ${lista.length} · ${c[2]} — ${c[3]}`; box.classList.toggle('movil', movil(c));
+    if (!dlg.open) dlg.showModal(); dlg.querySelector('.stage').scrollTop = 0;
+  }
+  document.getElementById('v-prev').onclick = () => abrir(ix - 1);
+  document.getElementById('v-next').onclick = () => abrir(ix + 1);
+  document.getElementById('v-cerrar').onclick = () => dlg.close();
+  dlg.addEventListener('keydown', e => { if (e.key === 'ArrowLeft') abrir(ix - 1); if (e.key === 'ArrowRight') abrir(ix + 1); });
+  dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+})();
+</script>
+</body>
+</html>

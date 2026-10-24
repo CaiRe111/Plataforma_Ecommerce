@@ -44,7 +44,10 @@ const demoCss = `
 #demobar .d-lnk, #demobar button { color: #cdd3e2; background: none; border: 0; padding: 4px 2px; font: inherit; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 #demobar .d-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 `;
-const html = `<meta charset="utf-8">
+const html = `<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Demo Tienda Online</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>${css}${demoCss}</style>
@@ -53,4 +56,7 @@ const html = `<meta charset="utf-8">
 <script type="module">${js}</script>
 `;
 fs.writeFileSync(path.join(HERE, 'dist', 'demo.html'), html);
+// Copia publicable junto a la página del proyecto (site/).
+fs.mkdirSync(path.join(HERE, '..', 'site', 'demo'), { recursive: true });
+fs.writeFileSync(path.join(HERE, '..', 'site', 'demo', 'index.html'), html);
 console.log(`dist/demo.html: ${(html.length / 1e6).toFixed(2)} MB`);
