@@ -259,3 +259,5 @@ footer a { color: #fff; }
 }
 @media (max-width: 960px) { .hero .wrap { grid-template-columns: minmax(0, 1fr); gap: 32px; } }
 .vgrid .vframe.movil { max-width: 190px; }
+.top .btn-primary { white-space: nowrap; }
+@media (max-width: 420px) { .top .wrap { gap: 12px; } .brand { font-size: 16px; } }
