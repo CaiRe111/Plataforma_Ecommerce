@@ -44,7 +44,8 @@ const demoCss = `
 #demobar .d-lnk, #demobar button { color: #cdd3e2; background: none; border: 0; padding: 4px 2px; font: inherit; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 #demobar .d-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 `;
-const html = `<title>Demo Tienda Online</title>
+const html = `<meta charset="utf-8">
+<title>Demo Tienda Online</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>${css}${demoCss}</style>
 <div id="root"></div><div id="overlay"></div><div id="toast" class="toast" role="status" aria-live="polite"></div>
