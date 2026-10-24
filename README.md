@@ -10,6 +10,15 @@ Una instalación por cliente, publicada con Cloudflare Tunnel.
 | `docs/` | [Instalación](docs/INSTALL.md) · [Wompi](docs/WOMPI.md) · [DIAN](docs/DIAN.md) · [Arquitectura](docs/ARCHITECTURE.md) |
 | `demo/` | Empaqueta la tienda y su servidor para que corran completos en el navegador (demo publicable). `cd demo && npm install && npm run build` genera `dist/demo.html`. |
 | `prototype/` | Prototipo visual aprobado en la fase 1 (solo referencia). |
+| `site/` | Página del proyecto para el portafolio: `index.html` (caso de estudio con videos y galería), `instructivos.html`, `demo/` (copia de la demo), `videos/`, `gifs/` y `capturas/`. Se publica tal cual; `wrangler.jsonc` la sirve como sitio estático. |
+
+## Página del proyecto
+
+```bash
+cd demo && npm install && npm run build   # genera dist/demo.html y site/demo/index.html
+node grabar.cjs                           # regraba videos, GIF y capturas de site/ (Playwright y ffmpeg)
+npx wrangler deploy                       # desde la raíz: publica site/ en Cloudflare
+```
 
 ## Probar en local
 

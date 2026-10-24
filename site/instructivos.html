@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Instructivos · Plataforma Ecommerce</title>
+<meta name="description" content="Cómo usar la tienda y el panel de administración de la Plataforma Ecommerce, tarea por tarea, con un video de la demo en cada paso.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234f46e5'/%3E%3Cpath d='M8 10h2.4l2.2 10h9.2l2-7H12' fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="site.css">
+<script>try{const t=localStorage.getItem('tema');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="index.html"><i aria-hidden="true"></i>Plataforma Ecommerce</a>
+    <nav aria-label="Secciones">
+      <a href="index.html">Inicio</a>
+      <a href="#empezar">Empezar</a>
+      <a href="#comprar">Comprar</a>
+      <a href="#administrar">Administrar</a>
+    </nav>
+    <button class="icon-toggle" id="tema" type="button" aria-label="Cambiar entre tema claro y oscuro" title="Tema claro / oscuro">◐</button>
+    <a class="btn btn-primary" href="demo/index.html">Abrir demo</a>
+  </div>
+</header>
+
+<main>
+<section class="hero" style="padding-block:56px 40px">
+  <div class="wrap" style="display:block">
+    <span class="eyebrow">Instructivos</span>
+    <h1>Cómo usar la tienda <span class="grad">y el panel</span>, tarea por tarea</h1>
+    <p class="lead">Cada tarea trae los pasos y un video grabado sobre la demo. Ábrela en otra pestaña y síguelos: todo usa datos ficticios y nada se cobra ni se envía.</p>
+  </div>
+</section>
+
+<div class="wrap guide" style="padding-block:24px 72px">
+  <nav class="toc" aria-label="Índice">
+    <a href="#empezar">Empezar</a>
+    <a href="#buscar">Buscar productos</a>
+    <a href="#carrito">Agregar al carrito</a>
+    <a href="#cupon">Usar un cupón</a>
+    <a href="#pagar">Pagar un pedido</a>
+    <a href="#rechazo">Si el pago falla</a>
+    <a href="#cuenta">Cuenta y cliente fiel</a>
+    <a href="#resumen">Resumen del panel</a>
+    <a href="#producto">Crear un producto</a>
+    <a href="#inventario">Ajustar inventario</a>
+    <a href="#pedidos">Atender pedidos</a>
+    <a href="#promos">Crear una promoción</a>
+    <a href="#clientes">Clientes fieles</a>
+    <a href="#factura">Facturación y correos</a>
+    <a href="#tema-tienda">Cambiar el tema</a>
+    <a href="#movil">Desde el teléfono</a>
+  </nav>
+
+  <div>
+    <!-- ============ EMPEZAR ============ -->
+    <section id="empezar">
+      <span class="eyebrow">Primeros pasos</span>
+      <h2>Abrir la demo y elegir una tienda</h2>
+      <p class="intro">La demo trae seis negocios de ejemplo con productos, promociones, pedidos y dos clientes registrados.</p>
+      <div class="task">
+        <div><h3>Entrar a la demo</h3>
+          <ol>
+            <li>Pulsa <b>Abrir demo</b>. Arriba aparece una barra oscura que solo existe en la demostración.</li>
+            <li>En el selector de la barra elige un negocio: moda, alimentos, electrónica, productos digitales, café o el tema Fantasía.</li>
+            <li>Con <b>Tienda</b> y <b>Panel</b> pasas de la vista del comprador a la del dueño. En la demo el panel abre sin contraseña.</li>
+            <li><b>Correos enviados</b> muestra los correos que la tienda habría enviado.</li>
+            <li><b>Restablecer</b> borra tus cambios y vuelve a los datos de ejemplo.</li>
+          </ol>
+          <p class="try" style="margin-top:14px"><b>Cuentas</b>Cliente normal <code>valentina.rios@correo.com</code> · cliente fiel <code>mateo.gomez@correo.com</code> · contraseña <code>demo12345</code></p></div>
+        <div class="vframe"><video data-src="videos/01-portada-y-tiendas.mp4" poster="videos/01-portada-y-tiendas.jpg" muted loop playsinline preload="none" aria-label="Cambio entre las tiendas de ejemplo"></video></div>
+      </div>
+    </section>
+
+    <!-- ============ COMPRAR ============ -->
+    <section id="comprar">
+      <span class="eyebrow">Tienda</span>
+      <h2>Comprar como cliente</h2>
+      <p class="intro">Lo que ve y hace quien entra a la tienda. Los precios ya incluyen IVA.</p>
+      <div class="task" id="buscar">
+        <div><h3>Buscar productos</h3>
+          <ol>
+            <li>Entra a una categoría desde el menú superior o pulsa el botón principal de la portada.</li>
+            <li>En la columna izquierda filtra por <b>categoría</b>, <b>rango de precio</b> o atributos como la marca.</li>
+            <li>Cambia el orden con <b>Ordenar</b>: destacados, precio de menor a mayor o al revés, o nombre.</li>
+            <li>Quita un filtro con la <b>×</b> de su etiqueta.</li>
+            <li>Escribe en <b>Buscar productos</b> y presiona Enter.</li>
+          </ol></div>
+        <div class="vframe"><video data-src="videos/02-catalogo-y-filtros.mp4" poster="videos/02-catalogo-y-filtros.jpg" muted loop playsinline preload="none" aria-label="Catálogo con filtros"></video></div>
+      </div>
+      <div class="task" id="carrito">
+        <div><h3>Agregar al carrito</h3>
+          <ol>
+            <li>Abre un producto. Las miniaturas cambian la vista de la imagen.</li>
+            <li>Elige las <b>opciones</b> (talla, color, formato) y la <b>cantidad</b>.</li>
+            <li>Pulsa <b>Agregar al carrito</b>: se abre el carrito lateral, donde ajustas cantidades.</li>
+            <li><b>Ver carrito</b> lleva al resumen completo, con envío y descuentos.</li>
+          </ol></div>
+        <div class="vframe"><video data-src="videos/03-ficha-y-carrito.mp4" poster="videos/03-ficha-y-carrito.jpg" muted loop playsinline preload="none" aria-label="Ficha de producto y carrito"></video></div>
+      </div>
+      <div class="task" id="cupon">
+        <div><h3>Usar un cupón</h3>
+          <ol>
+            <li>Entra a <b>Ofertas</b> para ver las promociones vigentes.</li>
+            <li>Las que tienen código muestran <b>Aplicar al carrito</b>; las demás se aplican solas.</li>
+            <li>También puedes escribir el código en el carrito, por ejemplo <code>PRIMERA10</code>.</li>
+            <li>El resumen muestra el descuento y cuánto falta para el envío gratis.</li>
+          </ol></div>
+        <div class="vframe"><video data-src="videos/04-ofertas-y-cupon.mp4" poster="videos/04-ofertas-y-cupon.jpg" muted loop playsinline preload="none" aria-label="Ofertas y cupón"></video></div>
+      </div>
+      <div class="task" id="pagar">
+        <div><h3>Pagar un pedido</h3>
+          <ol>
+            <li>Pulsa <b>Finalizar compra</b>.</li>
+            <li><b>Datos y entrega:</b> correo, nombre, teléfono, documento para la factura y dirección. En productos digitales no se pide dirección.</li>
+            <li><b>Pago:</b> elige pago en línea, transferencia o contra entrega, según lo que la tienda tenga activo.</li>
+            <li><b>Revisión:</b> confirma. Con pago en línea pasas a la pasarela.</li>
+            <li>En la demo, la pasarela es simulada: elige el medio y pulsa <b>Simular pago aprobado</b>.</li>
+          </ol></div>
+        <div class="vframe"><video data-src="videos/05-compra-y-pago-aprobado.mp4" poster="videos/05-compra-y-pago-aprobado.jpg" muted loop playsinline preload="none" aria-label="Pago de un pedido"></video></div>
+      </div>
+      <div class="task" id="rechazo">
+        <div><h3>Si el pago falla</h3>
+          <ol>
+            <li>En la pasarela pulsa <b>Simular pago rechazado</b>.</li>
+            <li>El pedido queda pendiente y los productos siguen reservados.</li>
+            <li>Pulsa <b>Completar el pago</b> para intentarlo de nuevo sin llenar nada otra vez.</li>
+          </ol></div>
+        <div class="vframe"><video data-src="videos/06-pago-rechazado-y-reintento.mp4" poster="videos/06-pago-rechazado-y-reintento.jpg" muted loop playsinline preload="none" aria-label="Pago rechazado y reintento"></video></div>
+      </div>
+      <div class="task" id="cuenta">
+        <div><h3>Cuenta y cliente fiel</h3>
+          <ol>
+            <li>Pulsa el ícono de persona y entra con <code>mateo.gomez@correo.com</code> / <code>demo12345</code>.</li>
+            <li>En <b>Mi cuenta</b> ves tus pedidos y beneficios.</li>
+            <li>En <b>Ofertas</b> aparecen las promociones exclusivas para clientes fieles.</li>
+            <li>Los precios del catálogo ya muestran tu descuento.</li>
+          </ol></div>
+        <div class="vframe"><video data-src="videos/07-cuenta-y-cliente-fiel.mp4" poster="videos/07-cuenta-y-cliente-fiel.jpg" muted loop playsinline preload="none" aria-label="Cuenta de cliente fiel"></video></div>
+      </div>
+    </section>
+
+    <!-- ============ ADMINISTRAR ============ -->
+    <section id="administrar">
+      <span class="eyebrow">Panel</span>
+      <h2>Administrar la tienda</h2>
+      <p class="intro">Desde la barra de la demo pulsa <b>Panel</b>. En una instalación real se entra con el correo y la contraseña del administrador.</p>
+      <div class="task" id="resumen">
+        <div><h3>Leer el resumen</h3>
+          <ol>
+            <li><b>Resumen</b> muestra las ventas de 14 días, el ticket promedio, los pedidos por atender y el stock en alerta.</li>
+            <li>La gráfica marca el día de hoy con el color de la marca.</li>
+            <li>Los pedidos recientes y el inventario en alerta enlazan a su detalle.</li>
+          </ol></div>
+        <div class="vframe"><video data-src="videos/08-panel-resumen.mp4" poster="videos/08-panel-resumen.jpg" muted loop playsinline preload="none" aria-label="Resumen del panel"></video></div>
+      </div>
+      <div class="task" id="producto">
+        <div><h3>Crear un producto</h3>
+          <ol>
+            <li>Ve a <b>Productos</b> y pulsa <b>Nuevo producto</b>.</li>
+            <li>Escribe nombre, descripción y categoría. Si la categoría no existe, se crea.</li>
+            <li>Pon el <b>precio con IVA</b>. Si llenas un <b>precio anterior</b> mayor, se muestra como oferta.</li>
+            <li>Define las unidades y las opciones, una por línea: <code>Talla: S, M, L</code>.</li>
+            <li>Pulsa <b>Crear producto</b>: ya aparece en la tienda.</li>
+          </ol></div>
+        <div class="vframe"><video data-src="videos/09-crear-producto.mp4" poster="videos/09-crear-producto.jpg" muted loop playsinline preload="none" aria-label="Creación de un producto"></video></div>
+      </div>
+      <div class="task" id="inventario">
+        <div><h3>Ajustar el inventario</h3>
+          <ol>
+            <li>En <b>Inventario</b> usa <b>+</b> y <b>−</b> o escribe la cantidad directamente.</li>
+            <li>El estado cambia solo: disponible, stock bajo o agotado.</li>
+            <li>Las pestañas filtran los productos con stock bajo o agotados.</li>
+          </ol></div>
+        <div class="vframe"><video data-src="videos/10-inventario.mp4" poster="videos/10-inventario.jpg" muted loop playsinline preload="none" aria-label="Ajuste de inventario"></video></div>
+      </div>
+      <div class="task" id="pedidos">
+        <div><h3>Atender pedidos</h3>
+          <ol>
+            <li>En <b>Pedidos</b> filtra por estado con las pestañas.</li>
+            <li>Abre un pedido para ver el comprador, los productos y la línea de tiempo.</li>
+            <li>Pulsa el botón principal para avanzarlo: confirmar el pago recibido, empezar a preparar, marcar como enviado o como entregado. Los pagos en línea se confirman solos al aprobarse.</li>
+            <li>Si cancelas un pedido, las existencias vuelven al inventario.</li>
+          </ol></div>
+        <div class="vframe"><video data-src="videos/11-gestion-de-pedidos.mp4" poster="videos/11-gestion-de-pedidos.jpg" muted loop playsinline preload="none" aria-label="Gestión de pedidos"></video></div>
+      </div>
+      <div class="task" id="promos">
+        <div><h3>Crear una promoción</h3>
+          <ol>
+            <li>En <b>Promociones</b> pulsa <b>Nueva promoción</b>.</li>
+            <li>Elige el tipo: porcentaje, monto fijo o envío gratis, y su valor.</li>
+            <li>Define a qué aplica (toda la tienda o una categoría) y la compra mínima.</li>
+            <li>Escribe un <b>código de cupón</b> o déjalo vacío para que se aplique solo.</li>
+            <li>Elige la audiencia (todos o solo fieles) y una fecha de fin opcional.</li>
+          </ol></div>
+        <div class="vframe"><video data-src="videos/12-promociones.mp4" poster="videos/12-promociones.jpg" muted loop playsinline preload="none" aria-label="Creación de una promoción"></video></div>
+      </div>
+      <div class="task" id="clientes">
+        <div><h3>Configurar clientes fieles</h3>
+          <ol>
+            <li>En <b>Clientes</b> define el descuento permanente y el monto de compras para volverse fiel.</li>
+            <li>Activa, si quieres, el envío gratis siempre para fieles.</li>
+            <li>En la tabla puedes pasar a un cliente a fiel o a normal a mano, o dejarlo en automático.</li>
+          </ol></div>
+        <div class="vframe"><video data-src="videos/13-clientes-y-programa-fiel.mp4" poster="videos/13-clientes-y-programa-fiel.jpg" muted loop playsinline preload="none" aria-label="Clientes y programa fiel"></video></div>
+      </div>
+      <div class="task" id="factura">
+        <div><h3>Facturación y correos</h3>
+          <ol>
+            <li>En <b>Facturación</b> están los datos del emisor, el régimen, el IVA del envío y la resolución de numeración.</li>
+            <li>Cada pedido pagado genera su documento en la cola de emisión.</li>
+            <li><b>Correos</b> lista los correos transaccionales: pedido recibido, pago confirmado, envío y entrega.</li>
+          </ol>
+          <p class="try" style="margin-top:14px"><b>Nota</b>En la demo los documentos son internos, sin validez fiscal: el envío a la DIAN depende del proveedor tecnológico elegido.</p></div>
+        <div class="vframe"><video data-src="videos/14-facturacion-y-correos.mp4" poster="videos/14-facturacion-y-correos.jpg" muted loop playsinline preload="none" aria-label="Facturación y correos"></video></div>
+      </div>
+      <div class="task" id="tema-tienda">
+        <div><h3>Cambiar el tema de la tienda</h3>
+          <ol>
+            <li>En <b>Ajustes</b> elige el <b>tema visual</b>: Clásico o Fantasía.</li>
+            <li>Guarda y pulsa <b>Ver tienda</b>.</li>
+            <li>El tema cambia solo la tienda; el panel siempre se ve igual.</li>
+          </ol></div>
+        <div class="vframe"><video data-src="videos/15-cambiar-tema.mp4" poster="videos/15-cambiar-tema.jpg" muted loop playsinline preload="none" aria-label="Cambio de tema"></video></div>
+      </div>
+      <div class="task" id="movil">
+        <div><h3>Desde el teléfono</h3>
+          <ol>
+            <li>El menú de categorías se abre con el botón de tres líneas.</li>
+            <li>En el catálogo, <b>Filtros</b> abre una hoja inferior.</li>
+            <li>El resumen del pedido queda plegado al pagar, para ver primero el formulario.</li>
+          </ol></div>
+        <div class="vframe movil"><video data-src="videos/16-movil.mp4" poster="videos/16-movil.jpg" muted loop playsinline preload="none" aria-label="La tienda en el teléfono"></video></div>
+      </div>
+    </section>
+  </div>
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><b style="color:#fff">Plataforma Ecommerce</b><br>Instructivos · datos ficticios en toda la demostración.</div>
+    <div>© <a href="https://www.kayrelabs.com/" target="_blank" rel="noopener">KayreLabs</a> · <a href="index.html">Caso de estudio</a> · <a href="demo/index.html">Abrir la demo</a></div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('tema').addEventListener('click', () => {
+  const r = document.documentElement;
+  const oscuro = r.dataset.theme ? r.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  r.dataset.theme = oscuro ? 'light' : 'dark';
+  try { localStorage.setItem('tema', r.dataset.theme); } catch (e) { /* sin almacenamiento */ }
+});
+(function () {
+  const reducir = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    const v = e.target;
+    if (e.isIntersecting) { if (!v.getAttribute('src')) v.src = v.dataset.src; if (!reducir) v.play().catch(() => {}); }
+    else v.pause();
+  }), { threshold: .35 });
+  document.querySelectorAll('video[data-src]').forEach(v => {
+    if (reducir) v.controls = true;
+    v.addEventListener('click', () => { v.paused ? v.play().catch(() => {}) : v.pause(); });
+    io.observe(v);
+  });
+})();
+</script>
+</body>
+</html>
