@@ -226,11 +226,13 @@ const GUIONES = {
   },
   async '14-facturacion-y-correos'(ctx) {
     const p = await abrir(ctx, 'moda', { hash: '#/admin/facturacion' });
-    await scrollSuave(p, 600); await scrollSuave(p, 600);
+    await scrollSuave(p, 600); await scrollSuave(p, 600); await scrollSuave(p, -1200, 8);
+    await clic(p, p.locator('.side a', { hasText: 'Pedidos' }), 1100);
+    await clic(p, p.locator('.tbl tbody tr a').first(), 1200);
+    for (let i = 0; i < 2; i++) { const b = act(p, 'order-next'); if (await b.count()) await clic(p, b, 1200); }
     await clic(p, p.locator('.side a', { hasText: 'Correos' }), 1300);
-    const r = p.locator('.tbl tbody tr a, .list-row, details summary').first();
-    if (await r.count()) await clic(p, r, 1500);
-    await scrollSuave(p, 400); await espera(p, 1000);
+    const v = act(p, 'mail-view'); if (await v.count()) await clic(p, v, 1500);
+    await scrollSuave(p, 500); await espera(p, 1200);
     return p;
   },
   async '15-cambiar-tema'(ctx) {
@@ -327,7 +329,10 @@ async function grabarCapturas(browser) {
   /* panel */
   p = await pagina('moda', { hash: '#/admin' }); await tomar(p, '16-panel-resumen');
   for (const [k, nombre] of [['productos', '17-panel-productos'], ['inventario', '19-panel-inventario'], ['pedidos', '20-panel-pedidos'], ['clientes', '22-panel-clientes'], ['promociones', '23-panel-promociones'], ['facturacion', '24-panel-facturacion'], ['correos', '25-panel-correos'], ['ajustes', '26-panel-ajustes']]) {
-    await ir(p, '#/admin/' + k); await tomar(p, nombre);
+    if (k === 'correos') { await ir(p, '#/admin/pedidos'); await p.locator('.tbl tbody tr a').first().click(); await espera(p, 800); for (let i = 0; i < 2; i++) { const b = act(p, 'order-next'); if (await b.count()) { await b.click(); await espera(p, 800); } } }
+    await ir(p, '#/admin/' + k);
+    if (k === 'correos' && await act(p, 'mail-view').count()) { await act(p, 'mail-view').click(); await espera(p, 600); }
+    await tomar(p, nombre);
     if (k === 'productos') { await p.locator('.cell-prod a').first().click(); await espera(p, 900); await tomar(p, '18-panel-editar-producto'); }
     if (k === 'pedidos') { await p.locator('.tbl tbody tr a').first().click(); await espera(p, 900); await tomar(p, '21-panel-detalle-de-pedido'); }
   }
