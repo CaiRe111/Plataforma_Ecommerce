@@ -1349,5 +1349,286 @@
     "endsInDays": 9
    }
   ]
+ },
+ "cafe": {
+  "label": "Café",
+  "store": {
+   "name": "Finca La Esperanza",
+   "tagline": "Café de especialidad del Huila, tostado cada semana y enviado directo desde la finca.",
+   "hue": 25,
+   "type": "physical",
+   "hero": {
+    "eyebrow": "Cosecha 2026",
+    "title": "Café de origen, del cafetal a tu taza.",
+    "cta": "Ver cafés"
+   },
+   "perks": [
+    {
+     "t": "Envío gratis desde $150.000",
+     "d": "Entrega en 2 a 5 días hábiles a todo el país."
+    },
+    {
+     "t": "Tostado cada lunes",
+     "d": "Despachamos máximo siete días después del tueste."
+    },
+    {
+     "t": "Precio justo",
+     "d": "Compramos a pequeños productores de Pitalito y La Plata."
+    }
+   ],
+   "facets": [
+    "Proceso",
+    "Tueste"
+   ],
+   "lowStock": 5,
+   "shipping": {
+    "flat": 11000,
+    "freeFrom": 150000
+   },
+   "pay": {
+    "online": true,
+    "transfer": true,
+    "cod": true
+   },
+   "transferInstructions": "Bancolombia, cuenta de ahorros 000-111222-33, a nombre de Finca La Esperanza. Envía el comprobante al correo de la tienda.",
+   "loyalty": {
+    "discount": 10,
+    "freeShipping": true,
+    "threshold": 500000
+   }
+  },
+  "categories": [
+   "Café en grano",
+   "Café molido",
+   "Métodos",
+   "Kits de regalo"
+  ],
+  "products": [
+   {
+    "name": "Geisha lavado 250 g",
+    "cat": "Café en grano",
+    "price": 68000,
+    "compare": null,
+    "stock": 18,
+    "kind": "bag",
+    "hue": 30,
+    "attrs": {
+     "Proceso": "Lavado",
+     "Tueste": "Claro",
+     "Notas": "Jazmín, mandarina, té negro"
+    },
+    "options": [],
+    "desc": "Microlote de 1.750 m s. n. m. en Pitalito. Puntaje SCA 88. Ideal para filtrados.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Caturra honey 500 g",
+    "cat": "Café en grano",
+    "price": 54900,
+    "compare": 62900,
+    "stock": 32,
+    "kind": "bag",
+    "hue": 20,
+    "attrs": {
+     "Proceso": "Honey",
+     "Tueste": "Medio",
+     "Notas": "Panela, durazno, chocolate"
+    },
+    "options": [],
+    "desc": "Proceso honey con secado en marquesina. Cuerpo medio y dulzor alto; funciona en filtrado y espresso.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Natural de la casa 1 kg",
+    "cat": "Café en grano",
+    "price": 89900,
+    "compare": null,
+    "stock": 4,
+    "kind": "bag",
+    "hue": 12,
+    "attrs": {
+     "Proceso": "Natural",
+     "Tueste": "Medio-oscuro",
+     "Notas": "Frutos rojos, vino, cacao"
+    },
+    "options": [],
+    "desc": "Secado en cereza durante 25 días. Rinde unas 110 tazas. Pocas unidades por cosecha.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Café molido tradicional 500 g",
+    "cat": "Café molido",
+    "price": 32900,
+    "compare": null,
+    "stock": 60,
+    "kind": "bag",
+    "hue": 35,
+    "attrs": {
+     "Proceso": "Lavado",
+     "Tueste": "Medio-oscuro",
+     "Notas": "Caramelo, nuez"
+    },
+    "options": [
+     {
+      "name": "Molienda",
+      "values": [
+       "Greca",
+       "Filtro",
+       "Prensa francesa",
+       "Espresso"
+      ]
+     }
+    ],
+    "desc": "El café de todos los días: balanceado, sin amargor. Molido el día del despacho.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Descafeinado de caña 250 g",
+    "cat": "Café molido",
+    "price": 38900,
+    "compare": null,
+    "stock": 22,
+    "kind": "bag",
+    "hue": 140,
+    "attrs": {
+     "Proceso": "Lavado",
+     "Tueste": "Medio",
+     "Notas": "Chocolate de leche, manzana"
+    },
+    "options": [
+     {
+      "name": "Molienda",
+      "values": [
+       "Filtro",
+       "Prensa francesa",
+       "Espresso"
+      ]
+     }
+    ],
+    "desc": "Descafeinado natural con acetato de etilo de caña de azúcar. 99,9 % libre de cafeína.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Prensa francesa 600 ml",
+    "cat": "Métodos",
+    "price": 119000,
+    "compare": null,
+    "stock": 10,
+    "kind": "jar",
+    "hue": 210,
+    "attrs": {
+     "Proceso": "Inmersión",
+     "Tueste": "Medio a oscuro",
+     "Material": "Vidrio borosilicato y acero"
+    },
+    "options": [],
+    "desc": "Prepara 3 tazas en 4 minutos. Filtro de acero de doble malla, apto para lavavajillas.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Taza artesanal de cerámica",
+    "cat": "Métodos",
+    "price": 42000,
+    "compare": null,
+    "stock": 25,
+    "kind": "box",
+    "hue": 190,
+    "attrs": {
+     "Proceso": "Hecha a mano",
+     "Tueste": "Cualquiera",
+     "Material": "Cerámica de Ráquira"
+    },
+    "options": [
+     {
+      "name": "Color",
+      "values": [
+       "Arena",
+       "Verde cafetal",
+       "Terracota"
+      ]
+     }
+    ],
+    "desc": "Capacidad de 300 ml. Cada pieza es única; puede variar levemente el tono.",
+    "digital": false,
+    "status": "active"
+   },
+   {
+    "name": "Kit degustación de orígenes",
+    "cat": "Kits de regalo",
+    "price": 99900,
+    "compare": 118000,
+    "stock": 14,
+    "kind": "box",
+    "hue": 45,
+    "attrs": {
+     "Proceso": "Lavado, honey y natural",
+     "Tueste": "Claro a medio"
+    },
+    "options": [
+     {
+      "name": "Presentación",
+      "values": [
+       "Grano",
+       "Molido"
+      ]
+     }
+    ],
+    "desc": "Tres bolsas de 125 g con los tres procesos de la finca y una tarjeta de cata.",
+    "digital": false,
+    "status": "active"
+   }
+  ],
+  "promos": [
+   {
+    "name": "Semana del grano",
+    "desc": "12 % menos en todo el café en grano.",
+    "kind": "percent",
+    "value": 12,
+    "scope": "Café en grano",
+    "code": "",
+    "audience": "all",
+    "min": 0,
+    "endsInDays": 7
+   },
+   {
+    "name": "Bienvenida",
+    "desc": "10 % de descuento en tu primera compra con el código.",
+    "kind": "percent",
+    "value": 10,
+    "scope": "all",
+    "code": "PRIMERA10",
+    "audience": "all",
+    "min": 0,
+    "endsInDays": null
+   },
+   {
+    "name": "Solo clientes fieles: métodos",
+    "desc": "15 % menos en prensas y tazas, aplicado automáticamente.",
+    "kind": "percent",
+    "value": 15,
+    "scope": "Métodos",
+    "code": "",
+    "audience": "fiel",
+    "min": 0,
+    "endsInDays": 14
+   },
+   {
+    "name": "Ahorra $20.000",
+    "desc": "Descuento fijo en compras desde $180.000.",
+    "kind": "fixed",
+    "value": 20000,
+    "scope": "all",
+    "code": "AHORRA20",
+    "audience": "all",
+    "min": 180000,
+    "endsInDays": 20
+   }
+  ]
  }
 }
