@@ -200,7 +200,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
 .cards .card h3 { font-size: 19px; margin-bottom: 10px; }
 .cards .card p, .cards .card li { color: var(--muted); font-size: 15.5px; }
 .cards .card ul { padding-left: 18px; display: grid; gap: 6px; }
-.stores { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
+.stores { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 .stores figure { display: grid; gap: 8px; }
 .stores img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border-radius: 12px; box-shadow: 0 0 0 1px var(--line), 0 16px 30px -20px rgba(0,0,0,.4); }
 .stores figcaption { font-size: 14px; color: var(--muted); } .stores figcaption b { color: var(--fg); display: block; font-size: 15px; }

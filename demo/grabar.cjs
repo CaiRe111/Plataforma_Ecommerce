@@ -310,6 +310,7 @@ async function grabarCapturas(browser) {
   /* tienda */
   p = await pagina('moda', { barra: true }); await tomar(p, '01-portada-moda'); await p.__ctx.close();
   for (const [i, t] of [['02', 'alimentos'], ['03', 'tecnologia'], ['04', 'digital'], ['05', 'fantasia']]) { p = await pagina(t); await tomar(p, `${i}-portada-${t}`); await p.__ctx.close(); }
+  p = await pagina('cafe'); await tomar(p, '31-portada-cafe'); await p.__ctx.close();
   p = await pagina('tecnologia', { hash: '#/catalogo' }); await tomar(p, '06-catalogo-con-filtros');
   await ir(p, '#/producto/' + await p.locator('.card').first().getAttribute('href').then(h => h.split('/').pop())); await tomar(p, '07-ficha-de-producto');
   await p.locator('.opt').first().click().catch(() => {}); await act(p, 'add').click(); await espera(p, 800); await tomar(p, '08-carrito-lateral');
