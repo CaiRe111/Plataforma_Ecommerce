@@ -14,6 +14,8 @@ Una instalación por cliente, publicada con Cloudflare Tunnel.
 
 ## Página del proyecto
 
+Publicada en https://ecommerce-demo.kayrelabs.com (Worker `ecommerce-demo`, rama de producción `main`).
+
 ```bash
 cd demo && npm install && npm run build   # genera dist/demo.html y site/demo/index.html
 node grabar.cjs                           # regraba videos, GIF y capturas de site/ (Playwright y ffmpeg)
